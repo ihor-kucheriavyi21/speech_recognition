@@ -9,8 +9,8 @@ import java.io.InputStreamReader;
 public class AudioRecognitionService {
 
     @SneakyThrows
-    public String recognizeAudioRecord() {
-        ProcessBuilder processBuilder = new ProcessBuilder("python", "src/test/resources/audio_recognition.py");
+    public String recognizeAudioRecord(String filePathFromSourceRoot) {
+        ProcessBuilder processBuilder = new ProcessBuilder("python", "src/main/resources/python/audio_recognition.py", filePathFromSourceRoot);
         processBuilder.redirectErrorStream(true);
         Process process = processBuilder.start();
 

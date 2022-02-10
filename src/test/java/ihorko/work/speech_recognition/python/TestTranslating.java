@@ -12,7 +12,7 @@ public class TestTranslating {
 
     @Test
     public void getPythonRecognition() throws IOException {
-        ProcessBuilder processBuilder = new ProcessBuilder("python", "src/test/resources/audio_recognition.py");
+        ProcessBuilder processBuilder = new ProcessBuilder("python", "src/test/resources/audio_recognition.py", "src/test/resources/testRecorder.wav");
         processBuilder.redirectErrorStream(true);
 
         Process process = processBuilder.start();
