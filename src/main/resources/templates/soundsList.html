@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Sound content creating</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>
+    <div th:switch="${sounds}">
+        <h2 th:case="null">No sounds yet!</h2>
+        <div th:case="*">
+            <h2>Sounds</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Language</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="sound : ${sounds}">
+                    <td th:text="${sound.getName()}"></td>
+                    <td th:text="${sound.getLanguage()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a href="/sound/create/page">Add a new sound</a></p>
+    </div>
+</h1>
+</body>
+</html>
