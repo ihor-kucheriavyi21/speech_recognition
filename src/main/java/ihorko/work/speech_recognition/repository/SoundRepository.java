@@ -17,4 +17,8 @@ public class SoundRepository {
     public List<Sound> findAll() {
         return SOUND_DAO.listSounds();
     }
+
+    public Sound findByName(String name) {
+        return SOUND_DAO.findByName(name);
+    }
 }

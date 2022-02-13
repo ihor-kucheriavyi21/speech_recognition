@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sound contents List</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        Content text
+    </tr>
+    <tr>
+        Sound name
+    </tr>
+    </thead>
+    <tbody>
+    <h2>
+        <tr th:each="sound_content : ${soundContentsList}">
+            <td th:text="${sound_content.getContentText()}"></td>
+            <td th:text="${sound_content.getSound().getName()}"></td>
+        </tr>
+    </h2>
+    </tbody>
+</table>
+</body>
+</html>

@@ -2,9 +2,11 @@ package ihorko.work.speech_recognition.repository;
 
 import ihorko.work.speech_recognition.db.dao.SoundContentDao;
 import ihorko.work.speech_recognition.db.dto.SoundContent;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class SoundContentRepository {
 
     private static final SoundContentDao SOUND_CONTENT_DAO = new SoundContentDao();
