@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 
 import javax.persistence.Query;
 import java.util.List;
+import java.util.UUID;
 
 public class SoundDao {
 
@@ -22,6 +23,15 @@ public class SoundDao {
         Session session = SessionUtil.getSession();
         Query query = session.createQuery("From sound s where s.name = :name", Sound.class);
         query.setParameter("name", name);
+        Sound result = (Sound) query.getSingleResult();
+        session.close();
+        return result;
+    }
+
+    public Sound findById(UUID id) {
+        Session session = SessionUtil.getSession();
+        Query query = session.createQuery("From sound s where s.id = :id", Sound.class);
+        query.setParameter("id", id);
         Sound result = (Sound) query.getSingleResult();
         session.close();
         return result;

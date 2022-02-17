@@ -26,12 +26,11 @@ public class SoundContentController {
         return "sound_content/soundContentCreate";
     }
 
+    //todo change usage hardcoding
     @PostMapping("/sound-content/create")
-    public String createSoundContent(String contentText, String soundName) {
+    public String createSoundContent(SoundContent soundContent) {
 
-        SoundContent soundContent = new SoundContent();
-        soundContent.setContentText(contentText);
-        Sound sound = soundRepository.findByName(soundName);
+        Sound sound = soundRepository.findById(soundContent.getSound().getId());
         soundContent.setSound(sound);
         soundContentRepository.save(soundContent);
         return "redirect:/sound-content/create/page";

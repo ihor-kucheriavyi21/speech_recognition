@@ -19,6 +19,4 @@ public class SoundContent {
     @ManyToOne
     @JoinColumn(name = "sound_id")
     private Sound sound;
-
-    private String soundName;
 }

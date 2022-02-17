@@ -5,6 +5,7 @@ import ihorko.work.speech_recognition.db.dto.Sound;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class SoundRepository {
@@ -20,5 +21,9 @@ public class SoundRepository {
 
     public Sound findByName(String name) {
         return SOUND_DAO.findByName(name);
+    }
+
+    public Sound findById(UUID id) {
+        return SOUND_DAO.findById(id);
     }
 }

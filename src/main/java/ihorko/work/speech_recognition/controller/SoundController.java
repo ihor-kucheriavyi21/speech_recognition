@@ -18,13 +18,13 @@ public class SoundController {
         return "soundCreate";
     }
 
-    @PostMapping("/sound-create")
+    @PostMapping("/sound/create")
     public String createSound(Sound sound) {
         SOUND_REPOSITORY.save(sound);
         return "redirect:/sound/create/page";
     }
 
-    @GetMapping("/sounds-list")
+    @GetMapping("/sounds/list")
     public String showListSounds(Model model) {
         model.addAttribute("sounds", SOUND_REPOSITORY.findAll());
         return "soundsList";
