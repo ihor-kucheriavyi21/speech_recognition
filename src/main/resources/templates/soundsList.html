@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Sound content creating</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Sound list</title>
+    <meta th:insert="fragments/header :: header">
 </head>
 <body>
+<div th:insert="fragments/navbar :: navbar">
+</div>
 <h1>
     <div th:switch="${sounds}">
         <h2 th:case="null">No sounds yet!</h2>

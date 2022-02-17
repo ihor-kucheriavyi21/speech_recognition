@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Sound contents List</title>
+    <meta th:insert="fragments/header :: header">
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        Content text
-    </tr>
-    <tr>
-        Sound name
-    </tr>
-    </thead>
-    <tbody>
-    <h2>
+<div th:insert="fragments/navbar :: navbar">
+</div>
+<h1>
+    <table>
+        <thead>
+        <tr>
+            Content text
+        </tr>
+        <tr>
+            Sound name
+        </tr>
+        </thead>
+        <tbody>
         <tr th:each="sound_content : ${soundContentsList}">
             <td th:text="${sound_content.getContentText()}"></td>
             <td th:text="${sound_content.getSound().getName()}"></td>
         </tr>
-    </h2>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+    <a href="/sound-content/create/page">Add a new sound content</a>
+</h1>
 </body>
 </html>

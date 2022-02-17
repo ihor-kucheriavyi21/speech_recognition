@@ -2,15 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Sound content creating</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta th:insert="fragments/header :: header"/>
 </head>
 <body>
+<div th:insert="fragments/navbar :: navbar">
+</div>
 <h1>
     <form th:action="@{/sound-create}" th:object="${sound}" method="post">
-        <label>Name</label>
-        <input type="text" th:field="*{name}">
-        <label>Language</label>
-        <input type="text" th:field="*{language}">
+        <label>Name
+            <input type="text" th:field="*{name}">
+        </label>
+        <label>Language
+            <input type="text" th:field="*{language}">
+        </label>
         <input type="submit">
     </form>
 </h1>
