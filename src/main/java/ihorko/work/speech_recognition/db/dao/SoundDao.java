@@ -4,6 +4,7 @@ import ihorko.work.speech_recognition.db.dto.Sound;
 import ihorko.work.speech_recognition.db.util.SessionUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -11,37 +12,29 @@ import java.util.UUID;
 
 public class SoundDao {
 
+    @Autowired
+    private Session session = SessionUtil.getSession();
+
     public void persist(Sound sound) {
-        Session session = SessionUtil.getSession();
         Transaction transaction = session.beginTransaction();
         session.persist(sound);
         transaction.commit();
-        session.close();
     }
 
-    public Sound findByName(String name) {
-        Session session = SessionUtil.getSession();
+    public List<Sound> findByName(String name) {
         Query query = session.createQuery("From sound s where s.name = :name", Sound.class);
         query.setParameter("name", name);
-        Sound result = (Sound) query.getSingleResult();
-        session.close();
-        return result;
+        return (List<Sound>) query.getResultList();
     }
 
     public Sound findById(UUID id) {
-        Session session = SessionUtil.getSession();
         Query query = session.createQuery("From sound s where s.id = :id", Sound.class);
         query.setParameter("id", id);
-        Sound result = (Sound) query.getSingleResult();
-        session.close();
-        return result;
+        return (Sound) query.getSingleResult();
     }
 
-    public List listSounds() {
-        Session session = SessionUtil.getSession();
+    public List<Sound> listSounds() {
         Query query = session.createQuery("From sound");
-        List result = query.getResultList();
-        session.close();
-        return result;
+        return (List<Sound>) query.getResultList();
     }
 }

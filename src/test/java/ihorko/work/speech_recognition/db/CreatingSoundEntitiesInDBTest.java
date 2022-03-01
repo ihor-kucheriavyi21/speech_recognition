@@ -6,6 +6,8 @@ import ihorko.work.speech_recognition.db.dto.SoundContent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class CreatingSoundEntitiesInDBTest {
 
     @Test
@@ -18,7 +20,7 @@ public class CreatingSoundEntitiesInDBTest {
         sound.setLanguage("English");
         SoundDao soundDao = new SoundDao();
         soundDao.persist(sound);
-        Sound byName = soundDao.findByName(sound.getName());
-        Assertions.assertEquals(sound.getLanguage(), byName.getLanguage());
+        List<Sound> byName = soundDao.findByName(sound.getName());
+        Assertions.assertNotNull(byName.get(0));
     }
 }

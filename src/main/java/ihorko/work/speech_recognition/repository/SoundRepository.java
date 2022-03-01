@@ -19,7 +19,7 @@ public class SoundRepository {
         return SOUND_DAO.listSounds();
     }
 
-    public Sound findByName(String name) {
+    public List<Sound> findByName(String name) {
         return SOUND_DAO.findByName(name);
     }
 
