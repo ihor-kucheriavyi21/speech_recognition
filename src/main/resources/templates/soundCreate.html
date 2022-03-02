@@ -8,7 +8,7 @@
 <div th:insert="fragments/navbar :: navbar">
 </div>
 <h1>
-    <form th:action="@{/sound-create}" th:object="${sound}" method="post">
+    <form th:action="@{/sound/create}" th:object="${sound}" method="post">
         <label>Name
             <input type="text" th:field="*{name}">
         </label>

@@ -5,10 +5,14 @@ import ihorko.work.speech_recognition.db.dto.Sound;
 import ihorko.work.speech_recognition.db.dto.SoundContent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class CreatingSoundEntitiesInDBTest {
+
+    @Autowired
+    private SoundDao soundDao;
 
     @Test
     public void testCreateSound() {
@@ -18,7 +22,6 @@ public class CreatingSoundEntitiesInDBTest {
         sound.addSoundContent(soundContent);
         sound.setName("Ch");
         sound.setLanguage("English");
-        SoundDao soundDao = new SoundDao();
         soundDao.persist(sound);
         List<Sound> byName = soundDao.findByName(sound.getName());
         Assertions.assertNotNull(byName.get(0));

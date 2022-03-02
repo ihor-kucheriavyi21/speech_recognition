@@ -1,28 +1,32 @@
 package ihorko.work.speech_recognition.db.dao;
 
 import ihorko.work.speech_recognition.db.dto.SoundContent;
-import ihorko.work.speech_recognition.db.util.SessionUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Repository
+@Transactional
 public class SoundContentDao {
 
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public SoundContentDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public void persist(SoundContent soundContent) {
-        Session session = SessionUtil.getSession();
-        Transaction transaction = session.beginTransaction();
-        session.persist(soundContent);
-        transaction.commit();
-        session.close();
+        sessionFactory.getCurrentSession().saveOrUpdate(soundContent);
     }
 
     public List<SoundContent> listSoundsContent() {
-        Session session = SessionUtil.getSession();
-        Query query = session.createQuery("From sound_content ");
-        List result = query.getResultList();
-        session.close();
-        return result;
+        TypedQuery<SoundContent> query = sessionFactory.getCurrentSession()
+                .createQuery("From sound_content", SoundContent.class);
+        return query.getResultList();
     }
 }

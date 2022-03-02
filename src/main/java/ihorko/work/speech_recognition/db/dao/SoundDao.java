@@ -1,40 +1,46 @@
 package ihorko.work.speech_recognition.db.dao;
 
 import ihorko.work.speech_recognition.db.dto.Sound;
-import ihorko.work.speech_recognition.db.util.SessionUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+@Repository
+@Transactional
 public class SoundDao {
 
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private Session session = SessionUtil.getSession();
+    public SoundDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public void persist(Sound sound) {
-        Transaction transaction = session.beginTransaction();
-        session.persist(sound);
-        transaction.commit();
+        sessionFactory.getCurrentSession().saveOrUpdate(sound);
     }
 
     public List<Sound> findByName(String name) {
-        Query query = session.createQuery("From sound s where s.name = :name", Sound.class);
+        TypedQuery<Sound> query = sessionFactory.getCurrentSession()
+                .createQuery("From sound s where s.name = :name", Sound.class);
         query.setParameter("name", name);
-        return (List<Sound>) query.getResultList();
+        return query.getResultList();
     }
 
     public Sound findById(UUID id) {
-        Query query = session.createQuery("From sound s where s.id = :id", Sound.class);
+        TypedQuery<Sound> query = sessionFactory.getCurrentSession()
+                .createQuery("From sound s where s.id = :id", Sound.class);
         query.setParameter("id", id);
-        return (Sound) query.getSingleResult();
+        return query.getSingleResult();
     }
 
     public List<Sound> listSounds() {
-        Query query = session.createQuery("From sound");
-        return (List<Sound>) query.getResultList();
+        TypedQuery<Sound> query = sessionFactory.getCurrentSession().createQuery("From sound", Sound.class);
+        return query.getResultList();
     }
 }

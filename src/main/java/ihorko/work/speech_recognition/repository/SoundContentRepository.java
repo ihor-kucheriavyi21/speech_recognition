@@ -2,6 +2,7 @@ package ihorko.work.speech_recognition.repository;
 
 import ihorko.work.speech_recognition.db.dao.SoundContentDao;
 import ihorko.work.speech_recognition.db.dto.SoundContent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,13 +10,14 @@ import java.util.List;
 @Repository
 public class SoundContentRepository {
 
-    private static final SoundContentDao SOUND_CONTENT_DAO = new SoundContentDao();
+    @Autowired
+    private SoundContentDao soundContentDao;
 
     public void save(SoundContent soundContent) {
-        SOUND_CONTENT_DAO.persist(soundContent);
+        soundContentDao.persist(soundContent);
     }
 
     public List<SoundContent> findAll() {
-        return SOUND_CONTENT_DAO.listSoundsContent();
+        return soundContentDao.listSoundsContent();
     }
 }
