@@ -10,8 +10,12 @@ import java.util.List;
 @Repository
 public class SoundContentRepository {
 
+    private final SoundContentDao soundContentDao;
+
     @Autowired
-    private SoundContentDao soundContentDao;
+    public SoundContentRepository(SoundContentDao soundContentDao) {
+        this.soundContentDao = soundContentDao;
+    }
 
     public void save(SoundContent soundContent) {
         soundContentDao.persist(soundContent);

@@ -14,10 +14,12 @@ public class Sound {
     @Id
     @GeneratedValue
     private UUID id;
+
     private String name;
+
     private String language;
 
-    @OneToMany(mappedBy = "sound", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sound", cascade = CascadeType.ALL, targetEntity = SoundContent.class)
     private List<SoundContent> soundContents = new ArrayList<>();
 
     public void addSoundContent(SoundContent soundContent) {

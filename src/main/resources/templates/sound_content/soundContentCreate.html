@@ -8,7 +8,7 @@
 <div th:insert="fragments/navbar :: navbar"></div>
 
 <h1>
-    <form th:action="@{/sound-content/create}" th:object="${soundContent}" method="post">
+    <form th:action="@{/sound-content/create}" th:object="${soundContent}" enctype="multipart/form-data" method="post">
         <label>Content text
             <input type="text" th:field="*{contentText}">
         </label>
@@ -19,6 +19,10 @@
                         th:text="${sound.getName()}">
                 </option>
             </select>
+        </label>
+        <label>File
+            <input multiple="multiple" type="file" name="file" class="file-input"/>
+            <input multiple="multiple" type="file" accept=".mp3,audio/*" name="audioFile" class="file-input"/>
         </label>
         <input type="submit">
     </form>

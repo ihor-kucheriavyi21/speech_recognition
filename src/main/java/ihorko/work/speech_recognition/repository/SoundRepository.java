@@ -11,8 +11,12 @@ import java.util.UUID;
 @Repository
 public class SoundRepository {
 
+    private final SoundDao soundDao;
+
     @Autowired
-    private SoundDao soundDao;
+    public SoundRepository(SoundDao soundDao) {
+        this.soundDao = soundDao;
+    }
 
     public void save(Sound sound) {
         soundDao.persist(sound);

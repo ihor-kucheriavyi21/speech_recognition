@@ -1,0 +1,36 @@
+package ihorko.work.speech_recognition.service;
+
+import ihorko.work.speech_recognition.db.dto.DBFile;
+import ihorko.work.speech_recognition.repository.DBFileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.transaction.Transactional;
+import java.io.IOException;
+
+@Service
+public class DBFileStorageService {
+
+    private DBFileRepository dbFileRepository;
+
+    @Autowired
+    public void setDbFileRepository(DBFileRepository dbFileRepository) {
+        this.dbFileRepository = dbFileRepository;    }
+
+    @Transactional
+    public DBFile storeFile(MultipartFile file) {
+        // Normalize file name
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+
+        DBFile dbFile = null;
+        try {
+            dbFile = new DBFile(fileName, file.getContentType(), file.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return dbFileRepository.save(dbFile);
+    }
+}
