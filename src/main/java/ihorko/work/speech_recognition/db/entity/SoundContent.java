@@ -1,5 +1,4 @@
-package ihorko.work.speech_recognition.db.dto;
-
+package ihorko.work.speech_recognition.db.entity;
 
 import lombok.Getter;
 
@@ -22,8 +21,7 @@ public class SoundContent {
     @JoinColumn(name = "sound_id", nullable = false)
     private Sound sound;
 
-    //todo why we can not use in this place mappedBy
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = DBFile.class)
+    @OneToMany(mappedBy = "soundContent", targetEntity = DBFile.class)
     private List<DBFile> dbFiles = new ArrayList<>();
 
 

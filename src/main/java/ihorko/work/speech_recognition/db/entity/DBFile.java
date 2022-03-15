@@ -1,4 +1,6 @@
-package ihorko.work.speech_recognition.db.dto;
+package ihorko.work.speech_recognition.db.entity;
+
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -15,6 +17,7 @@ public class DBFile {
     private String fileType;
 
     @Lob
+    @Type(type="org.hibernate.type.BinaryType")
     private byte[] data;
 
     @ManyToOne

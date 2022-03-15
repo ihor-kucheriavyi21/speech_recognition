@@ -1,4 +1,4 @@
-package ihorko.work.speech_recognition.db.dto;
+package ihorko.work.speech_recognition.db.entity;
 
 import lombok.Getter;
 

@@ -19,7 +19,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("ihorko/work/speech_recognition/db/dto");
+        sessionFactory.setPackagesToScan("ihorko/work/speech_recognition/db/entity");
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;

@@ -11,16 +11,32 @@
     <table>
         <thead>
         <tr>
+            Sound name
+        </tr>
+        <tr>
             Content text
         </tr>
         <tr>
-            Sound name
+            Audio
+        </tr>
+        <tr>
+            Image
         </tr>
         </thead>
         <tbody>
         <tr th:each="sound_content : ${soundContentsList}">
-            <td th:text="${sound_content.getContentText()}"></td>
             <td th:text="${sound_content.getSound().getName()}"></td>
+            <td th:text="${sound_content.getContentText()}"></td>
+            <td>
+                <audio controls>
+                    <source th:src="@{${'/files/'+sound_content.getAudioFile().getId()}}">
+                </audio>
+            </td>
+            <td>
+                <img th:if="${sound_content.getGifFile()!=null}"
+                     th:src="@{${'/files/'+ sound_content.getGifFile().getId()}}"
+                     alt="Image does not exist">
+            </td>
         </tr>
         </tbody>
     </table>
