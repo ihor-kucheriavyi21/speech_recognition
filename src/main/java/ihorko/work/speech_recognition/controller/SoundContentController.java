@@ -1,29 +1,42 @@
 package ihorko.work.speech_recognition.controller;
 
-import ihorko.work.speech_recognition.db.dto.DBFile;
-import ihorko.work.speech_recognition.db.dto.Sound;
-import ihorko.work.speech_recognition.db.dto.SoundContent;
+import ihorko.work.speech_recognition.converter.SoundContentConverter;
+import ihorko.work.speech_recognition.db.dto.SoundContentDto;
+import ihorko.work.speech_recognition.db.entity.DBFile;
+import ihorko.work.speech_recognition.db.entity.Sound;
+import ihorko.work.speech_recognition.db.entity.SoundContent;
 import ihorko.work.speech_recognition.repository.SoundContentRepository;
 import ihorko.work.speech_recognition.repository.SoundRepository;
 import ihorko.work.speech_recognition.service.DBFileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Controller
 public class SoundContentController {
 
-    //todo learn about autowired
     @Autowired
     private SoundRepository soundRepository;
     @Autowired
     private SoundContentRepository soundContentRepository;
     @Autowired
     private DBFileStorageService dbFileStorageService;
+    @Autowired
+    private SoundContentConverter soundContentConverter;
 
     @GetMapping("/sound-content/create/page")
     public String showSoundContentCreatePage(Model model) {
@@ -32,6 +45,7 @@ public class SoundContentController {
         return "sound_content/soundContentCreate";
     }
 
+    //todo thymeleaf session object
     @PostMapping("/sound-content/create")
     public String createSoundContent(SoundContent soundContent,
                                      @RequestParam MultipartFile file,
@@ -50,7 +64,8 @@ public class SoundContentController {
 
     @GetMapping("/sound-contents/list")
     public String showSoundContentsList(Model model) {
-        model.addAttribute("soundContentsList", soundContentRepository.findAll());
+        List<SoundContentDto> collect = soundContentRepository.findAll().stream().map(soundContentConverter::convert).collect(Collectors.toList());
+        model.addAttribute("soundContentsList", collect);
         return "sound_content/soundContentsList";
     }
 }

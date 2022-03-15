@@ -1,7 +1,7 @@
 package ihorko.work.speech_recognition.repository;
 
 import ihorko.work.speech_recognition.db.dao.SoundContentDao;
-import ihorko.work.speech_recognition.db.dto.SoundContent;
+import ihorko.work.speech_recognition.db.entity.SoundContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

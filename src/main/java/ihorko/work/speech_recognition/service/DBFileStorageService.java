@@ -1,6 +1,6 @@
 package ihorko.work.speech_recognition.service;
 
-import ihorko.work.speech_recognition.db.dto.DBFile;
+import ihorko.work.speech_recognition.db.entity.DBFile;
 import ihorko.work.speech_recognition.repository.DBFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,8 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.UUID;
 
 @Service
+@Transactional
 public class DBFileStorageService {
 
     private DBFileRepository dbFileRepository;
@@ -31,6 +35,15 @@ public class DBFileStorageService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            Files.write(Path.of("result.wav"), file.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return dbFileRepository.save(dbFile);
+    }
+
+    public DBFile findById(UUID uuid) {
+        return dbFileRepository.findById(uuid);
     }
 }
