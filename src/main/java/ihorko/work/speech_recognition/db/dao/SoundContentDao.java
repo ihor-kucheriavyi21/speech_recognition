@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 @Transactional
@@ -28,5 +29,10 @@ public class SoundContentDao {
         TypedQuery<SoundContent> query = sessionFactory.getCurrentSession()
                 .createQuery("From sound_content", SoundContent.class);
         return query.getResultList();
+    }
+
+    public SoundContent findById(UUID uuid) {
+        return sessionFactory.getCurrentSession()
+                .get(SoundContent.class, uuid);
     }
 }

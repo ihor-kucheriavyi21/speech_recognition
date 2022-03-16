@@ -1,8 +1,8 @@
 package ihorko.work.speech_recognition.db;
 
 import ihorko.work.speech_recognition.db.dao.SoundDao;
-import ihorko.work.speech_recognition.db.dto.Sound;
-import ihorko.work.speech_recognition.db.dto.SoundContent;
+import ihorko.work.speech_recognition.db.entity.Sound;
+import ihorko.work.speech_recognition.db.entity.SoundContent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

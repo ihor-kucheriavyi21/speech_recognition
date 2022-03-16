@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class SoundContentRepository {
@@ -23,5 +24,9 @@ public class SoundContentRepository {
 
     public List<SoundContent> findAll() {
         return soundContentDao.listSoundsContent();
+    }
+
+    public SoundContent findById(UUID uuid) {
+        return soundContentDao.findById(uuid);
     }
 }

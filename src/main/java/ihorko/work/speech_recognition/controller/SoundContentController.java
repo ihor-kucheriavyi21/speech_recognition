@@ -9,11 +9,6 @@ import ihorko.work.speech_recognition.repository.SoundContentRepository;
 import ihorko.work.speech_recognition.repository.SoundRepository;
 import ihorko.work.speech_recognition.service.DBFileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,5 +62,12 @@ public class SoundContentController {
         List<SoundContentDto> collect = soundContentRepository.findAll().stream().map(soundContentConverter::convert).collect(Collectors.toList());
         model.addAttribute("soundContentsList", collect);
         return "sound_content/soundContentsList";
+    }
+
+    @GetMapping("/sound-content/{id}")
+    public String showSoundContentPage(@PathVariable UUID id, Model model) {
+        SoundContentDto soundContent = soundContentConverter.convert(soundContentRepository.findById(id));
+        model.addAttribute("soundContent", soundContent);
+        return "sound_content/soundContent";
     }
 }

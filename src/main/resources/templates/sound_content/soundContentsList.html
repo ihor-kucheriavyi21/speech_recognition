@@ -7,40 +7,45 @@
 <body>
 <div th:insert="fragments/navbar :: navbar">
 </div>
-<h1>
-    <table>
-        <thead>
-        <tr>
-            Sound name
-        </tr>
-        <tr>
-            Content text
-        </tr>
-        <tr>
-            Audio
-        </tr>
-        <tr>
-            Image
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="sound_content : ${soundContentsList}">
-            <td th:text="${sound_content.getSound().getName()}"></td>
-            <td th:text="${sound_content.getContentText()}"></td>
-            <td>
-                <audio controls>
-                    <source th:src="@{${'/files/'+sound_content.getAudioFile().getId()}}">
-                </audio>
-            </td>
-            <td>
-                <img th:if="${sound_content.getGifFile()!=null}"
-                     th:src="@{${'/files/'+ sound_content.getGifFile().getId()}}"
-                     alt="Image does not exist">
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <a href="/sound-content/create/page">Add a new sound content</a>
-</h1>
+<div class="container">
+    <h1>
+        <table>
+            <thead>
+            <tr>
+                Sound name
+            </tr>
+            <tr>
+                Content text
+            </tr>
+            <tr>
+                Audio
+            </tr>
+            <tr>
+                Image
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sound_content : ${soundContentsList}">
+                <td th:text="${sound_content.getSound().getName()}"></td>
+                <td th:text="${sound_content.getContentText()}"></td>
+                <td>
+                    <audio controls>
+                        <source th:src="@{${'/files/'+sound_content.getAudioFile().getId()}}">
+                    </audio>
+                </td>
+                <td>
+                    <img th:if="${sound_content.getGifFile()!=null}"
+                         th:src="@{${'/files/'+ sound_content.getGifFile().getId()}}"
+                         alt="Image does not exist">
+                </td>
+                <td>
+                    <a th:href="@{${'/sound-content/'+ sound_content.getId()}}">Edit</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/sound-content/create/page}">Add a new sound content</a>
+    </h1>
+</div>
 </body>
 </html>

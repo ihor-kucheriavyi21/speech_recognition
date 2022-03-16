@@ -7,28 +7,30 @@
 <body>
 <div th:insert="fragments/navbar :: navbar">
 </div>
-<h1>
-    <div th:switch="${sounds}">
-        <h2 th:case="null">No sounds yet!</h2>
-        <div th:case="*">
-            <h2>Sounds</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Language</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="sound : ${sounds}">
-                    <td th:text="${sound.getName()}"></td>
-                    <td th:text="${sound.getLanguage()}"></td>
-                </tr>
-                </tbody>
-            </table>
+<div class="container">
+    <h1>
+        <div th:switch="${sounds}">
+            <h2 th:case="null">No sounds yet!</h2>
+            <div th:case="*">
+                <h2>Sounds</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Language</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="sound : ${sounds}">
+                        <td th:text="${sound.getName()}"></td>
+                        <td th:text="${sound.getLanguage()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><a th:href="@{/sound/create/page}">Add a new sound</a></p>
         </div>
-        <p><a href="/sound/create/page">Add a new sound</a></p>
-    </div>
-</h1>
+    </h1>
+</div>
 </body>
 </html>
