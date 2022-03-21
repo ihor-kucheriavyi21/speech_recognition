@@ -29,10 +29,10 @@
         let response = await fetch('/upload', {
             method: "POST",
             body: formData
-        });
-        if (response.status == 200) {
-            alert("File successfully uploaded.");
-        }
+        }).then(response => response.text())
+            .then((response) => {
+                alert(response);
+            })
     }
 
     jQuery(document).ready(function () {

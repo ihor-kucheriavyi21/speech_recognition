@@ -9,8 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.UUID;
 
 @Service
@@ -21,22 +19,17 @@ public class DBFileStorageService {
 
     @Autowired
     public void setDbFileRepository(DBFileRepository dbFileRepository) {
-        this.dbFileRepository = dbFileRepository;    }
+        this.dbFileRepository = dbFileRepository;
+    }
 
     @Transactional
     public DBFile storeFile(MultipartFile file) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
-
         DBFile dbFile = null;
         try {
             dbFile = new DBFile(fileName, file.getContentType(), file.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            Files.write(Path.of("result.wav"), file.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
