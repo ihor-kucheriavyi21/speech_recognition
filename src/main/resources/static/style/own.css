@@ -7,3 +7,29 @@
 .lines {
     margin-bottom: 3%;
 }
+
+.sound-block {
+    text-align: center;
+    padding: 20px;
+    border: solid 20px;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.add-button {
+    text-align: center;
+    display: block;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: #e9ecef;
+    border-radius: .3rem;
+}
+
+.navbar{
+    margin-bottom: 1%;
+}

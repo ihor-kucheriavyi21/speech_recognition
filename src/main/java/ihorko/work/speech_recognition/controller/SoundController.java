@@ -2,6 +2,7 @@ package ihorko.work.speech_recognition.controller;
 
 import ihorko.work.speech_recognition.db.entity.Sound;
 import ihorko.work.speech_recognition.repository.SoundRepository;
+import org.apache.commons.collections4.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +33,7 @@ public class SoundController {
 
     @GetMapping("/sounds/list")
     public String showListSounds(Model model) {
-        model.addAttribute("sounds", soundRepository.findAll());
+        model.addAttribute("soundsLists", ListUtils.partition(soundRepository.findAll(), 4));
         return "soundsList";
     }
 }
