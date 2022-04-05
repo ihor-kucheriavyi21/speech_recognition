@@ -1,6 +1,6 @@
 package ihorko.work.speech_recognition.service;
 
-import ihorko.work.speech_recognition.Language;
+import ihorko.work.speech_recognition.common.Language;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 

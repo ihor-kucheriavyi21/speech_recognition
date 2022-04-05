@@ -1,4 +1,4 @@
-package ihorko.work.speech_recognition;
+package ihorko.work.speech_recognition.common;
 
 import lombok.Getter;
 

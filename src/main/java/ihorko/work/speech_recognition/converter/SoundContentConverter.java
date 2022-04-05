@@ -15,6 +15,7 @@ public class SoundContentConverter {
         soundContentDto.setContentText(soundContent.getContentText());
         soundContentDto.setSound(soundContent.getSound());
         soundContentDto.setId(soundContent.getId());
+        soundContentDto.setContentType(soundContent.getTypeContent());
         soundContentDto.setAudioFile(soundContent.getDbFiles()
                 .stream()
                 .filter(content -> content.getFileType().contains("audio"))

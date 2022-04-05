@@ -43,9 +43,9 @@ public class SoundContentController {
     //todo thymeleaf session object
     @PostMapping("/sound-content/create")
     public String createSoundContent(SoundContent soundContent,
-                                     @RequestParam MultipartFile file,
+                                     @RequestParam MultipartFile imageFile,
                                      @RequestParam MultipartFile audioFile) {
-        DBFile dbFile = dbFileStorageService.storeFile(file);
+        DBFile dbFile = dbFileStorageService.storeFile(imageFile);
         DBFile dbAudioFile = dbFileStorageService.storeFile(audioFile);
 
         Sound sound = soundRepository.findById(soundContent.getSound().getId());

@@ -17,6 +17,8 @@ public class SoundContent {
 
     private String contentText;
 
+    private String typeContent;
+
     @ManyToOne
     @JoinColumn(name = "sound_id", nullable = false)
     private Sound sound;
@@ -40,5 +42,9 @@ public class SoundContent {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public void setTypeContent(String typeContent) {
+        this.typeContent = typeContent;
     }
 }

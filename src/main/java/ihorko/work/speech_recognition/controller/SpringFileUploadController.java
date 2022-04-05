@@ -1,6 +1,6 @@
 package ihorko.work.speech_recognition.controller;
 
-import ihorko.work.speech_recognition.Language;
+import ihorko.work.speech_recognition.common.Language;
 import ihorko.work.speech_recognition.service.AudioRecognitionService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;

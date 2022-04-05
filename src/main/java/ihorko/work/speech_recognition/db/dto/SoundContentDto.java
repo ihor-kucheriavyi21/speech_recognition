@@ -15,6 +15,8 @@ public class SoundContentDto {
 
     private String contentText;
 
+    private String contentType;
+
     private Sound sound;
 
     private DBFile audioFile;
