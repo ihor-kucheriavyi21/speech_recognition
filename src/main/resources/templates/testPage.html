@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/src/main/resources/static/style/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/src/main/resources/static/style/own.css">
+
+</head>
+<body>
+
+<section class="p-4">
+    <div class="container w-50">
+        <div class="card p-1">
+            <div class="card-body p-md-5">
+                <h3 class="mb-3 text-uppercase text-center">
+                    Learn how to pronounce <strong th:text="${soundContent.getSound().getName()}">Short ch</strong>
+                </h3>
+                <div class="row">
+                    <div class="col">
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0">
+                                    Listen the audio
+                                </h4>
+                            </div>
+
+                            <div class="col-9 form-group">
+                                <audio class="w-75" controls>
+                                    <source th:src="@{${'/files/'+soundContent.getAudioFile().getId()}}">
+                                </audio>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0">
+                                    Content for pronunciation
+                                </h4>
+                            </div>
+                            <div class="col-9">
+                                <p class="lead" th:text="${soundContent.getContentText()}">asdfasdfqwe qwerqwe asdf
+                                    asdf qweqweq asdasf asdfas df asgdsfgsd qwer qwee sdafsd sadfas fasdfawe</p>
+                            </div>
+                        </div>
+                        <div class="row align-items-center p-2">
+                            <h4 class="mb-3 text-uppercase text-center">
+                                <figure class="figure">
+                                    <img class="figure-img img-fluid rounded" th:if="${soundContent.getGifFile()!=null}"
+                                         src="/src/main/resources/image/listen_sound.png"
+                                         alt="Image does not exist">
+                                    <!--                                 th:src="@{${'/files/'+ soundContent.getGifFile().getId()}}"-->
+
+                                    <figcaption class="figure-caption">A caption for the above image.</figcaption>
+                                </figure>
+                            </h4>
+                        </div>
+                        <div class="row p-2">
+                            <div data-role="controls">
+                                <button class="btn btn-success btn-lg" id="audio-recorder">
+                                    Make audio record
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div data-role="recordings">
+                                <button class="btn btn-success btn-lg" id="upload-button" onclick="uploadFile()">
+                                    Verify record
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0 text-success" id="success-label">
+                                </h4>
+                            </div>
+                            <div class="col-9">
+                                <p class="lead" id="recognized-success-result">asdfasdfqwe qwerqwe asdf
+                                    asdf qweqweq asdasf asdfas df asgdsfgsd qwer qwee sdafsd sadfas fasdfawe</p>
+                            </div>
+                        </div>
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0 text-danger" id="failed-label">
+
+                                </h4>
+                            </div>
+                            <div class="col-9">
+                                <p class="lead" id="recognized-failed-result">asdfasdfqwe qwerqwe asdf
+                                    asdf qweqweq asdasf asdfas df asgdsfgsd qwer qwee sdafsd sadfas fasdfawe</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
