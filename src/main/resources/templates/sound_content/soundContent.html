@@ -7,47 +7,90 @@
 <body>
 <div th:insert="fragments/navbar :: navbar">
 </div>
-<h1>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <label class="row lines">
-                    Audio
-                    <audio controls>
-                        <source th:src="@{${'/files/'+soundContent.getAudioFile().getId()}}">
-                    </audio>
-                </label>
-                <label class="row lines">
-                    Sound name
-                    <div th:text="${soundContent.getSound().getName()}"></div>
-                </label>
-                <label class="row lines">
-                    Content text
-                    <div th:text="${soundContent.getContentText()}"></div>
-                </label>
-            </div>
-            <div class="col">
-                <label>
-                    <img th:if="${soundContent.getGifFile()!=null}"
-                         th:src="@{${'/files/'+ soundContent.getGifFile().getId()}}"
-                         alt="Image does not exist">
-                </label>
-            </div>
-            <div class="row">
-                <div data-role="controls">
-                    <button>Make audio record</button>
+<section class="p-4">
+    <div class="container w-50">
+        <div class="card p-1">
+            <div class="card-body p-md-5">
+                <h3 class="mb-3 text-uppercase text-center">
+                    Learn how to pronounce <strong th:text="${soundContent.getSound().getName()}">Short ch</strong>
+                </h3>
+                <div class="row">
+                    <div class="col">
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0">
+                                    Listen the audio
+                                </h4>
+                            </div>
+
+                            <div class="col-9 form-group">
+                                <audio class="w-75" controls>
+                                    <source th:src="@{${'/files/'+soundContent.getAudioFile().getId()}}">
+                                </audio>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0">
+                                    Content for pronunciation
+                                </h4>
+                            </div>
+                            <div class="col-9">
+                                <p class="lead" id="content-text" th:text="${soundContent.getContentText()}"></p>
+                            </div>
+                        </div>
+                        <div class="row align-items-center p-2">
+                            <h4 class="mb-3 text-uppercase text-center">
+                                <figure class="figure">
+                                    <img class="figure-img img-fluid rounded" th:if="${soundContent.getGifFile()!=null}"
+                                         th:src="@{${'/files/'+ soundContent.getGifFile().getId()}}"
+                                         alt="Image does not exist">
+                                    <figcaption class="figure-caption">
+                                        Image how to pronounce <strong
+                                            th:text="${soundContent.getSound().getName()}"></strong>
+                                    </figcaption>
+                                </figure>
+                            </h4>
+                        </div>
+                        <div class="row p-2">
+                            <div data-role="controls">
+                                <button class="btn btn-success btn-lg" id="audio-recorder">
+                                    Make audio record
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div data-role="recordings">
+                                <button class="btn btn-success btn-lg" id="upload-button" onclick="uploadFile()">
+                                    Verify record
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0 text-success" id="success-label">
+                                </h4>
+                            </div>
+                            <div class="col-9">
+                                <p class="lead" id="recognized-success-result"></p>
+                            </div>
+                        </div>
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0 text-danger" id="failed-label">
+                                </h4>
+                            </div>
+                            <div class="col-9">
+                                <p class="lead" id="recognized-failed-result"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div data-role="recordings"></div>
-                <button id="upload-button" onclick="uploadFile()">Verify record</button>
-            </div>
-            <div class="row">
-                <h2 id="result">
-                </h2>
             </div>
         </div>
     </div>
-
-</h1>
+</section>
 </body>
 
 <!--todo solve all issues and warnings-->
@@ -59,18 +102,40 @@
 
     async function uploadFile() {
         let formData = new FormData();
-        var url = window.location.href
-        var id = url.substring(url.lastIndexOf('/') + 1);
-        formData.append("file", savedAudio, 'testRecorder.wav');
+
+        formData.append('file', savedAudio, 'testRecorder.wav');
+        var contentText = document.getElementById("content-text")
+        formData.append("contentText", contentText.innerText);
+
         await fetch('/upload', {
             method: "POST",
             body: formData
-        }).then(response => response.text())
-            .then((response) => {
-                let resultSpeech = document.getElementById("result");
-                resultSpeech.value = response;
-                resultSpeech.textContent = response;
-            })
+        }).then(response =>
+            response.json().then(data => ({
+                    data: data,
+                    status: response.status
+                })
+            ).then(result => {
+                let successResult = document.getElementById("recognized-success-result");
+                let successLabel = document.getElementById("success-label");
+                if (result.data.correctText.length > 0) {
+                    successResult.textContent = result.data.correctText;
+                    successLabel.textContent = "Correctly pronounced text";
+                } else {
+                    successResult.textContent = "";
+                    successLabel.textContent = "";
+                }
+
+                let failedResult = document.getElementById("recognized-failed-result");
+                let failedLabel = document.getElementById("failed-label");
+                if (result.data.wrongText.length > 0) {
+                    failedResult.textContent = result.data.wrongText;
+                    failedLabel.textContent = "Incorrectly pronounced text";
+                } else {
+                    failedResult.textContent = "";
+                    failedLabel.textContent = "";
+                }
+            }));
     }
 
     jQuery(document).ready(function () {
@@ -128,7 +193,7 @@
                                 .attr('download', new Date().toUTCString() + '.wav');
 
                             // Wrap everything in a row
-                            var holderObject = $('<div class="row"></div>')
+                            var holderObject = $('<div class="row p-2"></div>')
                                 .append(audioObject)
                                 .append(downloadObject);
 

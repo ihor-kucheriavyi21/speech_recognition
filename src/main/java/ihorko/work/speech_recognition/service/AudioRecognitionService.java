@@ -7,9 +7,12 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.logging.Logger;
 
 @Service
 public class AudioRecognitionService {
+
+    private static final Logger LOGGER = Logger.getLogger(AudioRecognitionService.class.getName());
 
     @SneakyThrows
     public String recognizeAudioRecord(String filePathFromSourceRoot, Language language) {
@@ -20,10 +23,9 @@ public class AudioRecognitionService {
         try (InputStream inputStream = process.getInputStream();
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
 
-            //todo remove sout
-            String s = bufferedReader.readLine();
-            System.out.println(s);
-            return s;
+            String recognizedText = bufferedReader.readLine();
+            LOGGER.warning(recognizedText);
+            return recognizedText;
         }
     }
 }
