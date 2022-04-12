@@ -12,7 +12,9 @@
         <h2 th:case="null">No sounds yet!</h2>
         <div th:case="*">
             <div class="jumbotron">
-                <h1 class="display-4">Sounds</h1>
+                <h1 class="display-4 page-title">
+                    Sounds
+                </h1>
                 <p class="lead">There is a displayed sounds for the English language. You can choose one and start to
                     learn pronunciation!</p>
             </div>
@@ -21,7 +23,7 @@
                     <p class="rounded-pill btn-secondary col-3 sound-block" th:text="${sound.getName()}"></p>
                 </div>
             </div>
-
+            <!--todo remove comments-->
             <!-- <table>
                  <thead>
                  <tr>
@@ -42,5 +44,6 @@
         </div>
     </div>
 </div>
+<div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>

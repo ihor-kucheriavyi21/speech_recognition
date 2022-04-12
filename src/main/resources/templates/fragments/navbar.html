@@ -2,22 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Navigation Bar</title>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navbar">
-    <a class="navbar-brand" href="#">
-        Navbar
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default" th:fragment="navbar">
+    <a class="navbar-brand px-2" href="#">
+        <img class="figure-img img-fluid rounded"
+             th:src="@{/image/nav-icon.png}"
+             alt="Logo" width="40" height="40"/>
+        <span>
+            Speech learning
+        </span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="/sounds/list">
                     Sound list
@@ -28,8 +31,12 @@
                     Sound content list
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    Learn your own words
+                </a>
+            </li>
         </ul>
-        s
     </div>
 </nav>
 </body>

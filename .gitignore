@@ -7,7 +7,7 @@ target/
 #Created file
 *.wav
 *.mp3
-*.png
+*bootstrap*
 
 ### STS ###
 .apt_generated

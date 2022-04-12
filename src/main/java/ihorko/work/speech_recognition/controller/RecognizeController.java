@@ -42,7 +42,7 @@ public class RecognizeController {
         file.transferTo(fileDestination);
 
         String recognizedAudioRecord = audioRecognitionService.recognizeAudioRecord(fileDestination.getPath(), Language.ENGLISH);
-        RecognitionResult correctAndWrongPronunciation = stringService.findCorrectAndWrongPronunciation(recognizedAudioRecord, contentText);
+        RecognitionResult correctAndWrongPronunciation = stringService.findCorrectAndWrongPartInExpectedText(recognizedAudioRecord, contentText);
         return ResponseEntity.ok()
                 .body(gson.toJson(correctAndWrongPronunciation));
     }

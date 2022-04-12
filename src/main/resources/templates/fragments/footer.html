@@ -1,0 +1,41 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<div class="container" th:fragment="footer">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <span class="text-muted">© 2022 Ihorko Company, Inc</span>
+        </div>
+
+        <div class="col-md-4 d-flex align-items-center justify-content-center mb-3">
+            <a href="#">
+                <img class="figure-img img-fluid rounded"
+                     th:src="@{/image/nav-icon.png}"
+                     alt="Logo" width="40" height="40"/>
+            </a>
+        </div>
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <li class="ms-3">
+                <a class="text-muted" href="https://github.com/Ascomos21">
+                    <img class="figure-img img-fluid rounded"
+                         th:src="@{/image/github-icon.png}"
+                         alt="GitHub" width="40" height="40"/>
+                </a>
+            </li>
+            <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/ascomos228/">
+                <img class="figure-img img-fluid rounded"
+                     th:src="@{/image/instagram-icon.png}"
+                     alt="Instagram" width="40" height="40"/>
+            </a>
+            </li>
+            <li class="ms-3">
+                <a class="text-muted" href="https://t.me/Ascomos">
+                    <img class="figure-img img-fluid rounded"
+                         th:src="@{/image/telegram-icon.png}"
+                         alt="Telegram" width="40"
+                         height="40"/>
+                </a>
+            </li>
+        </ul>
+    </footer>
+</div>
+</html>

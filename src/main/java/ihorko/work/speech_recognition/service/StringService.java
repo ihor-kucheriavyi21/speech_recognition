@@ -11,7 +11,7 @@ public class StringService {
 
     private static final KMPSearch KMP_SEARCH = new KMPSearch();
 
-    public RecognitionResult findCorrectAndWrongPronunciation(String result, String expectedResult) {
+    public RecognitionResult findCorrectAndWrongPartInExpectedText(String result, String expectedResult) {
 
         expectedResult = expectedResult.toLowerCase(Locale.ROOT);
         String[] values = result.toLowerCase(Locale.ROOT).split("\\ ");
