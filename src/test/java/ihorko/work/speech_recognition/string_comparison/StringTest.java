@@ -1,9 +1,18 @@
 package ihorko.work.speech_recognition.string_comparison;
 
+import ihorko.work.speech_recognition.common.RabinaKarpa;
+import ihorko.work.speech_recognition.common.RecognitionResult;
+import ihorko.work.speech_recognition.service.StringService;
 import org.junit.jupiter.api.Test;
 
 public class StringTest {
 
+    @Test
+    public void testCheckAlgorithmForFindingSubTextInText(){
+        RecognitionResult result = new StringService()
+                .findCorrectAndWrongPartInExpectedText("this is first text example", "this is next text example");
+        System.out.println(result);
+    }
     @Test
     public void testFindDifferentWordsInString(){
          /*String str1 = "Lorem ipsum dolor sit amet consectetur adipiscing elit. Integer vel.";

@@ -1,6 +1,7 @@
 package ihorko.work.speech_recognition.service;
 
 import ihorko.work.speech_recognition.common.KMPSearch;
+import ihorko.work.speech_recognition.common.RabinaKarpa;
 import ihorko.work.speech_recognition.common.RecognitionResult;
 import org.springframework.stereotype.Service;
 
@@ -11,18 +12,20 @@ public class StringService {
 
     private static final KMPSearch KMP_SEARCH = new KMPSearch();
 
-    public RecognitionResult findCorrectAndWrongPartInExpectedText(String result, String expectedResult) {
+    private static final RabinaKarpa RABINA_KARPA = new RabinaKarpa();
 
-        expectedResult = expectedResult.toLowerCase(Locale.ROOT);
-        String[] values = result.toLowerCase(Locale.ROOT).split("\\ ");
+    public RecognitionResult findCorrectAndWrongPartInExpectedText(String expectedResult, String result) {
+
+        result = result.toLowerCase(Locale.ROOT);
+        String[] values = expectedResult.toLowerCase(Locale.ROOT).split("\\ ");
 
         StringBuilder correctText = new StringBuilder();
         StringBuilder wrongText = new StringBuilder();
         //todo improve using stream
         for (String pattern : values) {
-            if (KMP_SEARCH.findWordByPatternInText(pattern, expectedResult) > -1) {
+            if (RABINA_KARPA.search(pattern, result)) {
                 correctText.append(pattern).append(" ");
-                expectedResult = expectedResult.replaceFirst(pattern, "");
+                result = result.replaceFirst(pattern, "");
             } else {
                 wrongText.append(pattern).append(" ");
             }
