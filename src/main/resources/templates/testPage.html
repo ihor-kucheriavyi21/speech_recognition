@@ -3,121 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/src/main/resources/static/style/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/src/main/resources/static/style/own.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 
 </head>
 <body>
 
-<section class="p-4">
-    <div class="container w-50">
-        <div class="card p-1">
-            <div class="card-body p-md-5">
-                <h3 class="mb-3 text-uppercase text-center">
-                    Learn how to pronounce <strong th:text="${soundContent.getSound().getName()}">Short ch</strong>
-                </h3>
-                <div class="row">
-                    <div class="col">
-                        <div class="row align-items-center p-2">
-                            <div class="col-3 ">
-                                <h4 class="mb-0">
-                                    Listen the audio
-                                </h4>
-                            </div>
 
-                            <div class="col-9 form-group">
-                                <audio class="w-75" controls>
-                                    <source th:src="@{${'/files/'+soundContent.getAudioFile().getId()}}">
-                                </audio>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center p-2">
-                            <div class="col-3 ">
-                                <h4 class="mb-0">
-                                    Content for pronunciation
-                                </h4>
-                            </div>
-                            <div class="col-9">
-                                <p class="lead" th:text="${soundContent.getContentText()}">asdfasdfqwe qwerqwe asdf
-                                    asdf qweqweq asdasf asdfas df asgdsfgsd qwer qwee sdafsd sadfas fasdfawe</p>
-                            </div>
-                        </div>
-                        <div class="row align-items-center p-2">
-                            <h4 class="mb-3 text-uppercase text-center">
-                                <figure class="figure">
-                                    <img class="figure-img img-fluid rounded" th:if="${soundContent.getGifFile()!=null}"
-                                         src="/src/main/resources/image/listen_sound.png"
-                                         alt="Image does not exist">
-                                    <!--                                 th:src="@{${'/files/'+ soundContent.getGifFile().getId()}}"-->
-
-                                    <figcaption class="figure-caption">A caption for the above image.</figcaption>
-                                </figure>
-                            </h4>
-                        </div>
-                        <div class="row p-2">
-                            <div data-role="controls">
-                                <button class="btn btn-success btn-lg" id="audio-recorder">
-                                    Make audio record
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row p-2">
-                            <div data-role="recordings">
-                                <button class="btn btn-success btn-lg" id="upload-button" onclick="uploadFile()">
-                                    Verify record
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row align-items-center p-2">
-                            <div class="col-3 ">
-                                <h4 class="mb-0 text-success" id="success-label">
-                                </h4>
-                            </div>
-                            <div class="col-9">
-                                <p class="lead" id="recognized-success-result">asdfasdfqwe qwerqwe asdf
-                                    asdf qweqweq asdasf asdfas df asgdsfgsd qwer qwee sdafsd sadfas fasdfawe</p>
-                            </div>
-                        </div>
-                        <div class="row align-items-center p-2">
-                            <div class="col-3 ">
-                                <h4 class="mb-0 text-danger" id="failed-label">
-
-                                </h4>
-                            </div>
-                            <div class="col-9">
-                                <p class="lead" id="recognized-failed-result">asdfasdfqwe qwerqwe asdf
-                                    asdf qweqweq asdasf asdfas df asgdsfgsd qwer qwee sdafsd sadfas fasdfawe</p>
-                            </div>
-                        </div>
-                    </div>
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class=" col text-center">
+                    <h5 class="modal-title">
+                        Game Over <span id="finish-result">0</span>
+                    </h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class=" col text-center">
+                    <p>
+                        You are a powerful knight go on.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col text-center">
+                    <button th:href="@{/game}" type="button" class="btn btn-primary">
+                        Restart game
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-</section>
-
-<div class="container">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-            <img class="figure-img img-fluid rounded"
-                 th:src="@{/image/nav-icon.png}"
-                 alt="Logo" width="30" height="30"/>
-            <span class="text-muted">© 2022 Ihorko Company, Inc</span>
-        </div>
-
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3"><a class="text-muted" href="https://github.com/Ascomos21"><img class="figure-img img-fluid rounded"
-                                                                                            th:src="@{/image/github-icon.png}"
-                                                                                            alt="GitHub" width="24" height="24"/></a></li>
-            <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/ascomos228/"><img class="figure-img img-fluid rounded"
-                                                                                                     th:src="@{/image/instagram-icon.png}"
-                                                                                                     alt="Instagram" width="24" height="24"/></a></li>
-            <li class="ms-3"><a class="text-muted" href="https://t.me/Ascomos"><img class="figure-img img-fluid rounded"
-                                                                                    th:src="@{/image/telegram-icon.png}"
-                                                                                    alt="Telegram" width="24" height="24"/></a></li>
-        </ul>
-    </footer>
 </div>
 </body>
-</html>
