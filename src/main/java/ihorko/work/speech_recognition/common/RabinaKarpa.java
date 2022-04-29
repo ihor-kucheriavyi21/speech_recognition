@@ -9,40 +9,40 @@ public class RabinaKarpa {
         q -> A prime number
     */
     public boolean search(String pat, String txt) {
-        int q = Integer.MAX_VALUE;
-        int M = pat.length();
-        int N = txt.length();
+        int q = 10;
+        int patternLength = pat.length();
+        int textLength = txt.length();
         int i, j;
-        int p = 0; // hash value for pattern
-        int t = 0; // hash value for txt
+        int hashValueForPattern = 0; // hash value for pattern
+        int hashValueForText = 0; // hash value for txt
         int h = 1;
 
-        // The value of h would be "pow(d, M-1)%q"
-        for (i = 0; i < M - 1; i++)
+        // The value of h would be "pow(d, patternLength-1)%q"
+        for (i = 0; i < patternLength - 1; i++)
             h = (h * d) % q;
 
         // Calculate the hash value of pattern and first
         // window of text
-        for (i = 0; i < M; i++) {
-            p = (d * p + pat.charAt(i)) % q;
-            t = (d * t + txt.charAt(i)) % q;
+        for (i = 0; i < patternLength; i++) {
+            hashValueForPattern = (d * hashValueForPattern + pat.charAt(i)) % q;
+            hashValueForText = (d * hashValueForText + txt.charAt(i)) % q;
         }
 
         // Slide the pattern over text one by one
-        for (i = 0; i <= N - M; i++) {
+        for (i = 0; i <= textLength - patternLength; i++) {
 
             // Check the hash values of current window of text
             // and pattern. If the hash values match then only
             // check for characters one by one
-            if (p == t) {
+            if (hashValueForPattern == hashValueForText) {
                 /* Check for characters one by one */
-                for (j = 0; j < M; j++) {
+                for (j = 0; j < patternLength; j++) {
                     if (txt.charAt(i + j) != pat.charAt(j))
                         break;
                 }
 
-                // if p == t and pat[0...M-1] = txt[i, i+1, ...i+M-1]
-                if (j == M) {
+                // if hashValueForPattern == hashValueForText and pat[0...patternLength-1] = txt[i, i+1, ...i+patternLength-1]
+                if (j == patternLength) {
                     System.out.println("Pattern found at index " + i);
                     return true;
                 }
@@ -50,13 +50,14 @@ public class RabinaKarpa {
 
             // Calculate hash value for next window of text: Remove
             // leading digit, add trailing digit
-            if (i < N - M) {
-                t = (d * (t - txt.charAt(i) * h) + txt.charAt(i + M)) % q;
+            //hash полініомінального обертання
+            if (i < textLength - patternLength) {
+                hashValueForText = (d * (hashValueForText - txt.charAt(i) * h) + txt.charAt(i + patternLength)) % q;
 
-                // We might get negative value of t, converting it
+                // We might get negative value of hashValueForText, converting it
                 // to positive
-                if (t < 0)
-                    t = (t + q);
+                if (hashValueForText < 0)
+                    hashValueForText = (hashValueForText + q);
             }
         }
         return false;
