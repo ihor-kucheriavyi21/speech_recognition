@@ -34,7 +34,7 @@ public class RecognizeController {
     }
 
     @SneakyThrows
-    @PostMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/recognize", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> recognizeAudioFile(@RequestParam("file") MultipartFile file,
                                                 @RequestParam("contentText") String contentText) {
         String fileName = file.getOriginalFilename();
@@ -42,6 +42,10 @@ public class RecognizeController {
         file.transferTo(fileDestination);
 
         String recognizedAudioRecord = audioRecognitionService.recognizeAudioRecord(fileDestination.getPath(), Language.ENGLISH);
+        if (recognizedAudioRecord == null) {
+            return ResponseEntity.badRequest()
+                    .body(gson.toJson(""));
+        }
         RecognitionResult correctAndWrongPronunciation = stringService.findCorrectAndWrongPartInExpectedText(recognizedAudioRecord, contentText);
         return ResponseEntity.ok()
                 .body(gson.toJson(correctAndWrongPronunciation));

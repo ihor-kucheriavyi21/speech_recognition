@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
@@ -24,8 +25,12 @@ public class AudioRecognitionService {
              BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
 
             String recognizedText = bufferedReader.readLine();
-            LOGGER.warning(recognizedText);
+            if (recognizedText != null)
+                LOGGER.warning(() -> "Recognized text: " + recognizedText);
             return recognizedText;
+        } catch (IOException e) {
+            LOGGER.severe(e.getMessage());
         }
+        return null;
     }
 }

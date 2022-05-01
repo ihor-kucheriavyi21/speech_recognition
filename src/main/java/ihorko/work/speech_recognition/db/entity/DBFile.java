@@ -1,5 +1,6 @@
 package ihorko.work.speech_recognition.db.entity;
 
+import lombok.Builder;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class DBFile {
     private String fileType;
 
     @Lob
-    @Type(type="org.hibernate.type.BinaryType")
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] data;
 
     @ManyToOne

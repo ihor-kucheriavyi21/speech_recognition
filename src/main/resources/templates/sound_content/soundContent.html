@@ -12,7 +12,7 @@
         <div class="card p-1">
             <div class="card-body p-md-5">
                 <h3 class="mb-3 text-uppercase text-center">
-                    Learn how to pronounce <strong th:text="${soundContent.getSound().getName()}">Short ch</strong>
+                    Learn how to pronounce <strong th:text="${soundContent.getSound().getName()}"></strong>
                 </h3>
                 <div class="row">
                     <div class="col">
@@ -100,48 +100,58 @@
 <script>
 
     let savedAudio;
+    let successResult = document.getElementById("recognized-success-result");
+    let successLabel = document.getElementById("success-label");
 
+    /**
+     * @param data.wrongText -  text that our user said wrong
+     *  @param data.correctText - text that matching with our content
+     * @returns {Promise<void>}
+     */
     async function uploadFile() {
         let formData = new FormData();
 
         formData.append('file', savedAudio, 'testRecorder.wav');
-        var contentText = document.getElementById("content-text")
+        const contentText = document.getElementById("content-text")
         formData.append("contentText", contentText.innerText);
 
-        await fetch('/upload', {
+        await fetch('/recognize', {
             method: "POST",
             body: formData
-        }).then(response =>
-            response.json().then(data => ({
+        }).then(response => response.json()
+            .then(data => ({
                     data: data,
                     status: response.status
                 })
             ).then(result => {
-                let successResult = document.getElementById("recognized-success-result");
-                let successLabel = document.getElementById("success-label");
-                if (result.data.correctText.length > 0) {
-                    successResult.textContent = result.data.correctText;
-                    successLabel.textContent = "Correctly pronounced text";
-                } else {
-                    successResult.textContent = "";
-                    successLabel.textContent = "";
-                }
+                    if (!response.ok) {
+                        successResult.textContent = 'The text was not recognized try again';
+                        return;
+                    }
+                    if (result.data.correctText.length > 0) {
+                        successResult.textContent = result.data.correctText;
+                        successLabel.textContent = "Correctly pronounced text";
+                    } else {
+                        successResult.textContent = "";
+                        successLabel.textContent = "";
+                    }
 
-                let failedResult = document.getElementById("recognized-failed-result");
-                let failedLabel = document.getElementById("failed-label");
-                if (result.data.wrongText.length > 0) {
-                    failedResult.textContent = result.data.wrongText;
-                    failedLabel.textContent = "Incorrectly pronounced text";
-                } else {
-                    failedResult.textContent = "";
-                    failedLabel.textContent = "";
+                    let failedResult = document.getElementById("recognized-failed-result");
+                    let failedLabel = document.getElementById("failed-label");
+                    if (result.data.wrongText.length > 0) {
+                        failedResult.textContent = result.data.wrongText;
+                        failedLabel.textContent = "Incorrectly pronounced text";
+                    } else {
+                        failedResult.textContent = "";
+                        failedLabel.textContent = "";
+                    }
                 }
-            }));
+            ))
     }
 
     jQuery(document).ready(function () {
-        var $ = jQuery;
-        var myRecorder = {
+        const $ = jQuery;
+        let myRecorder = {
             objects: {
                 context: null,
                 stream: null,
