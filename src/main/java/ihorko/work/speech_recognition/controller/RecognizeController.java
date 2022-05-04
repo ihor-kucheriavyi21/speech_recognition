@@ -3,7 +3,9 @@ package ihorko.work.speech_recognition.controller;
 import com.google.gson.Gson;
 import ihorko.work.speech_recognition.common.Language;
 import ihorko.work.speech_recognition.common.RecognitionResult;
+import ihorko.work.speech_recognition.db.entity.SoundContent;
 import ihorko.work.speech_recognition.service.AudioRecognitionService;
+import ihorko.work.speech_recognition.service.SoundContentService;
 import ihorko.work.speech_recognition.service.StringService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.UUID;
 
 @Controller
 public class RecognizeController {
@@ -25,22 +28,29 @@ public class RecognizeController {
     @Autowired
     private StringService stringService;
 
+    @Autowired
+    private SoundContentService soundContentService;
+
     private static final Gson gson = new Gson();
 
     @SneakyThrows
     @PostMapping(value = "/recognize", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> recognizeAudioFile(@RequestParam("file") MultipartFile file,
-                                                @RequestParam("contentText") String contentText) {
+                                                @RequestParam("soundContentId") String soundContentId) {
         String fileName = file.getOriginalFilename();
         File fileDestination = new File("D:\\Study\\VNTU\\Dyplom\\speechTherapy\\web_app\\speech_recognition\\src\\main\\resources\\python\\" + fileName);
         file.transferTo(fileDestination);
 
-        String recognizedAudioRecord = audioRecognitionService.recognizeAudioRecord(fileDestination.getPath(), Language.ENGLISH);
+        SoundContent soundContent = soundContentService.findById(UUID.fromString(soundContentId));
+
+        String recognizedAudioRecord = audioRecognitionService.recognizeAudioRecord(fileDestination.getPath(),
+                Language.valueOf(soundContent.getSound().getLanguage().toUpperCase()));
         if (recognizedAudioRecord == null) {
             return ResponseEntity.badRequest()
                     .body(gson.toJson(""));
         }
-        RecognitionResult recognitionResult = stringService.findCorrectAndWrongPartInExpectedText(recognizedAudioRecord, contentText);
+        RecognitionResult recognitionResult = stringService.findCorrectAndWrongPartInExpectedText(recognizedAudioRecord,
+                soundContent.getContentText());
         return ResponseEntity.ok()
                 .body(gson.toJson(recognitionResult));
     }

@@ -22,7 +22,7 @@ public class AudioRecognitionService {
         Process process = processBuilder.start();
 
         try (InputStream inputStream = process.getInputStream();
-             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
+             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"windows-1251"))) {
 
             String recognizedText = bufferedReader.readLine();
             if (recognizedText != null)

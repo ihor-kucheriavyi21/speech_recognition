@@ -113,7 +113,9 @@
 
         formData.append('file', savedAudio, 'testRecorder.wav');
         const contentText = document.getElementById("content-text")
-        formData.append("contentText", contentText.innerText);
+        const soundContentId = window.location.pathname.split("/").pop()
+
+        formData.append("soundContentId", soundContentId);
 
         await fetch('/recognize', {
             method: "POST",
