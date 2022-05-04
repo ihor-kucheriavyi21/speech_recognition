@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -34,6 +35,12 @@ public class SoundController {
     @GetMapping("/sounds/list")
     public String showListSounds(Model model) {
         model.addAttribute("soundsLists", ListUtils.partition(soundService.findAll(), 4));
+        return "soundsList";
+    }
+
+    @GetMapping("/sounds/list/{language}")
+    public String showListSoundsByLanguage(@PathVariable String language, Model model) {
+        model.addAttribute("soundsLists", ListUtils.partition(soundService.findByLanguage(language), 4));
         return "soundsList";
     }
 }

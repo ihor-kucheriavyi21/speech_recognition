@@ -32,6 +32,13 @@ public class SoundDao {
         return query.getResultList();
     }
 
+    public List<Sound> findByLanguage(String language) {
+        TypedQuery<Sound> query = sessionFactory.getCurrentSession()
+                .createQuery("From sound s where s.language = :language", Sound.class);
+        query.setParameter("language", language);
+        return query.getResultList();
+    }
+
     public Sound findById(UUID id) {
         TypedQuery<Sound> query = sessionFactory.getCurrentSession()
                 .createQuery("From sound s where s.id = :id", Sound.class);

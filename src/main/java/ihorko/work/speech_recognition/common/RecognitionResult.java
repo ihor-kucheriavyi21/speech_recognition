@@ -12,5 +12,6 @@ public class RecognitionResult {
  
     private String correctText;
     private String wrongText;
+    private String fullText;
 
 }

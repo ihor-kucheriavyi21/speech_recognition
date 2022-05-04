@@ -73,6 +73,16 @@ public class SoundContentController {
         return "sound_content/soundContentsList";
     }
 
+    @GetMapping("/sound-contents/{sound_id}")
+    public String showSoundContentsList(@PathVariable String sound_id, Model model) {
+
+        List<SoundContentDto> collect = soundContentService.findListSoundContentBySound(UUID.fromString(sound_id))
+                .stream().map(soundContentConverter::convert)
+                .collect(Collectors.toList());
+        model.addAttribute("soundContentsList", collect);
+        return "sound_content/soundContentsList";
+    }
+
     @GetMapping("/sound-content/{id}")
     public String showSoundContentPage(@PathVariable UUID id, Model model) {
         SoundContentDto soundContent = soundContentConverter.convert(soundContentService.findById(id));

@@ -20,7 +20,8 @@
             </div>
             <div th:each="shortSoundList : ${soundsLists}" class="row">
                 <div th:each="sound :${shortSoundList}" th:remove="tag">
-                    <p class="rounded-pill btn-secondary col-3 sound-block" th:text="${sound.getName()}"></p>
+                    <a class="rounded-pill btn-secondary col-3 sound-block" th:text="${sound.getName()}"
+                       th:href="@{${'/sound-contents/' + sound.getId()}}"></a>
                 </div>
             </div>
             <!--todo remove comments-->

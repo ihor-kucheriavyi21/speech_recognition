@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,11 +27,6 @@ public class RecognizeController {
 
     private static final Gson gson = new Gson();
 
-    @GetMapping("/index")
-    public String hello() {
-        return "uploader";
-    }
-
     @SneakyThrows
     @PostMapping(value = "/recognize", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> recognizeAudioFile(@RequestParam("file") MultipartFile file,
@@ -46,8 +40,8 @@ public class RecognizeController {
             return ResponseEntity.badRequest()
                     .body(gson.toJson(""));
         }
-        RecognitionResult correctAndWrongPronunciation = stringService.findCorrectAndWrongPartInExpectedText(recognizedAudioRecord, contentText);
+        RecognitionResult recognitionResult = stringService.findCorrectAndWrongPartInExpectedText(recognizedAudioRecord, contentText);
         return ResponseEntity.ok()
-                .body(gson.toJson(correctAndWrongPronunciation));
+                .body(gson.toJson(recognitionResult));
     }
 }

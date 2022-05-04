@@ -30,6 +30,10 @@ public class SoundRepository {
         return soundDao.findByName(name);
     }
 
+    public List<Sound> findByLanguage(String language) {
+        return soundDao.findByLanguage(language);
+    }
+
     public Sound findById(UUID id) {
         return soundDao.findById(id);
     }

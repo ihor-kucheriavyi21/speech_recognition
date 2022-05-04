@@ -26,6 +26,10 @@ public class SoundService {
         return soundRepository.findAll();
     }
 
+    public List<Sound> findByLanguage(String language) {
+        return soundRepository.findByLanguage(language);
+    }
+
     public List<Sound> findByName(String name) {
         return soundRepository.findByName(name);
     }

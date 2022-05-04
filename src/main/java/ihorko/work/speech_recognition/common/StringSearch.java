@@ -1,8 +1,8 @@
 package ihorko.work.speech_recognition.common;
 
-public class RabinaKarpa {
+public class StringSearch {
     // d is the number of characters in the input alphabet
-    public final static int d = 256;
+    public static final int D = 256;
 
     /* pat -> pattern
         txt -> text
@@ -19,13 +19,13 @@ public class RabinaKarpa {
 
         // The value of h would be "pow(d, patternLength-1)%q"
         for (i = 0; i < patternLength - 1; i++)
-            h = (h * d) % q;
+            h = (h * D) % q;
 
         // Calculate the hash value of pattern and first
         // window of text
         for (i = 0; i < patternLength; i++) {
-            hashValueForPattern = (d * hashValueForPattern + pat.charAt(i)) % q;
-            hashValueForText = (d * hashValueForText + txt.charAt(i)) % q;
+            hashValueForPattern = (D * hashValueForPattern + pat.charAt(i)) % q;
+            hashValueForText = (D * hashValueForText + txt.charAt(i)) % q;
         }
 
         // Slide the pattern over text one by one
@@ -52,7 +52,7 @@ public class RabinaKarpa {
             // leading digit, add trailing digit
             //hash полініомінального обертання
             if (i < textLength - patternLength) {
-                hashValueForText = (d * (hashValueForText - txt.charAt(i) * h) + txt.charAt(i + patternLength)) % q;
+                hashValueForText = (D * (hashValueForText - txt.charAt(i) * h) + txt.charAt(i + patternLength)) % q;
 
                 // We might get negative value of hashValueForText, converting it
                 // to positive

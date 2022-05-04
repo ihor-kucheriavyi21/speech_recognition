@@ -31,6 +31,13 @@ public class SoundContentDao {
         return query.getResultList();
     }
 
+    public List<SoundContent> listSoundsContentBySound(UUID sound) {
+        TypedQuery<SoundContent> query = sessionFactory.getCurrentSession()
+                .createQuery("from sound_content s where s.sound.id= :sound_id", SoundContent.class);
+        query.setParameter("sound_id", sound);
+        return query.getResultList();
+    }
+
     public SoundContent findById(UUID uuid) {
         return sessionFactory.getCurrentSession()
                 .get(SoundContent.class, uuid);
