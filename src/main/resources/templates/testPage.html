@@ -8,42 +8,61 @@
 
 </head>
 <body>
-<div class="album py-5 bg-light">
-    <div class="container">
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-4 box-shadow">
-                    <img class="card-img-top"
-                         alt="English language"
-                         src="/src/main/resources/static/image/england-flag.jpg">
-                    <div class="card-body">
-                        <p class="card-text">Content for learning English pronunciation. Just open it.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Open</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card mb-4 box-shadow">
-                    <img class="card-img-top"
-                         alt="English language"
-                         src="/src/main/resources/static/image/ukraine-flag.jpg">
-                    <div class="card-body">
-                        <p class="card-text">Матеріали для вивчення Української вимови. Просто відкрийте це.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Відкрити</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default" th:fragment="navbar">
+    <a class="navbar-brand px-2" href="/language">
+        <img class="figure-img img-fluid rounded"
+             th:src="@{/image/nav-icon.png}"
+             alt="Logo" width="40" height="40"/>
+        <span>
+            Speech learning
+        </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/sounds/list">
+                    Sound list
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/sound-contents/list">
+                    Sound content list
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    Learn your own words
+                </a>
+            </li>
+            <li class="nav-item text-right">
+                <a class="nav-link" href="?lang=en">
+                    <img type="image" th:src="@{/image/england-flag.jpg}"
+                         alt="English language" width="32" height="18"/>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="?lang=ua">
+                    <img type="image" th:src="@{/image/ukraine-flag.jpg}"
+                         alt="Ukrainian language" width="32" height="18"/>
+                </a>
+            </li>
+
+        </ul>
+
     </div>
-</div>
+    <a class="nav-link" href="?lang=en">
+        <img type="image" th:src="@{/image/england-flag.jpg}"
+             alt="English language" width="32" height="18"/>
+    </a>
+    <a class="nav-link" href="?lang=ua">
+        <img type="image" th:src="@{/image/ukraine-flag.jpg}"
+             alt="Ukrainian language" width="32" height="18"/>
+    </a>
+</nav>
 </body>
 </html>

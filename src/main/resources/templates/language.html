@@ -9,6 +9,10 @@
 </div>
 <div class="album py-5 bg-light">
     <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4 page-title"  th:text="#{greeting}">
+            </h1>
+        </div>
 
         <div class="row">
             <div class="col-md-6">
@@ -46,5 +50,18 @@
         </div>
     </div>
 </div>
+<div th:insert="fragments/footer :: footer"></div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#locales").change(function () {
+            var selectedOption = $('#locales').val();
+            if (selectedOption != ''){
+                window.location.replace('language?lang=' + selectedOption);
+            }
+        });
+    });
+</script>
 </html>

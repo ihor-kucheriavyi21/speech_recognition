@@ -43,11 +43,6 @@
                         <source th:src="@{${'/files/'+sound_content.getAudioFile().getId()}}">
                     </audio>
                 </td>
-                <!-- <td>
-                     <img th:if="${sound_content.getGifFile()!=null}"
-                          th:src="@{${'/files/'+ sound_content.getGifFile().getId()}}"
-                          alt="Image does not exist">
-                 </td>-->
                 <td class="text-center">
                     <a class="btn btn-info" th:href="@{${'/sound-content/'+ sound_content.getId()}}">Open</a>
                 </td>
