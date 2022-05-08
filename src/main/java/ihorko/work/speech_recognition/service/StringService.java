@@ -1,6 +1,5 @@
 package ihorko.work.speech_recognition.service;
 
-import ihorko.work.speech_recognition.common.KMPSearch;
 import ihorko.work.speech_recognition.common.StringSearch;
 import ihorko.work.speech_recognition.common.RecognitionResult;
 import org.springframework.stereotype.Service;

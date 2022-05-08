@@ -1,37 +1,19 @@
 package ihorko.work.speech_recognition.repository;
 
-import ihorko.work.speech_recognition.db.dao.SoundContentDao;
-import ihorko.work.speech_recognition.db.entity.Sound;
 import ihorko.work.speech_recognition.db.entity.SoundContent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class SoundContentRepository {
+public interface SoundContentRepository {
 
-    private final SoundContentDao soundContentDao;
+    void save(SoundContent soundContent);
 
-    @Autowired
-    public SoundContentRepository(SoundContentDao soundContentDao) {
-        this.soundContentDao = soundContentDao;
-    }
+    List<SoundContent> findAll();
 
-    public void save(SoundContent soundContent) {
-        soundContentDao.persist(soundContent);
-    }
+    List<SoundContent> findListSoundContentBySound(UUID sound);
 
-    public List<SoundContent> findAll() {
-        return soundContentDao.listSoundsContent();
-    }
-
-    public List<SoundContent> findListSoundContentBySound(UUID sound){
-        return soundContentDao.listSoundsContentBySound(sound);
-    }
-
-    public SoundContent findById(UUID uuid) {
-        return soundContentDao.findById(uuid);
-    }
+    SoundContent findById(UUID uuid);
 }

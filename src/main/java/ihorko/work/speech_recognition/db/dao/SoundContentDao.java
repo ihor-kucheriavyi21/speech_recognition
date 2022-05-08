@@ -14,12 +14,9 @@ import java.util.UUID;
 @Transactional
 public class SoundContentDao {
 
-    private final SessionFactory sessionFactory;
-
     @Autowired
-    public SoundContentDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    private SessionFactory sessionFactory;
+
 
     public void persist(SoundContent soundContent) {
         sessionFactory.getCurrentSession().saveOrUpdate(soundContent);

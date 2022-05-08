@@ -77,7 +77,8 @@ public class SoundContentController {
     public String showSoundContentsList(@PathVariable String sound_id, Model model) {
 
         List<SoundContentDto> collect = soundContentService.findListSoundContentBySound(UUID.fromString(sound_id))
-                .stream().map(soundContentConverter::convert)
+                .stream()
+                .map(soundContentConverter::convert)
                 .collect(Collectors.toList());
         model.addAttribute("soundContentsList", collect);
         return "sound_content/soundContentsList";

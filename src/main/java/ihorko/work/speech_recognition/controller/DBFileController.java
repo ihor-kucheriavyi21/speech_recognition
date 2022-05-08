@@ -17,10 +17,13 @@ import java.util.UUID;
 @Controller
 public class DBFileController {
 
-    @Autowired
     private DBFileStorageService dbFileStorageService;
 
-    //todo work on this method more learn about path variable
+    @Autowired
+    public void setDbFileStorageService(DBFileStorageService dbFileStorageService) {
+        this.dbFileStorageService = dbFileStorageService;
+    }
+
     @GetMapping("/files/{fileId}")
     public ResponseEntity<Resource> downloadFile(@PathVariable UUID fileId) {
         // Load file from database
@@ -28,7 +31,8 @@ public class DBFileController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(dbFile.getFileType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getFileName() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + dbFile.getFileName() + "\"")
                 .body(new ByteArrayResource(dbFile.getData()));
     }
 }

@@ -9,23 +9,24 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class DBFileStorageService {
 
-    private DBFileRepository dbFileRepository;
+    private final DBFileRepository dbFileRepository;
 
     @Autowired
-    public void setDbFileRepository(DBFileRepository dbFileRepository) {
+    public DBFileStorageService(DBFileRepository dbFileRepository) {
         this.dbFileRepository = dbFileRepository;
     }
 
     @Transactional
     public DBFile storeFile(MultipartFile file) {
         // Normalize file name
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects
+                .requireNonNull(file.getOriginalFilename()));
 
         DBFile dbFile = null;
         try {
@@ -37,6 +38,7 @@ public class DBFileStorageService {
     }
 
     public DBFile findById(UUID uuid) {
-        return dbFileRepository.findById(uuid);
+        return dbFileRepository.findById(uuid)
+                .orElseThrow();
     }
 }

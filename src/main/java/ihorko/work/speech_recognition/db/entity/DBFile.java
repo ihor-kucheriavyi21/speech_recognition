@@ -1,6 +1,5 @@
 package ihorko.work.speech_recognition.db.entity;
 
-import lombok.Builder;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
