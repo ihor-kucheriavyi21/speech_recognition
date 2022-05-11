@@ -26,7 +26,6 @@ public class SoundContent {
     @OneToMany(mappedBy = "soundContent", targetEntity = DBFile.class)
     private List<DBFile> dbFiles = new ArrayList<>();
 
-
     public void addDbFile(DBFile dbFile) {
         dbFiles.add(dbFile);
         dbFile.setSoundContent(this);

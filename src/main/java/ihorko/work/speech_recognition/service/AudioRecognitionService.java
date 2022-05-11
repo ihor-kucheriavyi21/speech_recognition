@@ -17,12 +17,14 @@ public class AudioRecognitionService {
 
     @SneakyThrows
     public String recognizeAudioRecord(String filePathFromSourceRoot, Language language) {
-        ProcessBuilder processBuilder = new ProcessBuilder("python", "src/main/resources/python/audio_recognition.py", filePathFromSourceRoot, language.getCode());
+        ProcessBuilder processBuilder = new ProcessBuilder("python",
+                "src/main/resources/python/audio_recognition.py", filePathFromSourceRoot, language.getCode());
         processBuilder.redirectErrorStream(true);
         Process process = processBuilder.start();
 
         try (InputStream inputStream = process.getInputStream();
-             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"windows-1251"))) {
+             BufferedReader bufferedReader = new BufferedReader(
+                     new InputStreamReader(inputStream,"windows-1251"))) {
 
             String recognizedText = bufferedReader.readLine();
             if (recognizedText != null)

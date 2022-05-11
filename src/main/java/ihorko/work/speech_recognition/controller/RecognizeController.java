@@ -22,34 +22,41 @@ import java.util.UUID;
 @Controller
 public class RecognizeController {
 
-    @Autowired
-    private AudioRecognitionService audioRecognitionService;
+    private final AudioRecognitionService audioRecognitionService;
 
-    @Autowired
-    private StringService stringService;
+    private final StringService stringService;
 
-    @Autowired
-    private SoundContentService soundContentService;
+    private final SoundContentService soundContentService;
 
     private static final Gson gson = new Gson();
+
+    @Autowired
+    public RecognizeController(AudioRecognitionService audioRecognitionService, StringService stringService, SoundContentService soundContentService) {
+        this.audioRecognitionService = audioRecognitionService;
+        this.stringService = stringService;
+        this.soundContentService = soundContentService;
+    }
 
     @SneakyThrows
     @PostMapping(value = "/recognize", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> recognizeAudioFile(@RequestParam("file") MultipartFile file,
                                                 @RequestParam("soundContentId") String soundContentId) {
         String fileName = file.getOriginalFilename();
-        File fileDestination = new File("D:\\Study\\VNTU\\Dyplom\\speechTherapy\\web_app\\speech_recognition\\src\\main\\resources\\python\\" + fileName);
+        File fileDestination = new File("D:\\Study\\VNTU\\Dyplom\\speechTherapy\\web_app" +
+                "\\speech_recognition\\src\\main\\resources\\python\\" + fileName);
         file.transferTo(fileDestination);
 
         SoundContent soundContent = soundContentService.findById(UUID.fromString(soundContentId));
 
-        String recognizedAudioRecord = audioRecognitionService.recognizeAudioRecord(fileDestination.getPath(),
+        String recognizedAudioRecord = audioRecognitionService.recognizeAudioRecord(
+                fileDestination.getPath(),
                 Language.valueOf(soundContent.getSound().getLanguage().toUpperCase()));
         if (recognizedAudioRecord == null) {
             return ResponseEntity.badRequest()
                     .body(gson.toJson(""));
         }
-        RecognitionResult recognitionResult = stringService.findCorrectAndWrongPartInExpectedText(recognizedAudioRecord,
+        RecognitionResult recognitionResult = stringService
+                .findCorrectAndWrongPartInExpectedText(recognizedAudioRecord,
                 soundContent.getContentText());
         return ResponseEntity.ok()
                 .body(gson.toJson(recognitionResult));
