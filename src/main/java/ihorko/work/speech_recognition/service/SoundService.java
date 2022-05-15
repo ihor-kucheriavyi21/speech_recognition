@@ -1,7 +1,7 @@
 package ihorko.work.speech_recognition.service;
 
 import ihorko.work.speech_recognition.db.entity.Sound;
-import ihorko.work.speech_recognition.repository.SoundRepository;
+import ihorko.work.speech_recognition.repository.SoundRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,10 @@ import java.util.UUID;
 @Service
 public class SoundService {
 
-    private final SoundRepository soundRepository;
+    private final SoundRepositoryImpl soundRepository;
 
     @Autowired
-    public SoundService(SoundRepository soundRepository) {
+    public SoundService(SoundRepositoryImpl soundRepository) {
         this.soundRepository = soundRepository;
     }
 

@@ -9,6 +9,7 @@ import ihorko.work.speech_recognition.service.SoundContentService;
 import ihorko.work.speech_recognition.service.StringService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.UUID;
 
 @Controller
@@ -41,10 +44,12 @@ public class RecognizeController {
     @PostMapping(value = "/recognize", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> recognizeAudioFile(@RequestParam("file") MultipartFile file,
                                                 @RequestParam("soundContentId") String soundContentId) {
-        String fileName = file.getOriginalFilename();
-        File fileDestination = new File("D:\\Study\\VNTU\\Dyplom\\speechTherapy\\web_app" +
-                "\\speech_recognition\\src\\main\\resources\\python\\" + fileName);
-        file.transferTo(fileDestination);
+        File fileDestination = new ClassPathResource(
+                "/python/recorderDestination.wav").getFile();
+
+        try (OutputStream os = new FileOutputStream(fileDestination)) {
+            os.write(file.getBytes());
+        }
 
         SoundContent soundContent = soundContentService.findById(UUID.fromString(soundContentId));
 

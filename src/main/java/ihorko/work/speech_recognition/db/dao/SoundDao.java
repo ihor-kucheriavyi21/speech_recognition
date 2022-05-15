@@ -50,4 +50,8 @@ public class SoundDao {
         TypedQuery<Sound> query = sessionFactory.getCurrentSession().createQuery("From sound", Sound.class);
         return query.getResultList();
     }
+
+    public void deleteSound(UUID id) {
+        sessionFactory.getCurrentSession().delete(findById(id));
+    }
 }

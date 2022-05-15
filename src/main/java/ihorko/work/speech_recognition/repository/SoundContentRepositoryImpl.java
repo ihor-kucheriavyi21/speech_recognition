@@ -33,4 +33,8 @@ public class SoundContentRepositoryImpl implements SoundContentRepository {
     public SoundContent findById(UUID uuid) {
         return soundContentDao.findById(uuid);
     }
+
+    public void delete(UUID id) {
+        soundContentDao.delete(id);
+    }
 }

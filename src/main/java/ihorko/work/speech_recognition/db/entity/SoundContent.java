@@ -23,12 +23,12 @@ public class SoundContent {
     @JoinColumn(name = "sound_id", nullable = false)
     private Sound sound;
 
-    @OneToMany(mappedBy = "soundContent", targetEntity = DBFile.class)
-    private List<DBFile> dbFiles = new ArrayList<>();
+    @OneToMany(mappedBy = "soundContent", targetEntity = File.class)
+    private List<File> files = new ArrayList<>();
 
-    public void addDbFile(DBFile dbFile) {
-        dbFiles.add(dbFile);
-        dbFile.setSoundContent(this);
+    public void addDbFile(File file) {
+        files.add(file);
+        file.setSoundContent(this);
     }
 
     public void setContentText(String contentText) {

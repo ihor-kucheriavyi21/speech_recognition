@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DivideListTest {
     @Test
-    public final void givenList_whenParitioningIntoNSublistsUsingGroupingBy_thenCorrect() {
+    public final void testIfListDividingListWorksAsExpected() {
 
         int listSize = 3;
         List<Integer> intList = List.of(1, 2, 3, 4, 5, 6, 7, 8);

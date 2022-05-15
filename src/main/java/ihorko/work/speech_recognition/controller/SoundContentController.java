@@ -2,10 +2,10 @@ package ihorko.work.speech_recognition.controller;
 
 import ihorko.work.speech_recognition.converter.SoundContentConverter;
 import ihorko.work.speech_recognition.db.dto.SoundContentDto;
-import ihorko.work.speech_recognition.db.entity.DBFile;
+import ihorko.work.speech_recognition.db.entity.File;
 import ihorko.work.speech_recognition.db.entity.Sound;
 import ihorko.work.speech_recognition.db.entity.SoundContent;
-import ihorko.work.speech_recognition.service.DBFileStorageService;
+import ihorko.work.speech_recognition.service.FileStorageService;
 import ihorko.work.speech_recognition.service.SoundContentService;
 import ihorko.work.speech_recognition.service.SoundService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class SoundContentController {
     @Autowired
     private SoundContentService soundContentService;
     @Autowired
-    private DBFileStorageService dbFileStorageService;
+    private FileStorageService fileStorageService;
     @Autowired
     private SoundContentConverter soundContentConverter;
 
@@ -46,8 +46,8 @@ public class SoundContentController {
     public String createSoundContent(SoundContent soundContent,
                                      @RequestParam MultipartFile imageFile,
                                      @RequestParam MultipartFile audioFile, RedirectAttributes redirectAttributes) {
-        DBFile dbFile = dbFileStorageService.storeFile(imageFile);
-        DBFile dbAudioFile = dbFileStorageService.storeFile(audioFile);
+        File file = fileStorageService.storeFile(imageFile);
+        File dbAudioFile = fileStorageService.storeFile(audioFile);
 
         Sound sound = soundService.findById(soundContent.getSound().getId());
         if (sound.getName().isEmpty()) {
@@ -56,7 +56,7 @@ public class SoundContentController {
             throw new IllegalArgumentException("Name for our sound is empty");
         }
         soundContent.setSound(sound);
-        soundContent.addDbFile(dbFile);
+        soundContent.addDbFile(file);
         soundContent.addDbFile(dbAudioFile);
 
         soundContentService.save(soundContent);

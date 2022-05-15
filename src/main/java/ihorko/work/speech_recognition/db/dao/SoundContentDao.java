@@ -39,4 +39,8 @@ public class SoundContentDao {
         return sessionFactory.getCurrentSession()
                 .get(SoundContent.class, uuid);
     }
+
+    public void delete(UUID uuid){
+        sessionFactory.getCurrentSession().delete(findById(uuid));
+    }
 }

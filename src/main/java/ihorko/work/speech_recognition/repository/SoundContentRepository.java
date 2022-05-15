@@ -16,4 +16,6 @@ public interface SoundContentRepository {
     List<SoundContent> findListSoundContentBySound(UUID sound);
 
     SoundContent findById(UUID uuid);
+
+    void delete(UUID uuid);
 }
