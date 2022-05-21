@@ -51,7 +51,7 @@ public class SoundContentController {
 
         Sound sound = soundService.findById(soundContent.getSound().getId());
         if (sound.getName().isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Something went wrong with creation please try later");
+            redirectAttributes.addFlashAttribute("message", "Failed");
             redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
             throw new IllegalArgumentException("Name for our sound is empty");
         }
@@ -60,7 +60,7 @@ public class SoundContentController {
         soundContent.addDbFile(dbAudioFile);
 
         soundContentService.save(soundContent);
-        redirectAttributes.addFlashAttribute("message", "Successfully created");
+        redirectAttributes.addFlashAttribute("message", "Success");
         redirectAttributes.addFlashAttribute("alertClass", "alert-success");
 
         return "redirect:/sound-contents/list";

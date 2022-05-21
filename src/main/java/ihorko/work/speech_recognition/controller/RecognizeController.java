@@ -61,8 +61,8 @@ public class RecognizeController {
                     .body(gson.toJson(""));
         }
         RecognitionResult recognitionResult = stringService
-                .findCorrectAndWrongPartInExpectedText(recognizedAudioRecord,
-                soundContent.getContentText());
+                .findCorrectAndWrongPartInExpectedText(soundContent.getContentText(),
+                        recognizedAudioRecord);
         return ResponseEntity.ok()
                 .body(gson.toJson(recognitionResult));
     }

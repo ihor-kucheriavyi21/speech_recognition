@@ -13,6 +13,8 @@ public class StringSearch {
     private static final Logger LOGGER = Logger.getLogger(StringSearch.class.getName());
 
     public boolean search(String pat, String txt) {
+        if (pat.length() > txt.length())
+            return false;
         int q = 10;
         int patternLength = pat.length();
         int textLength = txt.length();

@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
@@ -17,17 +16,18 @@ public class InternationalizationConfig implements WebMvcConfigurer {
 
     @Bean
     public LocaleResolver localeResolver() {
-        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-        localeResolver.setDefaultLocale(Locale.US);
-        return localeResolver;
+        CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+        cookieLocaleResolver.setDefaultLocale(Locale.US);
+        return cookieLocaleResolver;
     }
 
     @Bean
     public ReloadableResourceBundleMessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:messages");
-        messageSource.setDefaultEncoding("UTF-8"); // Add this
-        return messageSource;
+        ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource
+                = new ReloadableResourceBundleMessageSource();
+        reloadableResourceBundleMessageSource.setDefaultEncoding("UTF-8");
+        reloadableResourceBundleMessageSource.setBasename("classpath:messages");
+        return reloadableResourceBundleMessageSource;
     }
 
     @Override
