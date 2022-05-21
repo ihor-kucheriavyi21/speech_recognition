@@ -9,60 +9,295 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default" th:fragment="navbar">
-    <a class="navbar-brand px-2" href="/language">
-        <img class="figure-img img-fluid rounded"
-             th:src="@{/image/nav-icon.png}"
-             alt="Logo" width="40" height="40"/>
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default">
+    <a class="navbar-brand px-2" href="http://localhost:8080/language">
+        <img class="figure-img img-fluid rounded" src="./Sound contents List_files/nav-icon.png" alt="Logo" width="40" height="40">
         <span>
             Speech learning
         </span>
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/sounds/list">
+                <a class="nav-link" href="http://localhost:8080/sounds/list">
                     Sound list
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/sound-contents/list">
+                <a class="nav-link" href="http://localhost:8080/sound-contents/list">
                     Sound content list
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="http://localhost:8080/sound-contents/list#">
                     Learn your own words
                 </a>
             </li>
-            <li class="nav-item text-right">
-                <a class="nav-link" href="?lang=en">
-                    <img type="image" th:src="@{/image/england-flag.jpg}"
-                         alt="English language" width="32" height="18"/>
-                </a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="?lang=ua">
-                    <img type="image" th:src="@{/image/ukraine-flag.jpg}"
-                         alt="Ukrainian language" width="32" height="18"/>
-                </a>
-            </li>
-
         </ul>
 
     </div>
-    <a class="nav-link" href="?lang=en">
-        <img type="image" th:src="@{/image/england-flag.jpg}"
-             alt="English language" width="32" height="18"/>
+
+    <a class="nav-link" href="http://localhost:8080/sound-contents/list?lang=en">
+        <img type="image" src="./Sound contents List_files/england-flag.jpg" alt="English language" width="32" height="18">
     </a>
-    <a class="nav-link" href="?lang=ua">
-        <img type="image" th:src="@{/image/ukraine-flag.jpg}"
-             alt="Ukrainian language" width="32" height="18"/>
+    <a class="nav-link" href="http://localhost:8080/sound-contents/list?lang=ua">
+        <img type="image" src="./Sound contents List_files/ukraine-flag.jpg" alt="Ukrainian language" width="32" height="18">
     </a>
-</nav>
+</nav></div>
+
+<div class="container">
+    <div>
+
+
+    </div>
+
+    <h3>
+        <!--        todo add sound description for sound and type for sound content-->
+        <div class="jumbotron">
+            <h1 class="display-4 page-title">
+                Sound description...
+            </h1>
+        </div>
+        <table class="table table-bordered">
+            <thead class="bg-primary text-white">
+            <tr>
+                <th>
+                    Content text
+                </th>
+                <th>
+                    Type content
+                </th>
+                <th>
+                    Audio
+                </th>
+                <th>
+                    Link on content
+                </th>
+            </tr>
+            </thead>
+            <tbody class="bg-light text-dark">
+            <tr>
+                <td>fileUpload</td>
+                <td>type</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/110112b0-7e69-4201-87a6-f5cbba4b6e12">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/d617d9d1-829c-4521-8230-f84e8731544d">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Listen the audio content for </td>
+                <td>test type</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/6dcf0fe3-7b8f-414d-a45a-072147957578">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/6f97ca94-3354-447b-86c1-50165f87652b">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>listen content listen form</td>
+                <td>qwerqwer</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/df401d4c-9636-4cf8-aeb6-dcd7d9902751">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/2f0a42ed-b1b8-461c-8b66-c45ffa34d690">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Chocolate champion chance</td>
+                <td>Enumeration wordsw</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/14c8439b-5f9e-4064-b113-700a6624f449">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/4a91920e-4e39-4dd8-9d93-19527e0e86b0">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>qetrerwt</td>
+                <td>type</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/ac93fdb1-0390-4314-bf6a-9eabca90a183">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/520f3f4e-1e65-45c9-8405-8908446c6171">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Father mother</td>
+                <td>Words</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/bc55eb15-0319-4384-bc12-c5af122b318a">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/d74700ca-14e3-4ed1-86e1-0c4de065da9b">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>combat</td>
+                <td>Enumeration words</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/4a12eb31-6ae1-4e0c-ba64-2aa10586e037">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/af5ac131-f513-4fab-8c71-d959e243b653">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>testCreationViaUI</td>
+                <td>type</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/6d7029b4-8751-47fe-b67a-8c65102e88a0">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/f1b65872-5ae5-4c53-ba68-2ae51aa4f6a4">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>qwerqwer</td>
+                <td>qwerqwer</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/bf0a1373-ec9b-49ef-be79-94a2c45d68a3">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/0908edd6-ef18-46b3-b872-ef5d06b5b35e">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Ї</td>
+                <td>ЇЖАЧОК</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/73625d08-3b69-4d5b-996f-78eaf68f14d2">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/c39f4041-8e5b-4f92-b68a-917dfbf712c6">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Їжачок їжа</td>
+                <td>слова</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/6a530f7d-bff6-4777-8ce4-2aa87de7162b">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/f331cc01-6358-461d-83de-af4cc07a6633">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Champion</td>
+                <td>qwerqwer</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/ca9a9dab-9d2a-4543-8627-f7173ed79af2">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/be4ca06f-b117-42f2-b5cc-4805c5b666d9">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Інтернаціональний філіжанка швидкісний</td>
+                <td>Слова</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/714182a1-be84-437d-8740-9824f1ab8fac">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/e35f17b6-9efa-4ce8-9d38-f38948a6c668">Open</a>
+                </td>
+            </tr>
+            <tr>
+                <td>test2</td>
+                <td>type</td>
+                <td>
+                    <audio controls="">
+                        <source src="/files/13dd810f-3594-4c9f-bb02-9fc81dc6e12b">
+                    </audio>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-info" href="http://localhost:8080/sound-content/33ddeed5-3d2b-436c-85ca-9da647ca42b5">Open</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-success add-button" href="http://localhost:8080/sound-content/create/page">
+                Add a new sound content
+            </a>
+        </div>
+    </h3>
+</div>
+<div class="" th:fragment="footer">
+    <footer class="bg-light fixed-bottom border-top p-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 d-flex align-items-center">
+                    <span class="text-muted">© 2022 Ihorko Company, Inc</span>
+                </div>
+
+                <div class="col-md-4 d-flex align-items-center justify-content-center ">
+                    <a href="#">
+                        <img class="figure-img img-fluid rounded"
+                             th:src="@{/image/nav-icon.png}"
+                             alt="Logo" width="40" height="40"/>
+                    </a>
+                </div>
+                <ul class="nav col-md-4 justify-content-end d-flex">
+                    <li class="ms-3">
+                        <a class="text-muted" href="https://github.com/Ascomos21">
+                            <img class="figure-img img-fluid rounded"
+                                 th:src="@{/image/github-icon.png}"
+                                 alt="GitHub" width="40" height="40"/>
+                        </a>
+                    </li>
+                    <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/ascomos228/">
+                        <img class="figure-img img-fluid rounded"
+                             th:src="@{/image/instagram-icon.png}"
+                             alt="Instagram" width="40" height="40"/>
+                    </a>
+                    </li>
+                    <li class="ms-3">
+                        <a class="text-muted" href="https://t.me/Ascomos">
+                            <img class="figure-img img-fluid rounded"
+                                 th:src="@{/image/telegram-icon.png}"
+                                 alt="Telegram" width="40"
+                                 height="40"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
 </body>
 </html>

@@ -7,9 +7,17 @@
 <body>
 <div th:insert="fragments/navbar :: navbar">
 </div>
-<div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"/>
 
 <div class="container">
+    <div th:switch="${message}">
+        <div th:case="'Success'" class="alert alert-success">
+            <strong>Success!</strong> Operation performed successfully.
+        </div>
+        <div th:case="'Failed'" class="alert alert-danger">
+            <strong>Failure!</strong> Operation failed. Please try again
+        </div>
+    </div>
+
     <h3>
         <!--        todo add sound description for sound and type for sound content-->
         <div class="jumbotron">

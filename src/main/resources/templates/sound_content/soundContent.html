@@ -4,9 +4,11 @@
     <meta th:insert="fragments/header :: header"/>
     <title>Sound</title>
 </head>
-<body>
 <div th:insert="fragments/navbar :: navbar">
 </div>
+<body class="d-flex flex-column min-vh-100">
+
+
 <section class="p-4">
     <div class="container w-50">
         <div class="card p-1">
@@ -85,6 +87,16 @@
                                 <p class="lead" id="recognized-failed-result"></p>
                             </div>
                         </div>
+
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0 text-info" id="full-label">
+                                </h4>
+                            </div>
+                            <div class="col-9">
+                                <p class="lead" id="recognized-full-result"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,6 +118,7 @@
     /**
      * @param data.wrongText -  text that our user said wrong
      *  @param data.correctText - text that matching with our content
+     *  @param data.fullText - full recognized text
      * @returns {Promise<void>}
      */
     async function uploadFile() {
@@ -147,6 +160,17 @@
                         failedResult.textContent = "";
                         failedLabel.textContent = "";
                     }
+
+                    let fullResult = document.getElementById("recognized-full-result");
+                    let fullLabel = document.getElementById("full-label");
+                    if (result.data.fullText.length > 0) {
+                        fullResult.textContent = result.data.fullText;
+                        fullLabel.textContent = "Full recognized text";
+                    } else {
+                        fullResult.textContent = "";
+                        fullLabel.textContent = "";
+                    }
+
                 }
             ))
     }

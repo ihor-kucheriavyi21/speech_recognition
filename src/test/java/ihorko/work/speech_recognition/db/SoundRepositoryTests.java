@@ -33,6 +33,7 @@ class SoundRepositoryTests {
         Sound createdSound = soundRepository.findByName(TEST_NAME).get(0);
         var soundId = createdSound.getId();
         soundRepository.delete(soundId);
-        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> soundRepository.findById(soundId));
+        Assertions.assertThrows(EmptyResultDataAccessException.class,
+                () -> soundRepository.findById(soundId));
     }
 }

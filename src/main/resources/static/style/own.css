@@ -24,3 +24,10 @@
     border-bottom: 1px solid #dee2e6!important;
 }
 
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+body { padding-bottom: 90px; }

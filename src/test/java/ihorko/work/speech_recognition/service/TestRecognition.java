@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class TestRecognition {
+class TestRecognition {
 
     @Autowired
     AudioRecognitionService audioRecognitionService;
 
     @Test
-    public void testEnglishRecognition(){
+    void testEnglishRecognition(){
         String translatedString = audioRecognitionService.recognizeAudioRecord(
                 "src/test/resources/englishRecord.wav", Language.ENGLISH);
 
@@ -25,11 +25,12 @@ public class TestRecognition {
     }
 
     @Test
-    public void testUkraineRecognition(){
+    void testUkraineRecognition(){
         String translatedString = audioRecognitionService.recognizeAudioRecord(
                 "src/test/resources/ukraineRecord.wav", Language.UKRAINIAN);
 
         //verify if text in audio was recognized
-        Assertions.assertTrue(translatedString.equalsIgnoreCase("інтернаціональний паляниця філіжанка швидкісний"));
+        Assertions.assertTrue(translatedString
+                .equalsIgnoreCase("інтернаціональний паляниця філіжанка швидкісний"));
     }
 }
