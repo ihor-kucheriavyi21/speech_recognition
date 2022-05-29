@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
 @Service
-public class AudioRecognitionService {
+public class AudioRecognitionService implements IAudioRecognitionService {
 
     private static final Logger LOGGER = Logger.getLogger(AudioRecognitionService.class.getName());
 
@@ -24,7 +24,7 @@ public class AudioRecognitionService {
 
         try (InputStream inputStream = process.getInputStream();
              BufferedReader bufferedReader = new BufferedReader(
-                     new InputStreamReader(inputStream,"windows-1251"))) {
+                     new InputStreamReader(inputStream, "windows-1251"))) {
 
             String recognizedText = bufferedReader.readLine();
             if (recognizedText != null)
