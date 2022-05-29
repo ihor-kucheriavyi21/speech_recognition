@@ -41,7 +41,6 @@ public class SoundContentController {
         return "sound_content/soundContentCreate";
     }
 
-    //todo thymeleaf session object
     @PostMapping("/sound-content/create")
     public String createSoundContent(SoundContent soundContent,
                                      @RequestParam MultipartFile imageFile,

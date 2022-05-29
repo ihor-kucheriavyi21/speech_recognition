@@ -40,30 +40,64 @@ public class RecognizeController {
         this.soundContentService = soundContentService;
     }
 
+    @PostMapping(value = "/recognize-from-content", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> recognizeFromContent(@RequestParam("file") MultipartFile file,
+                                                       @RequestParam("soundContentId") String soundContentId) {
+
+        File savedFile = saveFileIntoResources(file);
+        SoundContent soundContent = soundContentService.findById(UUID.fromString(soundContentId));
+
+        RecognitionResult recognitionResult = makeRecognitionAndSaveToResults(savedFile.getPath(),
+                Language.valueOf(soundContent.getSound().getLanguage().toUpperCase()),
+                soundContent.getContentText());
+
+        if (recognitionResult == null) {
+            return ResponseEntity.badRequest()
+                    .body(gson.toJson(""));
+        }
+
+        return ResponseEntity.ok()
+                .body(gson.toJson(recognitionResult));
+    }
+
+    @PostMapping(value = "/recognize-from-text", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> recognizeFromText(@RequestParam("file") MultipartFile file,
+                                                    @RequestParam("textToRecognize") String textContent,
+                                                    @RequestParam("language") String language) {
+
+        File savedFile = saveFileIntoResources(file);
+
+        RecognitionResult recognitionResult = makeRecognitionAndSaveToResults(savedFile.getPath(),
+                Language.valueOf(language.toUpperCase()),
+                textContent);
+
+        if (recognitionResult == null) {
+            return ResponseEntity.badRequest()
+                    .body(gson.toJson(""));
+        }
+
+        return ResponseEntity.ok()
+                .body(gson.toJson(recognitionResult));
+    }
+
     @SneakyThrows
-    @PostMapping(value = "/recognize", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> recognizeAudioFile(@RequestParam("file") MultipartFile file,
-                                                @RequestParam("soundContentId") String soundContentId) {
+    private File saveFileIntoResources(MultipartFile file) {
         File fileDestination = new ClassPathResource(
                 "/python/recorderDestination.wav").getFile();
 
         try (OutputStream os = new FileOutputStream(fileDestination)) {
             os.write(file.getBytes());
         }
+        return fileDestination;
+    }
 
-        SoundContent soundContent = soundContentService.findById(UUID.fromString(soundContentId));
-
+    private RecognitionResult makeRecognitionAndSaveToResults(String filePath, Language language, String textToRecognize) {
         String recognizedAudioRecord = audioRecognitionService.recognizeAudioRecord(
-                fileDestination.getPath(),
-                Language.valueOf(soundContent.getSound().getLanguage().toUpperCase()));
-        if (recognizedAudioRecord == null) {
-            return ResponseEntity.badRequest()
-                    .body(gson.toJson(""));
-        }
-        RecognitionResult recognitionResult = stringService
-                .findCorrectAndWrongPartInExpectedText(soundContent.getContentText(),
-                        recognizedAudioRecord);
-        return ResponseEntity.ok()
-                .body(gson.toJson(recognitionResult));
+                filePath,
+                language);
+        if (recognizedAudioRecord == null)
+            return null;
+
+        return stringService.findCorrectAndWrongPartInExpectedText(textToRecognize, recognizedAudioRecord);
     }
 }

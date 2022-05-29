@@ -1,58 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta th:insert="fragments/header :: header"/>
-    <title>Sound</title>
+    <title>Learn your own words</title>
 </head>
+<body>
 <div th:insert="fragments/navbar :: navbar">
 </div>
-<body class="d-flex flex-column min-vh-100">
-
-
 <section class="p-4">
     <div class="container w-50">
         <div class="card p-1">
             <div class="card-body p-md-5">
-                <h3 class="mb-3 text-uppercase text-center">
-                    <span th:text="#{learn_how_pronounce}"></span><strong
-                        th:text="${soundContent.getSound().getName()}"></strong>
+                <h3 class="mb-3 text-uppercase text-center"
+                    th:text="#{here_you_can_learn_own_words_just_type_into_text_box}">
                 </h3>
                 <div class="row">
                     <div class="col">
                         <div class="row align-items-center p-2">
                             <div class="col-3 ">
-                                <h4 class="mb-0" th:text="#{listen_the_audio_with_pronunciation}">
-                                </h4>
-                            </div>
-
-                            <div class="col-9 form-group">
-                                <audio class="w-75" controls>
-                                    <source th:src="@{${'/files/'+soundContent.getAudioFile().getId()}}">
-                                </audio>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center p-2">
-                            <div class="col-3 ">
-                                <h4 class="mb-0" th:text="#{content_for_pronunciation}">
-                                </h4>
+                                <h5 class="mb-0" th:text="#{text_to_pronounce}">
+                                </h5>
                             </div>
                             <div class="col-9">
-                                <p class="lead" id="content-text" th:text="${soundContent.getContentText()}"></p>
+                                <input required class="form-control form-control-lg" type="text" id="user-entered-text">
                             </div>
                         </div>
                         <div class="row align-items-center p-2">
-                            <h4 class="mb-3 text-uppercase text-center">
-                                <figure class="figure">
-                                    <img class="figure-img img-fluid rounded" th:if="${soundContent.getGifFile()!=null}"
-                                         th:src="@{${'/files/'+ soundContent.getGifFile().getId()}}"
-                                         alt="Image does not exist">
-                                    <figcaption class="figure-caption">
-                                        <span th:text="#{image_how_to_pronounce}"></span> <strong
-                                            th:text="${soundContent.getSound().getName()}"></strong>
-                                    </figcaption>
-                                </figure>
-                            </h4>
+                            <div class="col-3">
+                                <h5 class="mb-0" th:text="#{language}">
+                                </h5>
+                            </div>
+                            <div class="col-9">
+                                <select required class="form-select form-select-lg" id="selected-language">
+                                    <option value="English" th:text="#{english}"></option>
+                                    <option value="Ukrainian" th:text="#{ukrainian}"></option>
+                                </select>
+                            </div>
                         </div>
                         <div class="row p-2">
                             <div data-role="controls">
@@ -105,9 +89,8 @@
     </div>
 </section>
 <div th:insert="fragments/footer :: footer"></div>
-</body>
 
-<!--todo solve all issues and warnings-->
+</body>
 <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
 <script src="https://markjivko.com/dist/recorder.js"></script>
 <script>
@@ -126,11 +109,11 @@
         let formData = new FormData();
 
         formData.append('file', savedAudio, 'testRecorder.wav');
-        const soundContentId = window.location.pathname.split("/").pop()
-
-        formData.append("soundContentId", soundContentId);
-
-        await fetch('/recognize-from-content', {
+        const contentText = document.getElementById("user-entered-text").value;
+        const selectedLanguage = document.getElementById("selected-language").value;
+        formData.append("textToRecognize", contentText);
+        formData.append("language", selectedLanguage);
+        await fetch('/recognize-from-text', {
             method: "POST",
             body: formData
         }).then(response => response.json()
