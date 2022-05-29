@@ -14,14 +14,14 @@
         <div class="card p-1">
             <div class="card-body p-md-5">
                 <h3 class="mb-3 text-uppercase text-center">
-                    Learn how to pronounce <strong th:text="${soundContent.getSound().getName()}"></strong>
+                    <span th:text="#{learn_how_pronounce}"></span><strong
+                        th:text="${soundContent.getSound().getName()}"></strong>
                 </h3>
                 <div class="row">
                     <div class="col">
                         <div class="row align-items-center p-2">
                             <div class="col-3 ">
-                                <h4 class="mb-0">
-                                    Listen the audio
+                                <h4 class="mb-0" th:text="#{listen_the_audio_with_pronunciation}">
                                 </h4>
                             </div>
 
@@ -34,8 +34,7 @@
 
                         <div class="row align-items-center p-2">
                             <div class="col-3 ">
-                                <h4 class="mb-0">
-                                    Content for pronunciation
+                                <h4 class="mb-0" th:text="#{content_for_pronunciation}">
                                 </h4>
                             </div>
                             <div class="col-9">
@@ -49,7 +48,7 @@
                                          th:src="@{${'/files/'+ soundContent.getGifFile().getId()}}"
                                          alt="Image does not exist">
                                     <figcaption class="figure-caption">
-                                        Image how to pronounce <strong
+                                        <span th:text="#{image_how_to_pronounce}"></span> <strong
                                             th:text="${soundContent.getSound().getName()}"></strong>
                                     </figcaption>
                                 </figure>
@@ -57,21 +56,21 @@
                         </div>
                         <div class="row p-2">
                             <div data-role="controls">
-                                <button class="btn btn-success btn-lg" id="audio-recorder">
-                                    Start recording
+                                <button class="btn btn-success btn-lg" id="audio-recorder" th:text="#{start_recording}">
                                 </button>
                             </div>
                         </div>
                         <div class="row p-2">
                             <div data-role="recordings">
-                                <button class="btn btn-success btn-lg" id="upload-button" onclick="uploadFile()">
-                                    Verify record
+                                <button class="btn btn-success btn-lg" id="upload-button" onclick="uploadFile()"
+                                        th:text="#{verify_record}">
                                 </button>
                             </div>
                         </div>
                         <div class="row align-items-center p-2">
                             <div class="col-3 ">
-                                <h4 class="mb-0 text-success" id="success-label">
+                                <h4 class="mb-0 text-success" id="success-label" style="visibility: hidden"
+                                    th:text="#{correctly_pronounced_text}">
                                 </h4>
                             </div>
                             <div class="col-9">
@@ -80,7 +79,8 @@
                         </div>
                         <div class="row align-items-center p-2">
                             <div class="col-3 ">
-                                <h4 class="mb-0 text-danger" id="failed-label">
+                                <h4 class="mb-0 text-danger" id="failed-label" style="visibility: hidden"
+                                    th:text="#{incorrectly_pronounced_text}">
                                 </h4>
                             </div>
                             <div class="col-9">
@@ -90,7 +90,8 @@
 
                         <div class="row align-items-center p-2">
                             <div class="col-3 ">
-                                <h4 class="mb-0 text-info" id="full-label">
+                                <h4 class="mb-0 text-info" id="full-label" style="visibility: hidden"
+                                    th:text="#{full_recognized_text}">
                                 </h4>
                             </div>
                             <div class="col-9">
@@ -145,30 +146,30 @@
                     }
                     if (result.data.correctText.length > 0) {
                         successResult.textContent = result.data.correctText;
-                        successLabel.textContent = "Correctly pronounced text";
+                        successLabel.style.visibility = "visible";
                     } else {
                         successResult.textContent = "";
-                        successLabel.textContent = "";
+                        successLabel.style.visibility = "hidden";
                     }
 
                     let failedResult = document.getElementById("recognized-failed-result");
                     let failedLabel = document.getElementById("failed-label");
                     if (result.data.wrongText.length > 0) {
                         failedResult.textContent = result.data.wrongText;
-                        failedLabel.textContent = "Incorrectly pronounced text";
+                        failedLabel.style.visibility = "visible";
                     } else {
                         failedResult.textContent = "";
-                        failedLabel.textContent = "";
+                        failedLabel.style.visibility = "hidden";
                     }
 
                     let fullResult = document.getElementById("recognized-full-result");
                     let fullLabel = document.getElementById("full-label");
                     if (result.data.fullText.length > 0) {
                         fullResult.textContent = result.data.fullText;
-                        fullLabel.textContent = "Full recognized text";
+                        fullLabel.style.visibility = "visible";
                     } else {
                         fullResult.textContent = "";
-                        fullLabel.textContent = "";
+                        fullLabel.style.visibility = "hidden";
                     }
 
                 }
@@ -257,13 +258,11 @@
                 $(this).attr('data-recording', 'true');
                 $(this).removeClass('btn-success');
                 $(this).addClass('btn-danger')
-                $(this).text('Stop recording')
                 myRecorder.start();
             } else {
                 $(this).attr('data-recording', '');
                 $(this).removeClass('btn-danger');
                 $(this).addClass('btn-success')
-                $(this).text('Start recording')
                 myRecorder.stop(listObject);
             }
         });

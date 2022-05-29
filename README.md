@@ -14,7 +14,7 @@
 - hibernate-core
 - tomcat-dbcp
 - lombok
-- postgresqlл
+- postgresql
 
 ## Implemented methods during application development
 

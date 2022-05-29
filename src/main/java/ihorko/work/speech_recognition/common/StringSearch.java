@@ -69,4 +69,45 @@ public class StringSearch {
         }
         return false;
     }
+
+    public boolean searchUsingDefaultHash(String pat, String txt) {
+        if (pat.length() > txt.length())
+            return false;
+
+        int patternLength = pat.length();
+        int textLength = txt.length();
+        int i;
+        int hashValueForPattern = pat.hashCode();
+        int hashValueForText = 0;
+
+        // Calculate the hash value of pattern and first
+        // window of text\
+        int j;
+
+        // Slide the pattern over text one by one
+        for (i = 0; i <= textLength - patternLength; i++) {
+
+            // Check the hash values of current window of text
+            // and pattern. If the hash values match then only
+            // check for characters one by one
+            if (i < textLength - patternLength) {
+                hashValueForText = txt.substring(i, pat.length()+i).hashCode();
+            }
+
+            if (hashValueForPattern == hashValueForText) {
+                /* Check for characters one by one */
+                for (j = 0; j < patternLength; j++) {
+                    if (txt.charAt(i + j) != pat.charAt(j))
+                        break;
+                }
+
+                // if hashValueForPattern == hashValueForText and pat[0...patternLength-1] = txt[i, i+1, ...i+patternLength-1]
+                if (j == patternLength) {
+                    LOGGER.info("Pattern found at index " + i);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

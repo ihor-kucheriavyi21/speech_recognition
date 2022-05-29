@@ -18,6 +18,7 @@ public class InternationalizationConfig implements WebMvcConfigurer {
     public LocaleResolver localeResolver() {
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setDefaultLocale(Locale.US);
+        cookieLocaleResolver.setCookieMaxAge(60*100);
         return cookieLocaleResolver;
     }
 

@@ -10,8 +10,7 @@
     <div class="container w-50">
         <div class="card p-1">
             <div class="card-body p-md-5">
-                <h4 class="mb-3 text-uppercase text-center">
-                    Sound content creation form
+                <h4 class="mb-3 text-uppercase text-center" th:text="#{sound_content_creation_form}">
                 </h4>
                 <div class="row">
                     <div class="col-form-label-lg">
@@ -20,30 +19,29 @@
                               method="post">
                             <div class="row align-items-center p-2">
                                 <div class="col-3 ">
-                                    <h5 class="mb-0">
-                                        Content text
+                                    <h5 class="mb-0" th:text="#{content_text}">
                                     </h5>
                                 </div>
                                 <div class="col-9">
-                                    <input required class="form-control form-control-lg" type="text" th:field="*{contentText}">
+                                    <input required class="form-control form-control-lg" type="text"
+                                           th:field="*{contentText}">
                                 </div>
                             </div>
 
                             <div class="row align-items-center p-2">
                                 <div class="col-3">
-                                    <h5 class="mb-0">
-                                        Type content
+                                    <h5 class="mb-0" th:text="#{type_content}">
                                     </h5>
                                 </div>
                                 <div class="col-9">
-                                    <input required class="form-control form-control-lg" type="text" th:field="*{typeContent}">
+                                    <input required class="form-control form-control-lg" type="text"
+                                           th:field="*{typeContent}">
                                 </div>
                             </div>
 
                             <div class="row align-items-center p-2 ">
                                 <div class="col-3">
-                                    <h5 class="mb-0">
-                                        Select sound
+                                    <h5 class="mb-0" th:text="#{select_sound}">
                                     </h5>
                                 </div>
                                 <div class="col-9">
@@ -61,8 +59,7 @@
 
                             <div class="row align-items-center p-2">
                                 <div class="col-3">
-                                    <h5 class="mb-0">
-                                        Upload audio file with pronunciation
+                                    <h5 class="mb-0" th:text="#{upload_audio_file_with_pronunciation}">
                                     </h5>
                                 </div>
                                 <div class="col-md-9">
@@ -70,29 +67,28 @@
                                     <input required multiple="multiple" type="file" accept=".mp3,audio/*"
                                            name="audioFile"
                                            class="form-control form-control-lg"/>
-                                    <div class="small text-muted mt-2">
-                                        Upload your audio file. Max file size 10 MB
+                                    <div class="small text-muted mt-2"
+                                         th:text="#{upload_your_audio_file_max_size_10_mb}">
                                     </div>
 
                                 </div>
                             </div>
                             <div class="row align-items-center p-2">
                                 <div class="col-3">
-                                    <h5 class="mb-0">
-                                        Upload image or gif with pronunciation
+                                    <h5 class="mb-0" th:text="#{upload_image_or_gif_with_pronunciation}">
                                     </h5>
                                 </div>
                                 <div class="col-md-9">
                                     <input required multiple="multiple" type="file" name="imageFile" accept="image/*"
                                            class="form-control form-control-lg"/>
-                                    <div class="small text-muted mt-2">
-                                        Upload your image file. Max file size 10 MB
+                                    <div class="small text-muted mt-2"
+                                         th:text="#{upload_your_image_file_max_size_10_mb}">
                                     </div>
 
                                 </div>
                             </div>
 
-                            <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+                            <input class="btn btn-primary btn-lg" type="submit" th:value="#{submit}">
                         </form>
                     </div>
                 </div>
