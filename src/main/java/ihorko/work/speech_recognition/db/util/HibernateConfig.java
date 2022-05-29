@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-//todo learn how to create configuration for bean
 @Configuration
 @EnableTransactionManagement
 public class HibernateConfig {

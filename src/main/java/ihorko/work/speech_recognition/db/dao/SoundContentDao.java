@@ -14,9 +14,12 @@ import java.util.UUID;
 @Transactional
 public class SoundContentDao {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
+    @Autowired
+    public SoundContentDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public void persist(SoundContent soundContent) {
         sessionFactory.getCurrentSession().saveOrUpdate(soundContent);
@@ -40,7 +43,7 @@ public class SoundContentDao {
                 .get(SoundContent.class, uuid);
     }
 
-    public void delete(UUID uuid){
+    public void delete(UUID uuid) {
         sessionFactory.getCurrentSession().delete(findById(uuid));
     }
 }

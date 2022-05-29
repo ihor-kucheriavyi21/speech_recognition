@@ -7,36 +7,6 @@ public class HashCalculatingTest {
 
     private final StringSearch stringSearch = new StringSearch();
 
-    @Test
-    public void testJavaHash() {
-        int average = 0;
-
-        for (int i = 0; i < 10; i++) {
-            long before = System.nanoTime();
-            System.out.println("is found JAVA = " + stringSearch.searchUsingDefaultHash("consectetur", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tellus."));
-            long timeExecution = System.nanoTime() - before;
-            System.out.println(timeExecution);
-            average += timeExecution;
-        }
-
-        System.out.println("Average is - " +average/10);
-    }
-
-    @Test
-    public void testJavaHash1000Elements(){
-        int average = 0;
-
-        for (int i = 0; i < 1000; i++) {
-            long before = System.nanoTime();
-            stringSearch.searchUsingDefaultHash("Sed imperdiet accumsan gravida.", stringWith1000Words);
-//            System.out.println("is found JAVA = " + stringSearch.searchUsingDefaultHash("Sed imperdiet accumsan gravida.", stringWith1000Words));
-            long timeExecution = System.nanoTime() - before;
-//            System.out.println(timeExecution);
-            average += timeExecution;
-        }
-
-        System.out.println("Average is - " +average/10);
-    }
 
     @Test
     public void testCircleHash() {
@@ -58,10 +28,8 @@ public class HashCalculatingTest {
 
         for (int i = 0; i < 1000; i++) {
             long before = System.nanoTime();
-            stringSearch.searchUsingDefaultHash("Sed imperdiet accumsan gravida.", stringWith1000Words);
-//            System.out.println("is found JAVA = " + stringSearch.searchUsingDefaultHash("Sed imperdiet accumsan gravida.", stringWith1000Words));
+            stringSearch.search("Sed imperdiet accumsan gravida.", stringWith1000Words);
             long timeExecution = System.nanoTime() - before;
-//            System.out.println(timeExecution);
             average += timeExecution;
         }
 

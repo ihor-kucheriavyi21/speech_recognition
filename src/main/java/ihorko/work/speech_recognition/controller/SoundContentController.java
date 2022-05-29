@@ -25,14 +25,19 @@ import java.util.stream.Collectors;
 @Controller
 public class SoundContentController {
 
+    private final SoundService soundService;
+    private final SoundContentService soundContentService;
+    private final FileStorageService fileStorageService;
+    private final SoundContentConverter soundContentConverter;
+
     @Autowired
-    private SoundService soundService;
-    @Autowired
-    private SoundContentService soundContentService;
-    @Autowired
-    private FileStorageService fileStorageService;
-    @Autowired
-    private SoundContentConverter soundContentConverter;
+    public SoundContentController(SoundService soundService, SoundContentService soundContentService,
+                                  FileStorageService fileStorageService, SoundContentConverter soundContentConverter) {
+        this.soundService = soundService;
+        this.soundContentService = soundContentService;
+        this.fileStorageService = fileStorageService;
+        this.soundContentConverter = soundContentConverter;
+    }
 
     @GetMapping("/sound-content/create/page")
     public String showSoundContentCreatePage(Model model) {
@@ -54,6 +59,7 @@ public class SoundContentController {
             redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
             throw new IllegalArgumentException("Name for our sound is empty");
         }
+        sound.addSoundContent(soundContent);
         soundContent.setSound(sound);
         soundContent.addDbFile(file);
         soundContent.addDbFile(dbAudioFile);
@@ -72,10 +78,10 @@ public class SoundContentController {
         return "sound_content/soundContentsList";
     }
 
-    @GetMapping("/sound-contents/{sound_id}")
-    public String showSoundContentsList(@PathVariable String sound_id, Model model) {
+    @GetMapping("/sound-contents/{soundId}")
+    public String showSoundContentsList(@PathVariable String soundId, Model model) {
 
-        List<SoundContentDto> collect = soundContentService.findListSoundContentBySound(UUID.fromString(sound_id))
+        List<SoundContentDto> collect = soundContentService.findListSoundContentBySound(UUID.fromString(soundId))
                 .stream()
                 .map(soundContentConverter::convert)
                 .collect(Collectors.toList());
