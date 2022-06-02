@@ -49,13 +49,16 @@
 
 ## Зображення
 
-####Головна сторінка
+#### Головна сторінка
+
 <img src="git_files/BasePage.png" alt="base page" width="633" height="322">
 
-####Сторінка списку звуків
+#### Сторінка списку звуків
+
 <img src="git_files/SoundsPage.png" alt="base page" width="633" height="322">
 
-####Сторінка матеріалу для вивчення
+#### Сторінка матеріалу для вивчення
+
 <img src="git_files/SoundsContentPage.png" alt="base page" width="633" height="322">
 
 ## Автор
