@@ -10,18 +10,19 @@
 
 <div class="container">
     <div th:switch="${message}">
-        <div th:case="'Success'" class="alert alert-success" >
+        <div th:case="'Success'" class="alert alert-success">
             <strong th:text="#{success}"></strong> <span th:text="#{operation_performed_successfully}"></span>
         </div>
-        <div th:case="'Failed'" class="alert alert-danger" >
+        <div th:case="'Failed'" class="alert alert-danger">
             <strong th:text="#{failure}"></strong> <span th:text="#{operation_failed}"></span>
         </div>
     </div>
 
     <h3>
         <div class="jumbotron">
-            <h1 class="display-4 page-title" th:text="#{displayed_sound_content}">
+            <h1 class="display-4 page-title" th:text="#{material_for_study}">
             </h1>
+            <p class="lead" th:text="#{displayed_sound_content}"></p>
         </div>
         <table class="table table-bordered">
             <thead class="bg-primary text-white">
@@ -46,13 +47,15 @@
                     </audio>
                 </td>
                 <td class="text-center">
-                    <a class="btn btn-info" th:href="@{${'/sound-content/'+ sound_content.getId()}}" th:text="#{open}"></a>
+                    <a class="btn btn-info" th:href="@{${'/sound-content/'+ sound_content.getId()}}"
+                       th:text="#{open}"></a>
                 </td>
             </tr>
             </tbody>
         </table>
         <div class="d-flex justify-content-center">
-            <a class="btn btn-success add-button" th:href="@{/sound-content/create/page}" th:text="#{add_new_sound_content}">
+            <a class="btn btn-success add-button" th:href="@{/sound-content/create/page}"
+               th:text="#{add_new_sound_content}">
             </a>
         </div>
     </h3>

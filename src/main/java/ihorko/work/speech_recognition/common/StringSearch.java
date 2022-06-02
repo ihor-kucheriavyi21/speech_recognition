@@ -8,13 +8,13 @@ public class StringSearch {
     private static final Logger LOGGER = Logger.getLogger(StringSearch.class.getName());
 
     public boolean search(String pat, String txt) {
-        if (pat.length() > txt.length())
-            return false;
+
         int numberForCalculatingHash = 10;
 
         int patternLength = pat.length();
         int textLength = txt.length();
-
+        if (patternLength > textLength)
+            return false;
         int hashValueForPattern = 0;
         int hashValueForText = 0;
         int numberForChangingHash = 1;

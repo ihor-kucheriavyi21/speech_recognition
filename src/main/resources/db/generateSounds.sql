@@ -19,19 +19,27 @@ INSERT INTO public.sound(
 INSERT INTO public.sound(
 	id, language, name)
 	VALUES (uuid_generate_v4(), 'English', 'Q');
-	
+
 INSERT INTO public.sound(
-	id, language, name)
-	VALUES (uuid_generate_v4(), 'Українська', 'А');
-	
+    id, language, name)
+VALUES (uuid_generate_v4(), 'Ukrainian', 'А');
+
 INSERT INTO public.sound(
-	id, language, name)
-	VALUES (uuid_generate_v4(), 'Українська', 'В');
-	
+    id, language, name)
+VALUES (uuid_generate_v4(), 'Ukrainian', 'В');
+
 INSERT INTO public.sound(
-	id, language, name)
-	VALUES (uuid_generate_v4(), 'Українська', 'Б');
-	
+    id, language, name)
+VALUES (uuid_generate_v4(), 'Ukrainian', 'Б');
+
 INSERT INTO public.sound(
-	id, language, name)
-	VALUES (uuid_generate_v4(), 'Українська', 'С');
+    id, language, name)
+VALUES (uuid_generate_v4(), 'Ukrainian', 'С');
+
+INSERT INTO public.sound(
+    id, language, name)
+VALUES (uuid_generate_v4(), 'Ukrainian', 'Д');
+
+INSERT INTO public.sound(
+    id, language, name)
+VALUES (uuid_generate_v4(), 'Ukrainian', 'Ж');
