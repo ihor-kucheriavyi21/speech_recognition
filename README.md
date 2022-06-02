@@ -53,10 +53,10 @@
 <img src="git_files/BasePage.png" alt="base page" width="633" height="322">
 
 ####Сторінка списку звуків
-<img src="git_files/SoundsPage.png.png" alt="base page" width="633" height="322">
+<img src="git_files/SoundsPage.png" alt="base page" width="633" height="322">
 
 ####Сторінка матеріалу для вивчення
-<img src="git_files/SoundsContentPage.png.png.png" alt="base page" width="633" height="322">
+<img src="git_files/SoundsContentPage.png" alt="base page" width="633" height="322">
 
 ## Автор
 
