@@ -10,4 +10,9 @@ public class LanguageController {
     public String showLanguagePage() {
         return "/language";
     }
+
+    @GetMapping("/")
+    public String showDefaultPage() {
+        return "/language";
+    }
 }
