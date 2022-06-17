@@ -8,11 +8,11 @@ public class LanguageController {
 
     @GetMapping("/language")
     public String showLanguagePage() {
-        return "/language";
+        return "baseLanguage";
     }
 
     @GetMapping("/")
     public String showDefaultPage() {
-        return "/language";
+        return "baseLanguage";
     }
 }
