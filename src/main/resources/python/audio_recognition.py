@@ -7,5 +7,5 @@ recognizer = speech_recognition.Recognizer()
 test_file = speech_recognition.AudioFile(fileNameForRecognition)
 with test_file as source:
     audio = recognizer.record(source)
-    text = recognizer.recognize_google(audio, None, languageCode, False)
+    text = recognizer.recognize_google(audio, language = languageCode)
     print(text)

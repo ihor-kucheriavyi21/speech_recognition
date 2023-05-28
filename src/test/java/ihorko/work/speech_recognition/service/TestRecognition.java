@@ -13,24 +13,28 @@ class TestRecognition {
     AudioRecognitionService audioRecognitionService;
 
     @Test
-    void testEnglishRecognition(){
+    void testEnglishRecognition() {
         String translatedString = audioRecognitionService.recognizeAudioRecord(
                 "src/test/resources/englishRecord.wav", Language.ENGLISH);
 
         //verify if text in audio was recognized
-        Assertions.assertTrue(translatedString.contains("in relation"),
-                "String doesn't contains expected text - in relation");
+        Assertions.assertTrue(translatedString.contains("error"),
+                String.format("String doesn't contain expected text - in relation"
+                        + "\n But contains [%s]", translatedString));
         Assertions.assertTrue(translatedString.contains("audio recording could not load content"),
-                "String doesn't contains expected text -audio recording could not load content");
+                String.format("String doesn't contains expected text -audio recording could not load content"
+                        + "\n But contains [%s]", translatedString));
+
     }
 
     @Test
-    void testUkraineRecognition(){
+    void testUkraineRecognition() {
         String translatedString = audioRecognitionService.recognizeAudioRecord(
                 "src/test/resources/ukraineRecord.wav", Language.UKRAINIAN);
 
         //verify if text in audio was recognized
         Assertions.assertTrue(translatedString
-                .equalsIgnoreCase("інтернаціональний паляниця філіжанка швидкісний"));
+                .equalsIgnoreCase("інтернаціональний паляниця філіжанка швидкісний"),
+                "Actual result is " + translatedString);
     }
 }

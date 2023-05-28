@@ -5,6 +5,10 @@
 - Web-based interactive application for learning the correct pronunciation of sounds using Spring technologies.
 - Application created using Java, Python, JavaScript. For User Interface I use Bootstrap, HTML/CSS, Thymeleaf.
 
+## Installation 
+- Python.
+- pip3 install SpeechRecognition
+- brew install portaudio
 ## Used frameworks and libraries
 
 - spring-boot
