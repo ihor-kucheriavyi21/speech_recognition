@@ -23,7 +23,7 @@ public class SoundContent {
     @JoinColumn(name = "sound_id", nullable = false)
     private Sound sound;
 
-    @OneToMany(mappedBy = "soundContent", targetEntity = File.class)
+    @OneToMany(mappedBy = "soundContent", targetEntity = File.class, cascade = CascadeType.ALL)
     private List<File> files = new ArrayList<>();
 
     public void addDbFile(File file) {

@@ -2,12 +2,14 @@ package ihorko.work.speech_recognition.repository;
 
 import ihorko.work.speech_recognition.db.dao.SoundDao;
 import ihorko.work.speech_recognition.db.entity.Sound;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
+@Transactional
 @Repository
 public class SoundRepositoryImpl  implements SoundRepository{
 

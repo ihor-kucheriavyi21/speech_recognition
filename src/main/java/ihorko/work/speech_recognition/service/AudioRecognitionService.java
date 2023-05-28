@@ -17,18 +17,18 @@ public class AudioRecognitionService implements IAudioRecognitionService {
 
     @SneakyThrows
     public String recognizeAudioRecord(String filePathFromSourceRoot, Language language) {
-        ProcessBuilder processBuilder = new ProcessBuilder("python",
+        ProcessBuilder processBuilder = new ProcessBuilder("python3",
                 "src/main/resources/python/audio_recognition.py", filePathFromSourceRoot, language.getCode());
         processBuilder.redirectErrorStream(true);
         Process process = processBuilder.start();
 
         try (InputStream inputStream = process.getInputStream();
              BufferedReader bufferedReader = new BufferedReader(
-                     new InputStreamReader(inputStream, "windows-1251"))) {
+                     new InputStreamReader(inputStream))) {
 
             String recognizedText = bufferedReader.readLine();
             if (recognizedText != null)
-                LOGGER.warning(() -> "Recognized text: " + recognizedText);
+                LOGGER.info(() -> "Recognized text: " + recognizedText);
             return recognizedText;
         } catch (IOException e) {
             LOGGER.severe(e.getMessage());
