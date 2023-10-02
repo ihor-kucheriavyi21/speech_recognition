@@ -44,9 +44,9 @@
                         <div class="row align-items-center p-2">
                             <h4 class="mb-3 text-uppercase text-center">
                                 <figure class="figure">
-                                    <img class="figure-img img-fluid rounded" th:if="${soundContent.getGifFile()!=null}"
-                                         th:src="@{${'/files/'+ soundContent.getGifFile().getId()}}"
-                                         alt="Image does not exist">
+                                    <img alt="Image does not exist" class="figure-img img-fluid rounded"
+                                         th:if="${soundContent.getGifFile()!=null}"
+                                         th:src="@{${'/files/'+ soundContent.getGifFile().getId()}}">
                                     <figcaption class="figure-caption">
                                         <span th:text="#{image_how_to_pronounce}"></span> <strong
                                             th:text="${soundContent.getSound().getName()}"></strong>
@@ -108,7 +108,7 @@
 </body>
 
 <!--todo solve all issues and warnings-->
-<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery.min.js" type="text/javascript"></script>
 <script src="https://markjivko.com/dist/recorder.js"></script>
 <script>
 
@@ -143,6 +143,10 @@
                         successResult.textContent = 'The text was not recognized try again';
                         return;
                     }
+                    if(result.data.userAssistantText.length > 0){
+                    alert(result.data.userAssistantText);
+                    }
+                    
                     if (result.data.correctText.length > 0) {
                         successResult.textContent = result.data.correctText;
                         successLabel.style.visibility = "visible";
@@ -266,5 +270,7 @@
             }
         });
     });
+
+
 </script>
 </html>

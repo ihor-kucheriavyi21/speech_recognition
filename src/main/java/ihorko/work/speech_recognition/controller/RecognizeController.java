@@ -31,6 +31,8 @@ public class RecognizeController {
 
     private final SoundContentService soundContentService;
 
+    private int wrongAnswerCounter = 0;
+
     private static final Gson gson = new Gson();
 
     @Autowired
@@ -47,13 +49,24 @@ public class RecognizeController {
         File savedFile = saveFileIntoResources(file);
         SoundContent soundContent = soundContentService.findById(UUID.fromString(soundContentId));
 
+        Language language = Language.valueOf(soundContent.getSound().getLanguage().toUpperCase());
         RecognitionResult recognitionResult = makeRecognitionAndSaveToResults(savedFile.getPath(),
-                Language.valueOf(soundContent.getSound().getLanguage().toUpperCase()),
+                language,
                 soundContent.getContentText());
 
         if (recognitionResult == null) {
             return ResponseEntity.badRequest()
                     .body(gson.toJson(""));
+        }
+
+        if (!recognitionResult.getWrongText().isEmpty()) {
+            wrongAnswerCounter++;
+        }
+
+        int numberMistakes = 2;
+        if (wrongAnswerCounter == numberMistakes) {
+            recognitionResult.setUserAssistantText("User assistant");
+            wrongAnswerCounter = 0;
         }
 
         return ResponseEntity.ok()

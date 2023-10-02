@@ -9,9 +9,15 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class RecognitionResult {
- 
     private String correctText;
     private String wrongText;
     private String fullText;
+    private String userAssistantText;
 
+    public RecognitionResult(String correctText, String wrongText, String fullText) {
+        this.correctText = correctText;
+        this.wrongText = wrongText;
+        this.fullText = fullText;
+        this.userAssistantText = "";
+    }
 }
