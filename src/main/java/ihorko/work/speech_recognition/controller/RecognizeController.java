@@ -5,6 +5,7 @@ import ihorko.work.speech_recognition.common.Language;
 import ihorko.work.speech_recognition.common.RecognitionResult;
 import ihorko.work.speech_recognition.db.entity.SoundContent;
 import ihorko.work.speech_recognition.service.AudioRecognitionService;
+import ihorko.work.speech_recognition.service.GoogleBardService;
 import ihorko.work.speech_recognition.service.SoundContentService;
 import ihorko.work.speech_recognition.service.StringService;
 import lombok.SneakyThrows;
@@ -31,15 +32,18 @@ public class RecognizeController {
 
     private final SoundContentService soundContentService;
 
+    private final GoogleBardService googleBardService;
+
     private int wrongAnswerCounter = 0;
 
     private static final Gson gson = new Gson();
 
     @Autowired
-    public RecognizeController(AudioRecognitionService audioRecognitionService, StringService stringService, SoundContentService soundContentService) {
+    public RecognizeController(AudioRecognitionService audioRecognitionService, StringService stringService, SoundContentService soundContentService, GoogleBardService googleBardService) {
         this.audioRecognitionService = audioRecognitionService;
         this.stringService = stringService;
         this.soundContentService = soundContentService;
+        this.googleBardService = googleBardService;
     }
 
     @PostMapping(value = "/recognize-from-content", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -65,7 +69,7 @@ public class RecognizeController {
 
         int numberMistakes = 2;
         if (wrongAnswerCounter == numberMistakes) {
-            recognitionResult.setUserAssistantText("User assistant");
+            recognitionResult.setUserAssistantText(googleBardService.buildQueryAboutPronunciationAndAskBard(recognitionResult.getWrongText(), language));
             wrongAnswerCounter = 0;
         }
 
@@ -103,6 +107,7 @@ public class RecognizeController {
         }
         return fileDestination;
     }
+
 
     private RecognitionResult makeRecognitionAndSaveToResults(String filePath, Language language, String textToRecognize) {
         String recognizedAudioRecord = audioRecognitionService.recognizeAudioRecord(

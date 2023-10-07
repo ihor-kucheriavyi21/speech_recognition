@@ -3,11 +3,19 @@ package ihorko.work.speech_recognition.service;
 import com.pkslow.ai.GoogleBardClient;
 import com.pkslow.ai.domain.Answer;
 import ihorko.work.speech_recognition.common.Language;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GoogleBardService {
 
-    public String getAnswerFromBard(String text, Language language) {
-        GoogleBardClient client = new GoogleBardClient("agjaz9183at_ZCbL0A9FjJXL5wYNxobR7fgHbzPjyMVLx2NhN9QZgWvIPiYfk1_Vefz_0w.;sidts-CjEB3e41heZGRqkFokqPheHY7fzuACzqR84rTf9T2mM7gfGnr-j0ordK_9IY3NN-X6tIEAA");
+    public String getAnswerFromBard(String text) {
+        //__Secure-1PSID;__Secure-1PSIDTS
+        GoogleBardClient client = new GoogleBardClient("bgjaz3UlV_agKHh2dcfTozDQ-m5Gu5ZgsCHi7XNfdAsTAG9IoOyQ7fWed9X1k_ZWGdWpbw.;sidts-CjEB3e41hTTwBaC8c9QqV-nXkxMtCLzBXrPX3DmRcp8mtF9WS5qQ7VUAKdhTL1iVqsdKEAA");
+        Answer ask = client.ask(text);
+        return ask.getChosenAnswer();
+    }
+
+    public String buildQueryAboutPronunciationAndAskBard(String text, Language language) {
         String query;
         if (language == Language.ENGLISH) {
             query = String.format("I have a problem with the pronunciation of words %s. Please teach me how to pronounce" +
@@ -15,11 +23,6 @@ public class GoogleBardService {
         } else {
             query = String.format("У мене проблема з вимовою слів %s. Будь ласка, навчіть мене вимовляти це в одному абзаці та не використовуйте більше 100 слів", text);
         }
-
-        Answer ask = client.ask(query);
-        String response = ask.getChosenAnswer();
-
-        System.out.println(response);
-        return response;
+        return getAnswerFromBard(query);
     }
 }
