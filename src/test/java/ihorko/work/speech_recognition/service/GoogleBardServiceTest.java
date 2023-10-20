@@ -30,4 +30,21 @@ class GoogleBardServiceTest {
         LOGGER.info("Answer from BARD: " + answerFromBard);
         Assertions.assertTrue(answerFromBard.contains(wordForTesting), " Answer from BARD should contains word schedule");
     }
+
+    @Test
+    void testEnglishQueryFromGoogleBardService() {
+        String wordForTesting = "schedule";
+        String answerFromBard = googleBardService.buildQueryAboutPronunciationAndAskBard(wordForTesting, Language.ENGLISH);
+        LOGGER.info("Answer from BARD: " + answerFromBard);
+        Assertions.assertTrue(answerFromBard.contains(wordForTesting), " Answer from BARD should contains word schedule");
+    }
+
+    @Test
+    void testUkraineQueryFromGoogleBardService() {
+        String wordForTesting = "Графік";
+        String answerFromBard = googleBardService.buildQueryAboutPronunciationAndAskBard(wordForTesting, Language.UKRAINIAN);
+        LOGGER.info("Answer from BARD: " + answerFromBard);
+
+        Assertions.assertTrue(answerFromBard.contains(wordForTesting), " Answer from BARD should contains word %s".formatted(wordForTesting));
+    }
 }

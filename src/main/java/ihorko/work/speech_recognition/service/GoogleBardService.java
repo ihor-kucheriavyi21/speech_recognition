@@ -10,7 +10,7 @@ public class GoogleBardService {
 
     public String getAnswerFromBard(String text) {
         //__Secure-1PSID;__Secure-1PSIDTS
-        GoogleBardClient client = new GoogleBardClient("bgjaz3UlV_agKHh2dcfTozDQ-m5Gu5ZgsCHi7XNfdAsTAG9IoOyQ7fWed9X1k_ZWGdWpbw.;sidts-CjEB3e41hTTwBaC8c9QqV-nXkxMtCLzBXrPX3DmRcp8mtF9WS5qQ7VUAKdhTL1iVqsdKEAA");
+        GoogleBardClient client = new GoogleBardClient("bgjaz3UlV_agKHh2dcfTozDQ-m5Gu5ZgsWS5qQ7VUAKdhTL1iVqsdKEAA");
         Answer ask = client.ask(text);
         return ask.getChosenAnswer();
     }
