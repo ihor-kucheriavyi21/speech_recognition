@@ -15,6 +15,6 @@
 
         <mapping class="ihorko.work.speech_recognition.db.entity.Sound"/>
         <mapping class="ihorko.work.speech_recognition.db.entity.SoundContent"/>
-        <mapping class="ihorko.work.speech_recognition.db.entity.DBFile"/>
+        <mapping class="ihorko.work.speech_recognition.db.entity.File"/>
     </session-factory>
 </hibernate-configuration>

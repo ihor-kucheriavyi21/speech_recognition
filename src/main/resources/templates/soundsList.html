@@ -9,38 +9,22 @@
 </div>
 <div class="container">
     <div th:switch="${soundsLists}">
-        <h2 th:case="null">No sounds yet!</h2>
+        <h2 th:case="null" th:text="#{no_sounds_yet}"></h2>
         <div th:case="*">
             <div class="jumbotron">
-                <h1 class="display-4 page-title">
-                    Sounds
+                <h1 class="display-4 page-title" th:text="#{sounds}">
                 </h1>
-                <p class="lead">There is a displayed sounds for the English language. You can choose one and start to
-                    learn pronunciation!</p>
+                <p class="lead" th:text="#{displayed_sounds_you_can_choose_and_learn}"></p>
             </div>
             <div th:each="shortSoundList : ${soundsLists}" class="row">
                 <div th:each="sound :${shortSoundList}" th:remove="tag">
-                    <p class="rounded-pill btn-secondary col-3 sound-block" th:text="${sound.getName()}"></p>
+                    <a class="rounded-pill btn-secondary col-3 sound-block" th:text="${sound.getName()}"
+                       th:href="@{${'/sound-contents/' + sound.getId()}}"></a>
                 </div>
             </div>
-            <!--todo remove comments-->
-            <!-- <table>
-                 <thead>
-                 <tr>
-                     <th>Name</th>
-                     <th>Language</th>
-                 </tr>
-                 </thead>
-                 <tbody>
-                 <tr th:each="sound : ${sounds}">
-                     <td th:text="${sound.getName()}"></td>
-                     <td th:text="${sound.getLanguage()}"></td>
-                 </tr>
-                 </tbody>
-             </table>-->
         </div>
         <div class="d-flex justify-content-center">
-            <a class="btn btn-success add-button" th:href="@{/sound/create/page}">Add a new sound</a>
+            <a class="btn btn-success add-button" th:href="@{/sound/create/page}" th:text="#{add_sound}"></a>
         </div>
     </div>
 </div>

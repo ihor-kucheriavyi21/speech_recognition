@@ -7,28 +7,33 @@
 <body>
 <div th:insert="fragments/navbar :: navbar">
 </div>
+
 <div class="container">
+    <div th:switch="${message}">
+        <div th:case="'Success'" class="alert alert-success">
+            <strong th:text="#{success}"></strong> <span th:text="#{operation_performed_successfully}"></span>
+        </div>
+        <div th:case="'Failed'" class="alert alert-danger">
+            <strong th:text="#{failure}"></strong> <span th:text="#{operation_failed}"></span>
+        </div>
+    </div>
+
     <h3>
-        <!--        todo add sound description for sound and type for sound content-->
         <div class="jumbotron">
-            <h1 class="display-4 page-title">
-                Sound description...
+            <h1 class="display-4 page-title" th:text="#{material_for_study}">
             </h1>
+            <p class="lead" th:text="#{displayed_sound_content}"></p>
         </div>
         <table class="table table-bordered">
             <thead class="bg-primary text-white">
             <tr>
-                <th>
-                    Content text
+                <th th:text="#{content_text}">
                 </th>
-                <th>
-                    Type content
+                <th th:text="#{type_content}">
                 </th>
-                <th>
-                    Audio
+                <th th:text="#{audio}">
                 </th>
-                <th>
-                    Link on content
+                <th th:text="#{link_on_content}">
                 </th>
             </tr>
             </thead>
@@ -41,20 +46,16 @@
                         <source th:src="@{${'/files/'+sound_content.getAudioFile().getId()}}">
                     </audio>
                 </td>
-                <!-- <td>
-                     <img th:if="${sound_content.getGifFile()!=null}"
-                          th:src="@{${'/files/'+ sound_content.getGifFile().getId()}}"
-                          alt="Image does not exist">
-                 </td>-->
                 <td class="text-center">
-                    <a class="btn btn-info" th:href="@{${'/sound-content/'+ sound_content.getId()}}">Open</a>
+                    <a class="btn btn-info" th:href="@{${'/sound-content/'+ sound_content.getId()}}"
+                       th:text="#{open}"></a>
                 </td>
             </tr>
             </tbody>
         </table>
         <div class="d-flex justify-content-center">
-            <a class="btn btn-success add-button" th:href="@{/sound-content/create/page}">
-                Add a new sound content
+            <a class="btn btn-success add-button" th:href="@{/sound-content/create/page}"
+               th:text="#{add_new_sound_content}">
             </a>
         </div>
     </h3>

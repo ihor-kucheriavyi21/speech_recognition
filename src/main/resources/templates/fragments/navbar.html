@@ -5,9 +5,8 @@
     <title>Navigation Bar</title>
 </head>
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default" th:fragment="navbar">
-    <a class="navbar-brand px-2" href="#">
+<nav class=" navbar navbar-expand-lg navbar-light bg-light navbar-default" th:fragment="navbar">
+    <a class="navbar-brand px-2" th:href="@{/language}">
         <img class="figure-img img-fluid rounded"
              th:src="@{/image/nav-icon.png}"
              alt="Logo" width="40" height="40"/>
@@ -22,22 +21,29 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/sounds/list">
-                    Sound list
+                <a class="nav-link" th:href="@{/sounds/list}" th:text="#{sound_list}">
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/sound-contents/list">
-                    Sound content list
+                <a class="nav-link" th:href="@{/sound-contents/list}" th:text="#{sound_content_list}">
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    Learn your own words
+                <a class="nav-link" th:href="@{/own-words}" th:text="#{learn_your_own_words}">
                 </a>
             </li>
         </ul>
+
     </div>
+
+    <a class="nav-link" th:href="@{/language?lang=en}">
+        <img type="image" th:src="@{/image/england-flag.jpg}"
+             alt="English language" width="32" height="18"/>
+    </a>
+    <a class="nav-link" th:href="@{/language?lang=ua}">
+        <img type="image" th:src="@{/image/ukraine-flag.jpg}"
+             alt="Ukrainian language" width="32" height="18"/>
+    </a>
 </nav>
 </body>
 </html>

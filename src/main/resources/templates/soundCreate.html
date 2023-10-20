@@ -4,20 +4,48 @@
     <title>Sound content creating</title>
     <meta th:insert="fragments/header :: header"/>
 </head>
-<body>
 <div th:insert="fragments/navbar :: navbar">
 </div>
-<h1>
-    <form th:action="@{/sound/create}" th:object="${sound}" method="post">
-        <label>Name
-            <input type="text" th:field="*{name}">
-        </label>
-        <label>Language
-            <input type="text" th:field="*{language}">
-        </label>
-        <input type="submit">
-    </form>
-</h1>
+<section class="p-4" style="background-color: #eee;">
+    <div class="container w-50">
+        <div class="card p-1">
+            <div class="card-body p-md-5">
+                <h4 class="mb-3 text-uppercase text-center" th:text="#{sound_creation_form}">
+                </h4>
+                <div class="row">
+                    <div class="col-form-label-lg">
+                        <form th:action="@{/sound/create}" th:object="${sound}" method="post">
+                            <div class="row align-items-center p-2">
+                                <div class="col-3 ">
+                                    <h5 class="mb-0" th:text="#{sound_name}">
+                                    </h5>
+                                </div>
+                                <div class="col-9">
+                                    <input required class="form-control form-control-lg" type="text" th:field="*{name}">
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center p-2">
+                                <div class="col-3">
+                                    <h5 class="mb-0" th:text="#{language}">
+                                    </h5>
+                                </div>
+                                <div class="col-9">
+                                    <select required class="form-select form-select-lg" th:field="*{language}">
+                                        <option value="English" th:text="#{english}"></option>
+                                        <option value="Ukrainian" th:text="#{ukrainian}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <input class="btn btn-primary btn-lg" type="submit" th:value="#{submit}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <div th:insert="fragments/footer :: footer"></div>
 </body>
 </html>

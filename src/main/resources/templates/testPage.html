@@ -13,33 +13,168 @@
 </head>
 <body>
 
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default">
+    <a class="navbar-brand px-2" href="/language">
+        <img class="figure-img img-fluid rounded" src="./Sound contents List_files/nav-icon.png" alt="Logo" width="40" height="40">
+        <span>
+            Speech learning
+        </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/sounds/list">
+                    Sound list
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/sound-contents/list">
+                    Sound content list
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/sound-contents/list#">
+                    Learn your own words
+                </a>
+            </li>
+        </ul>
 
-<!-- Modal -->
-<div class="modal" id="exampleModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class=" col text-center">
-                    <h5 class="modal-title">
-                        Game Over <span id="finish-result">0</span>
-                    </h5>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class=" col text-center">
-                    <p>
-                        You are a powerful knight go on.
-                    </p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="col text-center">
-                    <button th:href="@{/game}" type="button" class="btn btn-primary">
-                        Restart game
-                    </button>
+    </div>
+
+    <a class="nav-link" href="http://localhost:8080/sound-contents/list?lang=en">
+        <img type="image" src="./Sound contents List_files/england-flag.jpg" alt="English language" width="32" height="18">
+    </a>
+    <a class="nav-link" href="http://localhost:8080/sound-contents/list?lang=ua">
+        <img type="image" src="./Sound contents List_files/ukraine-flag.jpg" alt="Ukrainian language" width="32" height="18">
+    </a>
+</nav></div>
+
+<section class="p-4">
+    <div class="container w-50">
+        <div class="card p-1">
+            <div class="card-body p-md-5">
+                <h3 class="mb-3 text-uppercase text-center">
+                    Here you can learn own words just type into text box and verify if you pronounce it correctly.
+                </h3>
+                <div class="row">
+                    <div class="col">
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h5 class="mb-0" th:text="#{content_text}">
+                                    Text that you want pronounce
+                                </h5>
+                            </div>
+                            <div class="col-9">
+                                <input required class="form-control form-control-lg" type="text" id="user-entered-text"
+                                       th:field="*{contentText}">
+                            </div>
+                        </div>
+                        <div class="row align-items-center p-2">
+                            <div class="col-3">
+                                <h5 class="mb-0" th:text="#{language}">
+                                </h5>
+                            </div>
+                            <div class="col-9">
+                                <select required class="form-select form-select-lg" id="selected-language">
+                                    <option value="English" th:text="#{}">english</option>
+                                    <option value="Ukrainian" th:text="#{}">ukrainian</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div data-role="controls">
+                                <button class="btn btn-success btn-lg" id="audio-recorder" th:text="#{start_recording}">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div data-role="recordings">
+                                <button class="btn btn-success btn-lg" id="upload-button" onclick="uploadFile()"
+                                        th:text="#{verify_record}">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0 text-success" id="success-label" style="visibility: hidden"
+                                    th:text="#{correctly_pronounced_text}">
+                                </h4>
+                            </div>
+                            <div class="col-9">
+                                <p class="lead" id="recognized-success-result"></p>
+                            </div>
+                        </div>
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0 text-danger" id="failed-label" style="visibility: hidden"
+                                    th:text="#{incorrectly_pronounced_text}">
+                                </h4>
+                            </div>
+                            <div class="col-9">
+                                <p class="lead" id="recognized-failed-result"></p>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0 text-info" id="full-label" style="visibility: hidden"
+                                    th:text="#{full_recognized_text}">
+                                </h4>
+                            </div>
+                            <div class="col-9">
+                                <p class="lead" id="recognized-full-result"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
+<div class="" th:fragment="footer">
+    <footer class="bg-light fixed-bottom border-top p-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 d-flex align-items-center">
+                    <span class="text-muted">© 2022 Ihorko Company, Inc</span>
+                </div>
+
+                <div class="col-md-4 d-flex align-items-center justify-content-center ">
+                    <a href="#">
+                        <img class="figure-img img-fluid rounded"
+                             th:src="@{/image/nav-icon.png}"
+                             alt="Logo" width="40" height="40"/>
+                    </a>
+                </div>
+                <ul class="nav col-md-4 justify-content-end d-flex">
+                    <li class="ms-3">
+                        <a class="text-muted" href="https://github.com/Ascomos21">
+                            <img class="figure-img img-fluid rounded"
+                                 th:src="@{/image/github-icon.png}"
+                                 alt="GitHub" width="40" height="40"/>
+                        </a>
+                    </li>
+                    <li class="ms-3"><a class="text-muted" href="https://www.instagram.com/ascomos228/">
+                        <img class="figure-img img-fluid rounded"
+                             th:src="@{/image/instagram-icon.png}"
+                             alt="Instagram" width="40" height="40"/>
+                    </a>
+                    </li>
+                    <li class="ms-3">
+                        <a class="text-muted" href="https://t.me/Ascomos">
+                            <img class="figure-img img-fluid rounded"
+                                 th:src="@{/image/telegram-icon.png}"
+                                 alt="Telegram" width="40"
+                                 height="40"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 </div>
 </body>

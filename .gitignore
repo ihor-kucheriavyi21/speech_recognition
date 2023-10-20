@@ -5,7 +5,7 @@ target/
 !**/src/test/**/target/
 
 #Created file
-*.wav
+src/main/resources/python/recorderDestination.wav
 *.mp3
 *bootstrap*
 

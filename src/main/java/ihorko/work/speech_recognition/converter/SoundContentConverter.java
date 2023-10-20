@@ -4,9 +4,6 @@ import ihorko.work.speech_recognition.db.dto.SoundContentDto;
 import ihorko.work.speech_recognition.db.entity.SoundContent;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
-import java.util.List;
-
 @Component
 public class SoundContentConverter {
 
@@ -16,20 +13,15 @@ public class SoundContentConverter {
         soundContentDto.setSound(soundContent.getSound());
         soundContentDto.setId(soundContent.getId());
         soundContentDto.setContentType(soundContent.getTypeContent());
-        soundContentDto.setAudioFile(soundContent.getDbFiles()
+        soundContentDto.setAudioFile(soundContent.getFiles()
                 .stream()
                 .filter(content -> content.getFileType().contains("audio"))
                 .findFirst().orElse(null));
-        soundContentDto.setGifFile(soundContent.getDbFiles()
+        soundContentDto.setGifFile(soundContent.getFiles()
                 .stream()
                 .filter(content -> content.getFileType().contains("image"))
                 .findFirst().orElse(null));
         return soundContentDto;
     }
 
-    public List<SoundContentDto> convert(List<SoundContent> soundContents) {
-        List<SoundContentDto> listToConvert = new LinkedList<>();
-        soundContents.forEach(element -> listToConvert.add(convert(element)));
-        return listToConvert;
-    }
 }

@@ -1,6 +1,6 @@
 package ihorko.work.speech_recognition.db.dao;
 
-import ihorko.work.speech_recognition.db.entity.DBFile;
+import ihorko.work.speech_recognition.db.entity.File;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,11 +19,11 @@ public class DBFileDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public void persist(DBFile dbFile) {
-        sessionFactory.getCurrentSession().saveOrUpdate(dbFile);
+    public void persist(File file) {
+        sessionFactory.getCurrentSession().saveOrUpdate(file);
     }
 
-    public DBFile findById(UUID uuid) {
-        return sessionFactory.getCurrentSession().get(DBFile.class, uuid);
+    public File findById(UUID uuid) {
+        return sessionFactory.getCurrentSession().get(File.class, uuid);
     }
 }

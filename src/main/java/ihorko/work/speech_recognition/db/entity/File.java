@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity(name = "file")
-public class DBFile {
+public class File {
 
     @Id
     @GeneratedValue
@@ -17,17 +17,17 @@ public class DBFile {
     private String fileType;
 
     @Lob
-    @Type(type="org.hibernate.type.BinaryType")
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] data;
 
     @ManyToOne
     @JoinColumn(name = "sound_content_id")
     private SoundContent soundContent;
 
-    public DBFile() {
+    public File() {
     }
 
-    public DBFile(String fileName, String fileType, byte[] data) {
+    public File(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;

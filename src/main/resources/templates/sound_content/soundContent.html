@@ -4,22 +4,24 @@
     <meta th:insert="fragments/header :: header"/>
     <title>Sound</title>
 </head>
-<body>
 <div th:insert="fragments/navbar :: navbar">
 </div>
+<body class="d-flex flex-column min-vh-100">
+
+
 <section class="p-4">
     <div class="container w-50">
         <div class="card p-1">
             <div class="card-body p-md-5">
                 <h3 class="mb-3 text-uppercase text-center">
-                    Learn how to pronounce <strong th:text="${soundContent.getSound().getName()}">Short ch</strong>
+                    <span th:text="#{learn_how_pronounce}"></span><strong
+                        th:text="${soundContent.getSound().getName()}"></strong>
                 </h3>
                 <div class="row">
                     <div class="col">
                         <div class="row align-items-center p-2">
                             <div class="col-3 ">
-                                <h4 class="mb-0">
-                                    Listen the audio
+                                <h4 class="mb-0" th:text="#{listen_the_audio_with_pronunciation}">
                                 </h4>
                             </div>
 
@@ -32,8 +34,7 @@
 
                         <div class="row align-items-center p-2">
                             <div class="col-3 ">
-                                <h4 class="mb-0">
-                                    Content for pronunciation
+                                <h4 class="mb-0" th:text="#{content_for_pronunciation}">
                                 </h4>
                             </div>
                             <div class="col-9">
@@ -47,7 +48,7 @@
                                          th:src="@{${'/files/'+ soundContent.getGifFile().getId()}}"
                                          alt="Image does not exist">
                                     <figcaption class="figure-caption">
-                                        Image how to pronounce <strong
+                                        <span th:text="#{image_how_to_pronounce}"></span> <strong
                                             th:text="${soundContent.getSound().getName()}"></strong>
                                     </figcaption>
                                 </figure>
@@ -55,21 +56,21 @@
                         </div>
                         <div class="row p-2">
                             <div data-role="controls">
-                                <button class="btn btn-success btn-lg" id="audio-recorder">
-                                    Make audio record
+                                <button class="btn btn-success btn-lg" id="audio-recorder" th:text="#{start_recording}">
                                 </button>
                             </div>
                         </div>
                         <div class="row p-2">
                             <div data-role="recordings">
-                                <button class="btn btn-success btn-lg" id="upload-button" onclick="uploadFile()">
-                                    Verify record
+                                <button class="btn btn-success btn-lg" id="upload-button" onclick="uploadFile()"
+                                        th:text="#{verify_record}">
                                 </button>
                             </div>
                         </div>
                         <div class="row align-items-center p-2">
                             <div class="col-3 ">
-                                <h4 class="mb-0 text-success" id="success-label">
+                                <h4 class="mb-0 text-success" id="success-label" style="visibility: hidden"
+                                    th:text="#{correctly_pronounced_text}">
                                 </h4>
                             </div>
                             <div class="col-9">
@@ -78,11 +79,23 @@
                         </div>
                         <div class="row align-items-center p-2">
                             <div class="col-3 ">
-                                <h4 class="mb-0 text-danger" id="failed-label">
+                                <h4 class="mb-0 text-danger" id="failed-label" style="visibility: hidden"
+                                    th:text="#{incorrectly_pronounced_text}">
                                 </h4>
                             </div>
                             <div class="col-9">
                                 <p class="lead" id="recognized-failed-result"></p>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center p-2">
+                            <div class="col-3 ">
+                                <h4 class="mb-0 text-info" id="full-label" style="visibility: hidden"
+                                    th:text="#{full_recognized_text}">
+                                </h4>
+                            </div>
+                            <div class="col-9">
+                                <p class="lead" id="recognized-full-result"></p>
                             </div>
                         </div>
                     </div>
@@ -100,48 +113,71 @@
 <script>
 
     let savedAudio;
+    let successResult = document.getElementById("recognized-success-result");
+    let successLabel = document.getElementById("success-label");
 
+    /**
+     * @param data.wrongText -  text that our user said wrong
+     *  @param data.correctText - text that matching with our content
+     *  @param data.fullText - full recognized text
+     * @returns {Promise<void>}
+     */
     async function uploadFile() {
         let formData = new FormData();
 
         formData.append('file', savedAudio, 'testRecorder.wav');
-        var contentText = document.getElementById("content-text")
-        formData.append("contentText", contentText.innerText);
+        const soundContentId = window.location.pathname.split("/").pop()
 
-        await fetch('/upload', {
+        formData.append("soundContentId", soundContentId);
+
+        await fetch('/recognize-from-content', {
             method: "POST",
             body: formData
-        }).then(response =>
-            response.json().then(data => ({
+        }).then(response => response.json()
+            .then(data => ({
                     data: data,
                     status: response.status
                 })
             ).then(result => {
-                let successResult = document.getElementById("recognized-success-result");
-                let successLabel = document.getElementById("success-label");
-                if (result.data.correctText.length > 0) {
-                    successResult.textContent = result.data.correctText;
-                    successLabel.textContent = "Correctly pronounced text";
-                } else {
-                    successResult.textContent = "";
-                    successLabel.textContent = "";
-                }
+                    if (!response.ok) {
+                        successResult.textContent = 'The text was not recognized try again';
+                        return;
+                    }
+                    if (result.data.correctText.length > 0) {
+                        successResult.textContent = result.data.correctText;
+                        successLabel.style.visibility = "visible";
+                    } else {
+                        successResult.textContent = "";
+                        successLabel.style.visibility = "hidden";
+                    }
 
-                let failedResult = document.getElementById("recognized-failed-result");
-                let failedLabel = document.getElementById("failed-label");
-                if (result.data.wrongText.length > 0) {
-                    failedResult.textContent = result.data.wrongText;
-                    failedLabel.textContent = "Incorrectly pronounced text";
-                } else {
-                    failedResult.textContent = "";
-                    failedLabel.textContent = "";
+                    let failedResult = document.getElementById("recognized-failed-result");
+                    let failedLabel = document.getElementById("failed-label");
+                    if (result.data.wrongText.length > 0) {
+                        failedResult.textContent = result.data.wrongText;
+                        failedLabel.style.visibility = "visible";
+                    } else {
+                        failedResult.textContent = "";
+                        failedLabel.style.visibility = "hidden";
+                    }
+
+                    let fullResult = document.getElementById("recognized-full-result");
+                    let fullLabel = document.getElementById("full-label");
+                    if (result.data.fullText.length > 0) {
+                        fullResult.textContent = result.data.fullText;
+                        fullLabel.style.visibility = "visible";
+                    } else {
+                        fullResult.textContent = "";
+                        fullLabel.style.visibility = "hidden";
+                    }
+
                 }
-            }));
+            ))
     }
 
     jQuery(document).ready(function () {
-        var $ = jQuery;
-        var myRecorder = {
+        const $ = jQuery;
+        let myRecorder = {
             objects: {
                 context: null,
                 stream: null,
@@ -219,9 +255,13 @@
             // Toggle
             if (!buttonState) {
                 $(this).attr('data-recording', 'true');
+                $(this).removeClass('btn-success');
+                $(this).addClass('btn-danger')
                 myRecorder.start();
             } else {
                 $(this).attr('data-recording', '');
+                $(this).removeClass('btn-danger');
+                $(this).addClass('btn-success')
                 myRecorder.stop(listObject);
             }
         });

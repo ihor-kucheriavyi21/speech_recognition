@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Language</title>
+    <meta th:insert="fragments/header :: header">
+</head>
+<div th:insert="fragments/navbar :: navbar">
+</div>
+<body>
+<div class="py-5">
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4 page-title" th:text="#{greeting}">
+            </h1>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4 box-shadow">
+                    <img class="card-img-top"
+                         alt="English language"
+                         th:src="@{/image/england-flag.jpg}">
+                    <div class="card-body">
+                        <p class="card-text" th:text="#{content_for_learning_english}"></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a th:href="@{/sounds/list/English}"
+                                   type="button" class="btn btn-sm btn-outline-secondary" th:text="#{open}"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4 box-shadow">
+                    <img class="card-img-top"
+                         alt="English language"
+                         th:src="@{/image/ukraine-flag.jpg}">
+                    <div class="card-body">
+                        <p class="card-text" th:text="#{content_for_learning_ukrainian}"></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a th:href="@{/sounds/list/Ukrainian}"
+                                   type="button" class="btn btn-sm btn-outline-secondary" th:text="#{open}"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

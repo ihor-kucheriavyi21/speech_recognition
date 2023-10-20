@@ -1,22 +1,23 @@
 package ihorko.work.speech_recognition.controller;
 
 import ihorko.work.speech_recognition.db.entity.Sound;
-import ihorko.work.speech_recognition.repository.SoundRepository;
+import ihorko.work.speech_recognition.service.SoundService;
 import org.apache.commons.collections4.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class SoundController {
 
-    private SoundRepository soundRepository;
+    private SoundService soundService;
 
     @Autowired
-    public void setSoundRepository(SoundRepository soundRepository) {
-        this.soundRepository = soundRepository;
+    public void setSoundService(SoundService soundService) {
+        this.soundService = soundService;
     }
 
     @GetMapping("/sound/create/page")
@@ -27,13 +28,19 @@ public class SoundController {
 
     @PostMapping("/sound/create")
     public String createSound(Sound sound) {
-        soundRepository.save(sound);
+        soundService.save(sound);
         return "redirect:/sound/create/page";
     }
 
     @GetMapping("/sounds/list")
     public String showListSounds(Model model) {
-        model.addAttribute("soundsLists", ListUtils.partition(soundRepository.findAll(), 4));
+        model.addAttribute("soundsLists", ListUtils.partition(soundService.findAll(), 4));
+        return "soundsList";
+    }
+
+    @GetMapping("/sounds/list/{language}")
+    public String showListSoundsByLanguage(@PathVariable String language, Model model) {
+        model.addAttribute("soundsLists", ListUtils.partition(soundService.findByLanguage(language), 4));
         return "soundsList";
     }
 }

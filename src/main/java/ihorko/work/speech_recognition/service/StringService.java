@@ -1,32 +1,32 @@
 package ihorko.work.speech_recognition.service;
 
-import ihorko.work.speech_recognition.common.KMPSearch;
 import ihorko.work.speech_recognition.common.RecognitionResult;
+import ihorko.work.speech_recognition.common.StringSearch;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
 
 @Service
-public class StringService {
+public class StringService implements IStringService {
 
-    private static final KMPSearch KMP_SEARCH = new KMPSearch();
+    private static final StringSearch STRING_SEARCH = new StringSearch();
 
-    public RecognitionResult findCorrectAndWrongPartInExpectedText(String result, String expectedResult) {
-
-        expectedResult = expectedResult.toLowerCase(Locale.ROOT);
-        String[] values = result.toLowerCase(Locale.ROOT).split("\\ ");
+    public RecognitionResult findCorrectAndWrongPartInExpectedText(String expectedResult, String result) {
+        String testResult = (" " + result + " ").toLowerCase(Locale.ROOT);
+        String[] values = expectedResult.toLowerCase(Locale.ROOT).split(" ");
 
         StringBuilder correctText = new StringBuilder();
         StringBuilder wrongText = new StringBuilder();
-        //todo improve using stream
+
         for (String pattern : values) {
-            if (KMP_SEARCH.findWordByPatternInText(pattern, expectedResult) > -1) {
+            if (STRING_SEARCH.search(" " + pattern + " ", testResult)) {
                 correctText.append(pattern).append(" ");
-                expectedResult = expectedResult.replaceFirst(pattern, "");
+                testResult = testResult.replaceFirst(pattern, "");
             } else {
                 wrongText.append(pattern).append(" ");
             }
         }
-        return new RecognitionResult(correctText.toString(), wrongText.toString());
+
+        return new RecognitionResult(correctText.toString(), wrongText.toString(), result);
     }
 }

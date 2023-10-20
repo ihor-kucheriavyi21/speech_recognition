@@ -1,6 +1,6 @@
 package ihorko.work.speech_recognition.db.dto;
 
-import ihorko.work.speech_recognition.db.entity.DBFile;
+import ihorko.work.speech_recognition.db.entity.File;
 import ihorko.work.speech_recognition.db.entity.Sound;
 import lombok.Data;
 import lombok.Getter;
@@ -19,7 +19,7 @@ public class SoundContentDto {
 
     private Sound sound;
 
-    private DBFile audioFile;
+    private File audioFile;
 
-    private DBFile gifFile;
+    private File gifFile;
 }

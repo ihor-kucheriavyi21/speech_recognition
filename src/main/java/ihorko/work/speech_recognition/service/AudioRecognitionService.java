@@ -5,27 +5,34 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
 @Service
-public class AudioRecognitionService {
+public class AudioRecognitionService implements IAudioRecognitionService {
 
     private static final Logger LOGGER = Logger.getLogger(AudioRecognitionService.class.getName());
 
     @SneakyThrows
     public String recognizeAudioRecord(String filePathFromSourceRoot, Language language) {
-        ProcessBuilder processBuilder = new ProcessBuilder("python", "src/main/resources/python/audio_recognition.py", filePathFromSourceRoot, language.getCode());
+        ProcessBuilder processBuilder = new ProcessBuilder("python3",
+                "src/main/resources/python/audio_recognition.py", filePathFromSourceRoot, language.getCode());
         processBuilder.redirectErrorStream(true);
         Process process = processBuilder.start();
 
         try (InputStream inputStream = process.getInputStream();
-             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
+             BufferedReader bufferedReader = new BufferedReader(
+                     new InputStreamReader(inputStream))) {
 
             String recognizedText = bufferedReader.readLine();
-            LOGGER.warning(recognizedText);
+            if (recognizedText != null)
+                LOGGER.info(() -> "Recognized text: " + recognizedText);
             return recognizedText;
+        } catch (IOException e) {
+            LOGGER.severe(e.getMessage());
         }
+        return null;
     }
 }
