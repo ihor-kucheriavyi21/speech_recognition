@@ -23,6 +23,6 @@ public class GoogleBardService {
         } else {
             query = String.format("У мене проблема з вимовою слів %s. Будь ласка, навчіть мене вимовляти це в одному абзаці та не використовуйте більше 100 слів", text);
         }
-        return getAnswerFromBard(query);
+        return "Temporary answer";
     }
 }
