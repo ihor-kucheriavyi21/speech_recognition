@@ -28,11 +28,11 @@
                         </div>
                         <div class="row align-items-center p-2">
                             <div class="col-3">
-                                <h5 class="mb-0" th:text="#{language}">
+                                <h5 class="mb-0" th:text="#{topic}">
                                 </h5>
                             </div>
                             <div class="col-9">
-                                <select required class="form-select form-select-lg" id="selected-language">
+                                <select required class="form-select form-select-lg" id="selected-topic">
                                     <option value="English" th:text="#{english}"></option>
                                     <option value="Ukrainian" th:text="#{ukrainian}"></option>
                                 </select>
@@ -110,9 +110,9 @@
 
         formData.append('file', savedAudio, 'testRecorder.wav');
         const contentText = document.getElementById("user-entered-text").value;
-        const selectedLanguage = document.getElementById("selected-language").value;
+        const selectedTopic = document.getElementById("selected-topic").value;
         formData.append("textToRecognize", contentText);
-        formData.append("language", selectedLanguage);
+        formData.append("topic", selectedTopic);
         await fetch('/recognize-from-text', {
             method: "POST",
             body: formData

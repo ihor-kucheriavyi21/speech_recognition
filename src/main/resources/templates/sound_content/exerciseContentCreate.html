@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Create sound</title>
+    <title>Create exercise</title>
     <meta th:insert="fragments/header::header">
 </head>
 <body>
@@ -10,11 +10,11 @@
     <div class="container w-50">
         <div class="card p-1">
             <div class="card-body p-md-5">
-                <h4 class="mb-3 text-uppercase text-center" th:text="#{sound_content_creation_form}">
+                <h4 class="mb-3 text-uppercase text-center" th:text="#{exercise_content_creation_form}">
                 </h4>
                 <div class="row">
                     <div class="col-form-label-lg">
-                        <form th:action="@{/sound-content/create}" th:object="${soundContent}"
+                        <form th:action="@{/exercise-content/create}" th:object="${ExerciseContent}"
                               enctype="multipart/form-data"
                               method="post">
                             <div class="row align-items-center p-2">
@@ -41,15 +41,15 @@
 
                             <div class="row align-items-center p-2 ">
                                 <div class="col-3">
-                                    <h5 class="mb-0" th:text="#{select_sound}">
+                                    <h5 class="mb-0" th:text="#{select_exercise}">
                                     </h5>
                                 </div>
                                 <div class="col-9">
 
-                                    <select class="form-select form-select-lg" th:field="*{sound.id}">
-                                        <option th:each="sound : ${sounds}"
-                                                th:value="${sound.getId()}"
-                                                th:text="${sound.getName()}">
+                                    <select class="form-select form-select-lg" th:field="*{exercise.id}">
+                                        <option th:each="exercise : ${exercises}"
+                                                th:value="${exercise.getId()}"
+                                                th:text="${exercise.getName()}">
                                         </option>
 
                                     </select>

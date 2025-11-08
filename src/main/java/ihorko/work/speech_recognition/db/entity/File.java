@@ -21,8 +21,8 @@ public class File {
     private byte[] data;
 
     @ManyToOne
-    @JoinColumn(name = "sound_content_id")
-    private SoundContent soundContent;
+    @JoinColumn(name = "exercise_content_id")
+    private ExerciseContent ExerciseContent;
 
     public File() {
     }
@@ -65,11 +65,11 @@ public class File {
         this.data = data;
     }
 
-    public SoundContent getSoundContent() {
-        return soundContent;
+    public ExerciseContent getExerciseContent() {
+        return ExerciseContent;
     }
 
-    public void setSoundContent(SoundContent soundContent) {
-        this.soundContent = soundContent;
+    public void setExerciseContent(ExerciseContent ExerciseContent) {
+        this.ExerciseContent = ExerciseContent;
     }
 }

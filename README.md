@@ -2,7 +2,7 @@
 
 ## About
 
-- Web-based interactive application for learning the correct pronunciation of sounds using Spring technologies.
+- Web-based interactive application for learning the correct pronunciation of exercises using Spring technologies.
 - Application created using Java, Python, JavaScript. For User Interface I use Bootstrap, HTML/CSS, Thymeleaf.
 
 ## Installation 
@@ -59,11 +59,11 @@
 
 #### Сторінка списку звуків
 
-<img src="git_files/SoundsPage.png" alt="base page" width="633" height="322">
+<img src="git_files/ExercisesPage.png" alt="base page" width="633" height="322">
 
 #### Сторінка матеріалу для вивчення
 
-<img src="git_files/SoundsContentPage.png" alt="base page" width="633" height="322">
+<img src="git_files/ExercisesContentPage.png" alt="base page" width="633" height="322">
 
 ## Автор
 

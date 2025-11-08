@@ -1,7 +1,7 @@
 package ihorko.work.speech_recognition.db;
 
-import ihorko.work.speech_recognition.db.entity.Sound;
-import ihorko.work.speech_recognition.repository.SoundRepository;
+import ihorko.work.speech_recognition.db.entity.Exercise;
+import ihorko.work.speech_recognition.repository.ExerciseRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,31 +9,31 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.MethodName.class)
-class SoundRepositoryTests {
+class ExerciseRepositoryTests {
 
     @Autowired
-    private SoundRepository soundRepository;
+    private ExerciseRepository exerciseRepository;
     private static final String TEST_NAME = "TestName1234";
 
     @Test
     @Order(1)
-    void testCreateSound() {
-        Sound sound = new Sound();
-        sound.setName(TEST_NAME);
-        sound.setLanguage("English");
-        soundRepository.save(sound);
-        var createdSound = soundRepository.findByName(TEST_NAME).get(0);
-        Assertions.assertNotNull(createdSound);
-        Assertions.assertEquals(TEST_NAME, createdSound.getName());
+    void testCreateExercise() {
+        Exercise exercise = new Exercise();
+        exercise.setName(TEST_NAME);
+        exercise.setTopic("English");
+        exerciseRepository.save(exercise);
+        var createdExercise = exerciseRepository.findByName(TEST_NAME).get(0);
+        Assertions.assertNotNull(createdExercise);
+        Assertions.assertEquals(TEST_NAME, createdExercise.getName());
     }
 
     @Test
     @Order(2)
-    void testDeleteSound() {
-        Sound createdSound = soundRepository.findByName(TEST_NAME).get(0);
-        var soundId = createdSound.getId();
-        soundRepository.delete(soundId);
+    void testDeleteExercise() {
+        Exercise createdExercise = exerciseRepository.findByName(TEST_NAME).get(0);
+        var exerciseId = createdExercise.getId();
+        exerciseRepository.delete(exerciseId);
         Assertions.assertThrows(EmptyResultDataAccessException.class,
-                () -> soundRepository.findById(soundId));
+                () -> exerciseRepository.findById(exerciseId));
     }
 }

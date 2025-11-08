@@ -1,6 +1,6 @@
 package ihorko.work.speech_recognition.service;
 
-import ihorko.work.speech_recognition.common.Language;
+import ihorko.work.speech_recognition.common.Topic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ class TestRecognition {
     @Test
     void testEnglishRecognition() {
         String translatedString = audioRecognitionService.recognizeAudioRecord(
-                "src/test/resources/englishRecord.wav", Language.ENGLISH);
+                "src/test/resources/englishRecord.wav", Topic.ENGLISH);
 
         //verify if text in audio was recognized
         Assertions.assertTrue(translatedString.contains("error"),
@@ -30,7 +30,7 @@ class TestRecognition {
     @Test
     void testUkraineRecognition() {
         String translatedString = audioRecognitionService.recognizeAudioRecord(
-                "src/test/resources/ukraineRecord.wav", Language.UKRAINIAN);
+                "src/test/resources/ukraineRecord.wav", Topic.UKRAINIAN);
 
         //verify if text in audio was recognized
         Assertions.assertTrue(translatedString

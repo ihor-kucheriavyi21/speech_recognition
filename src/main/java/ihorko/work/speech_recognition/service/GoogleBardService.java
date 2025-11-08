@@ -2,7 +2,7 @@ package ihorko.work.speech_recognition.service;
 
 import com.pkslow.ai.GoogleBardClient;
 import com.pkslow.ai.domain.Answer;
-import ihorko.work.speech_recognition.common.Language;
+import ihorko.work.speech_recognition.common.Topic;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,9 +15,9 @@ public class GoogleBardService {
         return ask.getChosenAnswer();
     }
 
-    public String buildQueryAboutPronunciationAndAskBard(String text, Language language) {
+    public String buildQueryAboutPronunciationAndAskBard(String text, Topic topic) {
         String query;
-        if (language == Language.ENGLISH) {
+        if (topic == Topic.ENGLISH) {
             query = String.format("I have a problem with the pronunciation of words %s. Please teach me how to pronounce" +
                     " that within one paragraph and don't use more than 100 words", text);
         } else {

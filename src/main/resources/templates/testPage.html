@@ -11,8 +11,8 @@
 
 <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default">
-    <a class="navbar-brand px-2" href="/language">
-        <img class="figure-img img-fluid rounded" src="./Sound contents List_files/nav-icon.png" alt="Logo" width="40" height="40">
+    <a class="navbar-brand px-2" href="/topic">
+        <img class="figure-img img-fluid rounded" src="./Exercise contents List_files/nav-icon.png" alt="Logo" width="40" height="40">
         <span>
             Speech learning
         </span>
@@ -23,17 +23,17 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/sounds/list">
-                    Sound list
+                <a class="nav-link" href="/exercises/list">
+                    Exercise list
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/sound-contents/list">
-                    Sound content list
+                <a class="nav-link" href="/exercise-contents/list">
+                    Exercise content list
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/sound-contents/list#">
+                <a class="nav-link" href="/exercise-contents/list#">
                     Learn your own words
                 </a>
             </li>
@@ -41,11 +41,11 @@
 
     </div>
 
-    <a class="nav-link" href="http://localhost:8080/sound-contents/list?lang=en">
-        <img type="image" src="./Sound contents List_files/england-flag.jpg" alt="English language" width="32" height="18">
+    <a class="nav-link" href="http://localhost:8080/exercise-contents/list?lang=en">
+        <img type="image" src="./Exercise contents List_files/england-flag.jpg" alt="English topic" width="32" height="18">
     </a>
-    <a class="nav-link" href="http://localhost:8080/sound-contents/list?lang=ua">
-        <img type="image" src="./Sound contents List_files/ukraine-flag.jpg" alt="Ukrainian language" width="32" height="18">
+    <a class="nav-link" href="http://localhost:8080/exercise-contents/list?lang=ua">
+        <img type="image" src="./Exercise contents List_files/ukraine-flag.jpg" alt="Ukrainian topic" width="32" height="18">
     </a>
 </nav></div>
 
@@ -71,11 +71,11 @@
                         </div>
                         <div class="row align-items-center p-2">
                             <div class="col-3">
-                                <h5 class="mb-0" th:text="#{language}">
+                                <h5 class="mb-0" th:text="#{topic}">
                                 </h5>
                             </div>
                             <div class="col-9">
-                                <select required class="form-select form-select-lg" id="selected-language">
+                                <select required class="form-select form-select-lg" id="selected-topic">
                                     <option value="English" th:text="#{}">english</option>
                                     <option value="Ukrainian" th:text="#{}">ukrainian</option>
                                 </select>

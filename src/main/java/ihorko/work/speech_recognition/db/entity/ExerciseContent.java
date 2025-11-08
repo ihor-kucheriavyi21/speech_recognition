@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Entity(name = "sound_content")
+@Entity(name = "exercise_content")
 @Getter
-public class SoundContent {
+public class ExerciseContent {
 
     @Id
     @GeneratedValue
@@ -20,23 +20,23 @@ public class SoundContent {
     private String typeContent;
 
     @ManyToOne
-    @JoinColumn(name = "sound_id", nullable = false)
-    private Sound sound;
+    @JoinColumn(name = "exercise_id", nullable = false)
+    private Exercise exercise;
 
-    @OneToMany(mappedBy = "soundContent", targetEntity = File.class, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ExerciseContent", targetEntity = File.class, cascade = CascadeType.ALL)
     private List<File> files = new ArrayList<>();
 
     public void addDbFile(File file) {
         files.add(file);
-        file.setSoundContent(this);
+        file.setExerciseContent(this);
     }
 
     public void setContentText(String contentText) {
         this.contentText = contentText;
     }
 
-    public void setSound(Sound sound) {
-        this.sound = sound;
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
     }
 
     public void setId(UUID id) {

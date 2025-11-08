@@ -1,6 +1,6 @@
 package ihorko.work.speech_recognition.service;
 
-import ihorko.work.speech_recognition.common.Language;
+import ihorko.work.speech_recognition.common.Topic;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ class GoogleBardServiceTest {
     @Test
     void testQueryFromGoogleBardService() {
         String wordForTesting = "schedule";
-        String answerFromBard = googleBardService.buildQueryAboutPronunciationAndAskBard(wordForTesting, Language.ENGLISH);
+        String answerFromBard = googleBardService.buildQueryAboutPronunciationAndAskBard(wordForTesting, Topic.ENGLISH);
         LOGGER.info("Answer from BARD: " + answerFromBard);
         Assertions.assertTrue(answerFromBard.contains(wordForTesting), " Answer from BARD should contains word schedule");
     }
@@ -34,7 +34,7 @@ class GoogleBardServiceTest {
     @Test
     void testEnglishQueryFromGoogleBardService() {
         String wordForTesting = "schedule";
-        String answerFromBard = googleBardService.buildQueryAboutPronunciationAndAskBard(wordForTesting, Language.ENGLISH);
+        String answerFromBard = googleBardService.buildQueryAboutPronunciationAndAskBard(wordForTesting, Topic.ENGLISH);
         LOGGER.info("Answer from BARD: " + answerFromBard);
         Assertions.assertTrue(answerFromBard.contains(wordForTesting), " Answer from BARD should contains word schedule");
     }
@@ -42,7 +42,7 @@ class GoogleBardServiceTest {
     @Test
     void testUkraineQueryFromGoogleBardService() {
         String wordForTesting = "Графік";
-        String answerFromBard = googleBardService.buildQueryAboutPronunciationAndAskBard(wordForTesting, Language.UKRAINIAN);
+        String answerFromBard = googleBardService.buildQueryAboutPronunciationAndAskBard(wordForTesting, Topic.UKRAINIAN);
         LOGGER.info("Answer from BARD: " + answerFromBard);
 
         Assertions.assertTrue(answerFromBard.contains(wordForTesting), " Answer from BARD should contains word %s".formatted(wordForTesting));

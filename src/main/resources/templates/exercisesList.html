@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Exercise list</title>
+    <meta th:insert="fragments/header :: header">
+</head>
+<body>
+<div th:insert="fragments/navbar :: navbar">
+</div>
+<div class="container">
+    <div th:switch="${exercisesLists}">
+        <h2 th:case="null" th:text="#{no_exercises_yet}"></h2>
+        <div th:case="*">
+            <div class="jumbotron">
+                <h1 class="display-4 page-title" th:text="#{exercises}">
+                </h1>
+                <p class="lead" th:text="#{displayed_exercises_you_can_choose_and_learn}"></p>
+            </div>
+            <div th:each="shortExerciseList : ${exercisesLists}" class="row">
+                <div th:each="exercise :${shortExerciseList}" th:remove="tag">
+                    <a class="rounded-pill btn-secondary col-3 exercise-block" th:text="${exercise.getName()}"
+                       th:href="@{${'/exercise-contents/' + exercise.getId()}}"></a>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-success add-button" th:href="@{/exercise/create/page}" th:text="#{add_exercise}"></a>
+        </div>
+    </div>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

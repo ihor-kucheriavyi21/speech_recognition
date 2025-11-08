@@ -1,7 +1,7 @@
 package ihorko.work.speech_recognition.db.dto;
 
 import ihorko.work.speech_recognition.db.entity.File;
-import ihorko.work.speech_recognition.db.entity.Sound;
+import ihorko.work.speech_recognition.db.entity.Exercise;
 import lombok.Data;
 import lombok.Getter;
 
@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @Getter
-public class SoundContentDto {
+public class ExerciseContentDto {
 
     private UUID id;
 
@@ -17,7 +17,7 @@ public class SoundContentDto {
 
     private String contentType;
 
-    private Sound sound;
+    private Exercise exercise;
 
     private File audioFile;
 

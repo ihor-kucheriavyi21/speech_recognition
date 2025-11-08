@@ -1,7 +1,6 @@
 package ihorko.work.speech_recognition.string_comparison;
 
 import ihorko.work.speech_recognition.common.RecognitionResult;
-import ihorko.work.speech_recognition.service.StringService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
