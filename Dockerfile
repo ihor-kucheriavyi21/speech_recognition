@@ -1,17 +1,25 @@
-# 1. Базовий image з Java 17
-FROM eclipse-temurin:17-jdk-alpine
-
-# 2. Директорія всередині контейнера
+# ---------- STAGE 1: Build ----------
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# 3. Артефакт, який будемо копіювати (jar після maven build)
-ARG JAR_FILE=target/speech_recognition-0.0.1-SNAPSHOT.jar
+# Копіюємо pom.xml і завантажуємо залежності
+COPY pom.xml .
+RUN mvn -B dependency:resolve dependency:resolve-plugins
 
-# 4. Копіюємо jar у контейнер
-COPY ${JAR_FILE} app.jar
+# Копіюємо весь код
+COPY src ./src
 
-# 5. Вказуємо порт для інформації (не обов'язково, але ок)
+# Будуємо JAR
+RUN mvn clean package -DskipTests
+
+# ---------- STAGE 2: Runtime ----------
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+
+# Копіюємо побудований JAR з попереднього шару
+COPY --from=build /app/target/*.jar app.jar
+
+# Динамічний порт (Render передасть PORT)
 EXPOSE 8080
 
-# 6. Команда запуску
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
