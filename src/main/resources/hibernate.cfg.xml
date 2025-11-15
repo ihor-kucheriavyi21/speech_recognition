@@ -13,8 +13,8 @@
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
         <property name="hibernate.connection.autocommit" >false</property>
 
-        <mapping class="ihorko.work.speech_recognition.db.entity.Exercise"/>
-        <mapping class="ihorko.work.speech_recognition.db.entity.ExerciseContent"/>
-        <mapping class="ihorko.work.speech_recognition.db.entity.File"/>
+        <mapping class="ihorko.work.db_learning.db.entity.Exercise"/>
+        <mapping class="ihorko.work.db_learning.db.entity.ExerciseContent"/>
+        <mapping class="ihorko.work.db_learning.db.entity.File"/>
     </session-factory>
 </hibernate-configuration>
