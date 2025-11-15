@@ -1,25 +1,26 @@
 package ihorko.work.speech_recognition.db.dto;
 
-import ihorko.work.speech_recognition.db.entity.File;
-import ihorko.work.speech_recognition.db.entity.Exercise;
 import lombok.Data;
-import lombok.Getter;
-
+import java.util.List;
 import java.util.UUID;
 
 @Data
-@Getter
 public class ExerciseContentDto {
 
     private UUID id;
 
-    private String contentText;
+    private String questionText;
 
-    private String contentType;
+    private String typeContent;
 
-    private Exercise exercise;
+    private List<String> answers;
 
-    private File audioFile;
+    private Integer correctAnswerIndex;
 
-    private File gifFile;
+    private UUID exerciseId;
+
+    private String exerciseName;
+
+    private UUID imageFileId;
+
 }

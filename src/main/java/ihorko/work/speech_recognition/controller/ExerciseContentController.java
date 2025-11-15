@@ -2,21 +2,17 @@ package ihorko.work.speech_recognition.controller;
 
 import ihorko.work.speech_recognition.converter.ExerciseContentConverter;
 import ihorko.work.speech_recognition.db.dto.ExerciseContentDto;
-import ihorko.work.speech_recognition.db.entity.File;
 import ihorko.work.speech_recognition.db.entity.Exercise;
+import ihorko.work.speech_recognition.db.entity.ExerciseAttempt;
 import ihorko.work.speech_recognition.db.entity.ExerciseContent;
-import ihorko.work.speech_recognition.service.FileStorageService;
-import ihorko.work.speech_recognition.service.ExerciseContentService;
-import ihorko.work.speech_recognition.service.ExerciseService;
+import ihorko.work.speech_recognition.db.entity.File;
+import ihorko.work.speech_recognition.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,72 +23,164 @@ public class ExerciseContentController {
 
     private final ExerciseService exerciseService;
     private final ExerciseContentService exerciseContentService;
+    private final ExerciseContentConverter exerciseContentConverter;
     private final FileStorageService fileStorageService;
-    private final ExerciseContentConverter ExerciseContentConverter;
+    private final GeminiService geminiService;
+    private final ExerciseAttemptService exerciseAttemptService;
 
     @Autowired
-    public ExerciseContentController(ExerciseService exerciseService, ExerciseContentService exerciseContentService,
-                                  FileStorageService fileStorageService, ExerciseContentConverter ExerciseContentConverter) {
+    public ExerciseContentController(
+            ExerciseService exerciseService,
+            ExerciseContentService exerciseContentService,
+            ExerciseContentConverter exerciseContentConverter,
+            FileStorageService fileStorageService,
+            ExerciseAttemptService exerciseAttemptService,
+            GeminiService geminiService
+
+    ) {
         this.exerciseService = exerciseService;
         this.exerciseContentService = exerciseContentService;
+        this.exerciseContentConverter = exerciseContentConverter;
         this.fileStorageService = fileStorageService;
-        this.ExerciseContentConverter = ExerciseContentConverter;
+        this.exerciseAttemptService = exerciseAttemptService;
+
+        this.geminiService = geminiService;
+
     }
 
+    // -------------------------------------------------------
+    // 1️⃣ сторінка створення тестового завдання
+    // -------------------------------------------------------
     @GetMapping("/exercise-content/create/page")
-    public String showExerciseContentCreatePage(Model model) {
+    public String showCreatePage(Model model) {
         model.addAttribute("ExerciseContent", new ExerciseContent());
         model.addAttribute("exercises", exerciseService.findAll());
-        return "exercise_content/ExerciseContentCreate";
+        return "exercise_content/exerciseContentCreate";
     }
 
+    // -------------------------------------------------------
+    // 2️⃣ логіка створення ExerciseContent
+    // -------------------------------------------------------
     @PostMapping("/exercise-content/create")
-    public String createExerciseContent(ExerciseContent ExerciseContent,
-                                     @RequestParam MultipartFile imageFile,
-                                     @RequestParam MultipartFile audioFile, RedirectAttributes redirectAttributes) {
-        File file = fileStorageService.storeFile(imageFile);
-        File dbAudioFile = fileStorageService.storeFile(audioFile);
+    public String createExerciseContent(
+            @ModelAttribute("ExerciseContent") ExerciseContent exerciseContent,
+            @RequestParam("answers") List<String> answers,
+            @RequestParam("correctAnswerIndex") Integer correctAnswerIndex,
+            @RequestParam("imageFile") MultipartFile imageFile
+    ) {
+        // 1) Зв’язуємо Exercise (бо exercise.id автоматично мапиться в ExerciseContent.exercise)
+        UUID exerciseId = exerciseContent.getExercise().getId();
+        Exercise exercise = exerciseService.findById(exerciseId);
+        exerciseContent.setExercise(exercise);
 
-        Exercise exercise = exerciseService.findById(ExerciseContent.getExercise().getId());
-        if (exercise.getName().isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Failed");
-            redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
-            throw new IllegalArgumentException("Name for our exercise is empty");
+        // 2) Зберігаємо відповіді
+        exerciseContent.setAnswers(answers);
+        exerciseContent.setCorrectAnswerIndex(correctAnswerIndex);
+
+        // 3) Зберігаємо зображення, якщо є
+        if (!imageFile.isEmpty()) {
+            File stored = fileStorageService.storeFile(imageFile);
+            exerciseContent.addFile(stored);
         }
-        exercise.addExerciseContent(ExerciseContent);
-        ExerciseContent.setExercise(exercise);
-        ExerciseContent.addDbFile(file);
-        ExerciseContent.addDbFile(dbAudioFile);
 
-        exerciseContentService.save(ExerciseContent);
-        redirectAttributes.addFlashAttribute("message", "Success");
-        redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+        // 4) Зберігаємо в БД
+        exerciseContentService.save(exerciseContent);
 
         return "redirect:/exercise-contents/list";
     }
 
+    // -------------------------------------------------------
+    // 3️⃣ список усіх ExerciseContent
+    // -------------------------------------------------------
     @GetMapping("/exercise-contents/list")
-    public String showExerciseContentsList(Model model) {
-        List<ExerciseContentDto> collect = exerciseContentService.findAll().stream().map(ExerciseContentConverter::convert).collect(Collectors.toList());
-        model.addAttribute("ExerciseContentsList", collect);
-        return "exercise_content/ExerciseContentsList";
-    }
-
-    @GetMapping("/exercise-contents/{exerciseId}")
-    public String showExerciseContentsList(@PathVariable String exerciseId, Model model) {
-
-        List<ExerciseContentDto> collect = exerciseContentService.findListExerciseContentByExercise(UUID.fromString(exerciseId))
+    public String showAllContents(Model model) {
+        List<ExerciseContentDto> list = exerciseContentService.findAll()
                 .stream()
-                .map(ExerciseContentConverter::convert)
+                .map(exerciseContentConverter::convert)
                 .collect(Collectors.toList());
-        model.addAttribute("ExerciseContentsList", collect);
+
+        model.addAttribute("ExerciseContentsList", list);
         return "exercise_content/ExerciseContentsList";
     }
 
-    @GetMapping("/exercise-content/{id}")
-    public String showExerciseContentPage(@PathVariable UUID id, Model model) {
-        ExerciseContentDto ExerciseContent = ExerciseContentConverter.convert(exerciseContentService.findById(id));
-        model.addAttribute("ExerciseContent", ExerciseContent);
-        return "exercise_content/ExerciseContent";
+    // -------------------------------------------------------
+    // 4️⃣ список ExerciseContent для конкретної теми
+    // -------------------------------------------------------
+    @GetMapping("/exercise-contents/{exerciseId}")
+    public String showContentsByExercise(@PathVariable UUID exerciseId, Model model) {
+        List<ExerciseContentDto> list = exerciseContentService
+                .findListExerciseContentByExercise(exerciseId)
+                .stream()
+                .map(exerciseContentConverter::convert)
+                .collect(Collectors.toList());
+
+        model.addAttribute("ExerciseContentsList", list);
+        return "exercise_content/ExerciseContentsList";
     }
+
+    // -------------------------------------------------------
+    // 5️⃣ показ одного ExerciseContent
+    // -------------------------------------------------------
+    @GetMapping("/exercise-content/{id}")
+    public String showExerciseContent(@PathVariable UUID id, Model model) {
+        ExerciseContentDto dto = exerciseContentConverter.convert(exerciseContentService.findById(id));
+        model.addAttribute("exercise", dto);
+        return "exercise_content/exerciseContent";
+    }
+
+    // -------------------------------------------------------
+    // 6️⃣ перевірка відповіді
+    // -------------------------------------------------------
+    @PostMapping("/exercise-content/check")
+    public String checkAnswer(
+            @RequestParam UUID id,
+            @RequestParam Integer selectedAnswer,
+            Model model
+    ) {
+        // 1) Тягнемо entity + DTO (як і раніше)
+        ExerciseContent exerciseContent = exerciseContentService.findById(id);
+        ExerciseContentDto dto = exerciseContentConverter.convert(exerciseContent);
+
+        boolean isCorrect = dto.getCorrectAnswerIndex().equals(selectedAnswer);
+
+        model.addAttribute("exercise", dto);
+        model.addAttribute("selectedAnswer", selectedAnswer);
+        model.addAttribute("isCorrect", isCorrect);
+
+        // 2) AI-підказка тільки якщо помилка
+        if (!isCorrect) {
+            String hint = geminiService.sendPrompt(dto.getQuestionText());
+            model.addAttribute("aiHint", hint);
+        }
+
+        // 3) Зберігаємо спробу в таблицю exercise_attempt
+        ExerciseAttempt attempt = new ExerciseAttempt();
+        attempt.setExerciseContent(exerciseContent);
+        attempt.setAttemptNumber(exerciseAttemptService.getNextAttemptNumber(id));
+        attempt.setIsCorrect(isCorrect);
+        attempt.setUsedAiHint(!isCorrect);     // якщо помилився — показали підказку
+        attempt.setSelectedAnswer(selectedAnswer);
+
+        exerciseAttemptService.saveAttempt(attempt);
+
+        return "exercise_content/exerciseContent";
+    }
+
+
+    @GetMapping("/exercise-content/image/{fileId}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getImage(@PathVariable UUID fileId) {
+
+        File file = fileStorageService.getFile(fileId);
+
+        if (file == null || file.getData() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok()
+                .header("Content-Type", file.getFileType())  // image/png, image/jpeg
+                .body(file.getData());
+    }
+
+
 }

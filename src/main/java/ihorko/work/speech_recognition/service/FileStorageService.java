@@ -45,4 +45,9 @@ public class FileStorageService {
     public void delete(File file){
         fileRepository.delete(file);
     }
+
+    public File getFile(UUID id) {
+        return fileRepository.findById(id).orElseThrow();
+    }
+
 }

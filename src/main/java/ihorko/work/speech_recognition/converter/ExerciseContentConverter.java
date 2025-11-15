@@ -7,21 +7,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExerciseContentConverter {
 
-    public ExerciseContentDto convert(ExerciseContent ExerciseContent) {
-        ExerciseContentDto ExerciseContentDto = new ExerciseContentDto();
-        ExerciseContentDto.setContentText(ExerciseContent.getContentText());
-        ExerciseContentDto.setExercise(ExerciseContent.getExercise());
-        ExerciseContentDto.setId(ExerciseContent.getId());
-        ExerciseContentDto.setContentType(ExerciseContent.getTypeContent());
-        ExerciseContentDto.setAudioFile(ExerciseContent.getFiles()
-                .stream()
-                .filter(content -> content.getFileType().contains("audio"))
-                .findFirst().orElse(null));
-        ExerciseContentDto.setGifFile(ExerciseContent.getFiles()
-                .stream()
-                .filter(content -> content.getFileType().contains("image"))
-                .findFirst().orElse(null));
-        return ExerciseContentDto;
-    }
+    public ExerciseContentDto convert(ExerciseContent entity) {
 
+        ExerciseContentDto dto = new ExerciseContentDto();
+
+        dto.setId(entity.getId());
+        dto.setQuestionText(entity.getQuestionText());
+        dto.setTypeContent(entity.getTypeContent());
+        dto.setAnswers(entity.getAnswers());
+        dto.setCorrectAnswerIndex(entity.getCorrectAnswerIndex());
+        if (entity.getFiles() != null && !entity.getFiles().isEmpty()) {
+            dto.setImageFileId(entity.getFiles().get(0).getId());
+        }
+
+        if (entity.getExercise() != null) {
+            dto.setExerciseId(entity.getExercise().getId());
+            dto.setExerciseName(entity.getExercise().getName());
+        }
+
+        return dto;
+    }
 }

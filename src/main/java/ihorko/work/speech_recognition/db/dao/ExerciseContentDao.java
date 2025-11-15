@@ -27,13 +27,13 @@ public class ExerciseContentDao {
 
     public List<ExerciseContent> listExercisesContent() {
         TypedQuery<ExerciseContent> query = sessionFactory.getCurrentSession()
-                .createQuery("From exercise_content", ExerciseContent.class);
+                .createQuery("From ExerciseContent", ExerciseContent.class);
         return query.getResultList();
     }
 
     public List<ExerciseContent> listExercisesContentByExercise(UUID exercise) {
         TypedQuery<ExerciseContent> query = sessionFactory.getCurrentSession()
-                .createQuery("from exercise_content s where s.exercise.id= :exercise_id", ExerciseContent.class);
+                .createQuery("from ExerciseContent s where s.exercise.id= :exercise_id", ExerciseContent.class);
         query.setParameter("exercise_id", exercise);
         return query.getResultList();
     }

@@ -22,7 +22,7 @@ public class File {
 
     @ManyToOne
     @JoinColumn(name = "exercise_content_id")
-    private ExerciseContent ExerciseContent;
+    private ExerciseContent exerciseContent;
 
     public File() {
     }
@@ -66,10 +66,10 @@ public class File {
     }
 
     public ExerciseContent getExerciseContent() {
-        return ExerciseContent;
+        return exerciseContent;
     }
 
-    public void setExerciseContent(ExerciseContent ExerciseContent) {
-        this.ExerciseContent = ExerciseContent;
+    public void setExerciseContent(ExerciseContent exerciseContent) {
+        this.exerciseContent = exerciseContent;
     }
 }

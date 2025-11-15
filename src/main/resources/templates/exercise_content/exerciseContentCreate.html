@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ua">
+<head>
+    <title>Create exercise</title>
+    <meta th:insert="fragments/header::header">
+</head>
+<body>
+<div th:insert="fragments/navbar :: navbar"></div>
+<section class="p-4" style="background-color: #eee;">
+    <div class="d-flex justify-content-center">
+        <div class="card p-1" style="width: 700px;">
+        <div class="card p-1">
+            <div class="card-body p-md-5">
+                <h4 class="mb-3 text-uppercase text-center" th:text="#{exercise_content_creation_form}">
+                </h4>
+                <div class="row">
+                    <div class="col-form-label-lg">
+                        <form th:action="@{/exercise-content/create}" th:object="${ExerciseContent}"
+                              enctype="multipart/form-data" method="post">
+
+                            <!-- Текст питання -->
+                            <div class="row align-items-center p-2">
+                                <div class="col-3">
+                                    <h5 class="mb-0">Текст питання</h5>
+                                </div>
+                                <div class="col-9">
+                                    <textarea required class="form-control form-control-lg" rows="3"
+                                              th:field="*{questionText}"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Вибір теми -->
+                            <div class="row align-items-center p-2">
+                                <div class="col-3"><h5 class="mb-0">Обрати тему</h5></div>
+                                <div class="col-9">
+
+                                    <!-- старий селект лишаємо -->
+                                    <select class="form-select form-select-lg" th:field="*{exercise.id}"
+                                            id="exerciseSelect">
+                                        <option th:each="exercise : ${exercises}"
+                                                th:value="${exercise.getId()}"
+                                                th:text="${exercise.getName()}">
+                                        </option>
+                                    </select>
+
+                                    <!-- ✔ новий hidden input, який надсилає exerciseId -->
+                                    <input type="hidden" name="exerciseId" id="hiddenExerciseId">
+
+                                    <script>
+                                        const select = document.getElementById("exerciseSelect");
+                                        const hiddenInput = document.getElementById("hiddenExerciseId");
+
+                                        // встановити початкове значення
+                                        hiddenInput.value = select.value;
+
+                                        // оновлювати при зміні
+                                        select.addEventListener("change", () => {
+                                            hiddenInput.value = select.value;
+                                        });
+                                    </script>
+
+                                </div>
+                            </div>
+
+                            <!-- Відповіді -->
+                            <div class="p-2">
+                                <h5>Варіанти відповідей</h5>
+                                <div id="answers-container">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-text">
+                                            <input type="radio" name="correctAnswerIndex" value="0" required>
+                                        </div>
+                                        <input type="text" name="answers" class="form-control" placeholder="Варіант 1" required>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-secondary btn-sm" type="button" id="add-answer-btn">➕ Додати відповідь</button>
+                            </div>
+
+                            <!-- Завантаження ER-діаграми -->
+                            <div class="row align-items-center p-2">
+                                <div class="col-3"><h5 class="mb-0">Зображення (опційно)</h5></div>
+                                <div class="col-9">
+                                    <input type="file" name="imageFile" accept="image/*" class="form-control form-control-lg">
+                                    <div class="small text-muted mt-2">Макс. розмір файлу — 10 МБ</div>
+                                </div>
+                            </div>
+
+                            <input class="btn btn-primary btn-lg" type="submit" value="Підтвердити">
+                        </form>
+
+                        <script>
+                            let answerIndex = 1;
+                            document.getElementById('add-answer-btn').addEventListener('click', () => {
+                                const container = document.getElementById('answers-container');
+                                const div = document.createElement('div');
+                                div.className = 'input-group mb-2';
+                                div.innerHTML = `
+                                <div class="input-group-text">
+                                  <input type="radio" name="correctAnswerIndex" value="${answerIndex}">
+                                </div>
+                                <input type="text" name="answers" class="form-control" placeholder="Варіант ${answerIndex + 1}" required>
+                              `;
+                                container.appendChild(div);
+                                answerIndex++;
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>

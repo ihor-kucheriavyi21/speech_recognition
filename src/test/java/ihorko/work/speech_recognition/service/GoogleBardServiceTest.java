@@ -14,37 +14,13 @@ class GoogleBardServiceTest {
     private static final Logger LOGGER = Logger.getLogger(GoogleBardServiceTest.class.getName());
 
     @Autowired
-    GoogleBardService googleBardService;
+    GeminiService geminiService;
 
     @Test
-    void testSimpleAnswerFromGoogleBardService() {
-        String answerFromBard = googleBardService.getAnswerFromBard("What is it today?");
-        LOGGER.info("Answer from BARD: " + answerFromBard);
-        Assertions.assertFalse(answerFromBard.isEmpty(), " Answer from BARD shouldn't be empty");
+    public void test() {
+        String answer = geminiService.sendPrompt("Поясни що таке ER-діаграма простими словами");
+        System.out.println(answer);
     }
 
-    @Test
-    void testQueryFromGoogleBardService() {
-        String wordForTesting = "schedule";
-        String answerFromBard = googleBardService.buildQueryAboutPronunciationAndAskBard(wordForTesting, Topic.ENGLISH);
-        LOGGER.info("Answer from BARD: " + answerFromBard);
-        Assertions.assertTrue(answerFromBard.contains(wordForTesting), " Answer from BARD should contains word schedule");
-    }
 
-    @Test
-    void testEnglishQueryFromGoogleBardService() {
-        String wordForTesting = "schedule";
-        String answerFromBard = googleBardService.buildQueryAboutPronunciationAndAskBard(wordForTesting, Topic.ENGLISH);
-        LOGGER.info("Answer from BARD: " + answerFromBard);
-        Assertions.assertTrue(answerFromBard.contains(wordForTesting), " Answer from BARD should contains word schedule");
-    }
-
-    @Test
-    void testUkraineQueryFromGoogleBardService() {
-        String wordForTesting = "Графік";
-        String answerFromBard = googleBardService.buildQueryAboutPronunciationAndAskBard(wordForTesting, Topic.UKRAINIAN);
-        LOGGER.info("Answer from BARD: " + answerFromBard);
-
-        Assertions.assertTrue(answerFromBard.contains(wordForTesting), " Answer from BARD should contains word %s".formatted(wordForTesting));
-    }
 }

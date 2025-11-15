@@ -1,49 +1,42 @@
 package ihorko.work.speech_recognition.db.entity;
 
 import lombok.Getter;
-
+import lombok.Setter;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-@Entity(name = "exercise_content")
+@Entity
+@Table(name = "exercise_content")
 @Getter
+@Setter
 public class ExerciseContent {
 
     @Id
     @GeneratedValue
     private UUID id;
 
-    private String contentText;
+    @Column(nullable = false, length = 2000)
+    private String questionText;
 
     private String typeContent;
 
+    @ElementCollection
+    @CollectionTable(name = "exercise_answers", joinColumns = @JoinColumn(name = "exercise_content_id"))
+    @Column(name = "answer_text")
+    private List<String> answers = new ArrayList<>();
+
+    private Integer correctAnswerIndex;
+
     @ManyToOne
-    @JoinColumn(name = "exercise_id", nullable = false)
+    @JoinColumn(name = "exercise_id")
     private Exercise exercise;
 
-    @OneToMany(mappedBy = "ExerciseContent", targetEntity = File.class, cascade = CascadeType.ALL)
+    // 🟢 Зверни увагу: mappedBy = "exerciseContent"
+    @OneToMany(mappedBy = "exerciseContent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<File> files = new ArrayList<>();
 
-    public void addDbFile(File file) {
+    public void addFile(File file) {
         files.add(file);
         file.setExerciseContent(this);
-    }
-
-    public void setContentText(String contentText) {
-        this.contentText = contentText;
-    }
-
-    public void setExercise(Exercise exercise) {
-        this.exercise = exercise;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setTypeContent(String typeContent) {
-        this.typeContent = typeContent;
     }
 }
