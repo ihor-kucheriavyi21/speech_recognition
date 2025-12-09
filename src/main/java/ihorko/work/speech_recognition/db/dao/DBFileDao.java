@@ -2,7 +2,6 @@ package ihorko.work.speech_recognition.db.dao;
 
 import ihorko.work.speech_recognition.db.entity.File;
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
