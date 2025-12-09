@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
@@ -13,12 +14,8 @@ import java.util.UUID;
 @Transactional
 public class DBFileDao {
 
-    private final EntityManager entityManager;
-
-    @Autowired
-    public DBFileDao(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private Session getSession() {
         return entityManager.unwrap(Session.class);

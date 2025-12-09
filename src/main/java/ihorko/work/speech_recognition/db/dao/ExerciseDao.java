@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -15,12 +16,8 @@ import java.util.UUID;
 @Transactional
 public class ExerciseDao {
 
-    private final EntityManager entityManager;
-
-    @Autowired
-    public ExerciseDao(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private Session getSession() {
         return entityManager.unwrap(Session.class);

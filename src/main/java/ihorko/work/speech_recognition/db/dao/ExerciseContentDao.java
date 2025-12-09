@@ -16,12 +16,8 @@ import java.util.UUID;
 @Transactional
 public class ExerciseContentDao {
 
-    private final EntityManager entityManager;
-
-    @Autowired
-    public ExerciseContentDao(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private Session getSession() {
         return entityManager.unwrap(Session.class);
