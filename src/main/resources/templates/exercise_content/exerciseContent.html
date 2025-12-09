@@ -78,10 +78,10 @@
     <!-- QUESTION TEXT -->
     <div class="question" th:text="${exercise.questionText}"></div>
     <!-- IMAGE (якщо існує) -->
-   <!-- <div th:if="${exercise.imageFileId != null}" style="text-align: center; margin-bottom: 20px;">
+    <div th:if="${exercise.imageFileId != null}" style="text-align: center; margin-bottom: 20px;">
         <img th:src="@{'/exercise-content/image/' + ${exercise.imageFileId}}"
              style="max-width: 100%; max-height: 400px; border-radius: 8px;">
-    </div>-->
+    </div>
     <!-- ANSWERS -->
     <form method="post" action="/exercise-content/check">
         <input type="hidden" name="id" th:value="${exercise.id}"/>

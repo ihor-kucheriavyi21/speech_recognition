@@ -1,7 +1,7 @@
 package ihorko.work.db_learning.db;
 
-import ihorko.work.db_learning.db.entity.Exercise;
-import ihorko.work.db_learning.repository.ExerciseRepository;
+import ihorko.work.speech_recognition.db.entity.Exercise;
+import ihorko.work.speech_recognition.repository.ExerciseRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

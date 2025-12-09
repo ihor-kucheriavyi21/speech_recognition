@@ -1,6 +1,7 @@
 package ihorko.work.db_learning.service;
 
-import ihorko.work.db_learning.db.entity.File;
+import ihorko.work.speech_recognition.db.entity.File;
+import ihorko.work.speech_recognition.service.FileStorageService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;

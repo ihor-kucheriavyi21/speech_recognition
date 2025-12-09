@@ -1,6 +1,6 @@
 package ihorko.work.db_learning.string_comparison;
 
-import ihorko.work.db_learning.common.StringSearch;
+import ihorko.work.speech_recognition.common.StringSearch;
 import org.junit.Test;
 
 public class HashCalculatingTest {
